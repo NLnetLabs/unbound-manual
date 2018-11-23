@@ -7,6 +7,12 @@ Welcome to the Unbound User Manual!
    :maxdepth: 2
    :caption: Contents:
 
+   getting-started/index
+   use-cases/index
+   topics/index
+   internals/index
+   libunbound
+   reference
 
 
 Indices and tables
