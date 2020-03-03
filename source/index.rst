@@ -30,29 +30,44 @@ mailing list.
    :maxdepth: 2
    :caption: Getting Started
 
-   getting-started/index
+   getting-started/installation
+   getting-started/configuration
 
 .. toctree::
    :maxdepth: 2
    :caption: Use Cases
 
-   use-cases/index
+   use-cases/enterprise-resolver
+   use-cases/home-resolver
+   use-cases/isp-resolver
+   use-cases/local-stub
+   use-cases/privacy-aware-resolver
 
 .. toctree::
    :maxdepth: 2
    :caption: Topics
 
-   topics/index
+   topics/privacy
+   topics/performance
+   topics/filtering
+   topics/monitoring
+   topics/ecs
+   topics/resiliency
 
 .. toctree::
    :maxdepth: 2
    :caption: Internals
 
-   internals/index
+   internals/server-selection
+   internals/compliance
+   internals/architecture
+   internals/code-structure
+   internals/python-modules
+   internals/trust-anchors
 
 .. toctree::
    :maxdepth: 2
-   :caption: Reference
+   :caption: Other
 
    libunbound
    reference
