@@ -1,7 +1,7 @@
 .. Unbound User Manual master file
 
-Welcome to the Unbound User Manual!
-===================================
+Unbound by NLnet Labs
+=====================
 
 .. Warning:: This project has been launched in March 2020 and has the goal to
              replace the `existing documentation
