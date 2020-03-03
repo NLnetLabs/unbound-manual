@@ -6,9 +6,7 @@ Welcome to the Unbound User Manual!
 .. Warning:: This project has been launched in March 2020 and has the goal to
              replace the `existing documentation
              <https://www.nlnetlabs.nl/documentation/unbound/>`_ with an
-             open source community project.
-
-             **This is a work in progress.**
+             open source community project. **This is a work in progress.**
 
 .. toctree::
    :maxdepth: 2
