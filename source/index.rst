@@ -8,14 +8,14 @@
 Unbound by NLnet Labs
 =====================
 
+**Welcome to the Unbound documentation. Unbound is a validating, recursive,
+caching DNS resolver. It is designed to be fast and lean and incorporates modern
+features based on open standards.**
+
 .. figure:: img/unbound-logo.svg
    :align: left
    :width: 50%
    :alt: Unbound logo
-
-Welcome to the Unbound documentation. Unbound is a validating, recursive,
-caching DNS resolver. It is designed to be fast and lean and incorporates modern
-features based on open standards.
 
 Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
 with packages available for most platforms. It is included in the base-system of
@@ -33,15 +33,34 @@ mailing list.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Getting Started
 
    getting-started/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Use Cases
+
    use-cases/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Topics
+
    topics/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Internals
+
    internals/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reference
+
    libunbound
    reference
-
 
 Indices and tables
 ==================
