@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Unbound User Manual'
+project = 'Unbound'
 copyright = '2020, The Unbound Team'
 author = 'The Unbound Team'
 
