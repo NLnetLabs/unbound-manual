@@ -12,11 +12,6 @@ Unbound by NLnet Labs
 caching DNS resolver. It is designed to be fast and lean and incorporates modern
 features based on open standards.**
 
-.. figure:: img/unbound-logo.svg
-   :align: left
-   :width: 50%
-   :alt: Unbound logo
-
 Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
 with packages available for most platforms. It is included in the base-system of
 FreeBSD and OpenBSD and in the standard repositories of most Linux
