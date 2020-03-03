@@ -8,7 +8,7 @@
 Unbound by NLnet Labs
 =====================
 
-.. figure:: img/Unbound_FC.svg
+.. figure:: img/unbound_logo.svg
    :align: left
    :width: 50%
    :alt: Unbound logo
@@ -25,7 +25,7 @@ This documentation is an open source project maintained by NLnet Labs. We always
 appreciate your feedback and improvements. You can submit an issue or pull
 request on the `GitHub repository
 <https://github.com/NLnetLabs/unbound-manual/issues>`_, or post a message on the
-`Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_. 
+`Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_.
 
 .. toctree::
    :maxdepth: 2
