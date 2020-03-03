@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Unbound'
-copyright = '2020, The Unbound Team'
-author = 'The Unbound Team'
+copyright = '2020, NLnet Labs'
+author = 'NLnet Labs'
 
 # The short X.Y version
 version = ''

@@ -54,13 +54,13 @@ your IPv6 subnet if you have one.
         verbosity: 1
 
 By default the software comes with chroot enabled. This provides an extra
-layer of defense against remote exploits. Enter file paths as full pathnames
+layer of defence against remote exploits. Enter file paths as full pathnames
 starting at the root of the filesystem (``/``). If chroot gives
 you trouble, you can disable it with ``chroot: ""`` in the config.
 
-Also the server assumes the username ``unbound`` to drop privileges.
-You can add this user with your favorite account management tool (``useradd(8)``),
-or disable the feature with ``username: ""`` in the config.
+Also the server assumes the username ``unbound`` to drop privileges. You can add
+this user with your favourite account management tool (``useradd(8)``), or
+disable the feature with ``username: ""`` in the config.
 
 Start the server using the rc.d script (if you or the package manager
 installed one) as ``/etc/rc.d/init.d/unbound start``.
