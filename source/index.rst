@@ -8,7 +8,7 @@
 Unbound by NLnet Labs
 =====================
 
-.. figure:: img/unbound_logo.svg
+.. figure:: img/unbound-logo.svg
    :align: left
    :width: 50%
    :alt: Unbound logo
@@ -17,15 +17,19 @@ Welcome to the Unbound documentation. Unbound is a validating, recursive,
 caching DNS resolver. It is designed to be fast and lean and incorporates modern
 features based on open standards.
 
-Unbound is free, open source software under the BSD license. The guiding
-principles for our product development roadmap are first and foremost the
-security and privacy of the user.
+Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
+with packages available for most platforms. It is included in the base-system of
+FreeBSD and OpenBSD and in the standard repositories of most Linux
+distributions. Installation and configuration is designed to be easy. Setting up
+a resolver for your machine or network can be done with only a few lines of
+configuration.
 
 This documentation is an open source project maintained by NLnet Labs. We always
 appreciate your feedback and improvements. You can submit an issue or pull
 request on the `GitHub repository
 <https://github.com/NLnetLabs/unbound-manual/issues>`_, or post a message on the
-`Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_.
+`Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_
+mailing list.
 
 .. toctree::
    :maxdepth: 2
