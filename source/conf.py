@@ -131,7 +131,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'UnboundUserManual.tex', 'Unbound User Manual',
-     'The Unbound Team', 'manual'),
+     'NLnet Labs', 'manual'),
 ]
 
 
