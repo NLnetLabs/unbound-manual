@@ -29,20 +29,21 @@ to consume policies from external sources. You will have to fetch the external
 policies in the offered format, and reformat it in such a way that Unbound will
 understand it. You then have to keep this list up-to-date, for example using
 `unbound-control
-<https://nlnetlabs.nl/documentation/unbound/unbound-control/>`_. There is,
-however, a policy format that will work on different resolver implementations,
-and that has capabilities to be directly transferred and loaded from external
-sources: Response Policy Zones (RPZ).
+<https://nlnetlabs.nl/documentation/unbound/unbound-control/>`_.
 
-Policies
-""""""""
+There is, however, a policy format that will work on different resolver
+implementations, and that has capabilities to be directly transferred and loaded
+from external sources: Response Policy Zones (RPZ).
+
+RPZ Policies
+""""""""""""
 
 RPZ policies are formatted in DNS zone files. This makes it possible to easily
 consume and keep them to up-to-date by using DNS zone transfers. Something that
 Unbound is already capable of doing for its `auth-zone
 <https://nlnetlabs.nl/documentation/unbound/unbound.conf/#master>`_ feature.
 
-Each policy in the policy zone consist of a trigger and an action. The trigger
+Each policy in the policy zone consists of a trigger and an action. The trigger
 describes when the policy should be applied. The action describes what action
 should be taken if the policy needs to be applied. Each trigger and action
 combination is defined as a Resource Record (RR) in the policy zone. The owner
@@ -50,8 +51,8 @@ of the RR states the trigger, the type and RDATA state the action.
 
 The latest `RPZ draft
 <https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_ describes five
-different policy triggers of which Unbound currently supports two: the QNAME
-trigger and the Response IP Address trigger.
+different policy triggers of which Unbound supports two: the QNAME trigger and
+the Response IP Address trigger.
 
 QNAME Trigger
 """""""""""""
@@ -59,7 +60,7 @@ QNAME Trigger
 A policy with the *QNAME* trigger will be applied when the target domain name in
 the query (the query name, or QNAME) matches the trigger name. The trigger name
 is the part of the *owner* of the record before the origin of the zone. For
-example, if we have this record in the ``rpz.nlnetlabs.nl`` zone:
+example, if there is this record in the ``rpz.nlnetlabs.nl`` zone:
 
 .. code-block:: text
 
@@ -67,22 +68,22 @@ example, if we have this record in the ``rpz.nlnetlabs.nl`` zone:
   example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
 
 then Unbound will add a policy for queries for ``example.com``. Only exact
-matches for ``example.com`` will be triggered. If we want to have a policy for
-``example.com`` and all of its subdomains we can do that by adding a wildcard
-record:
+matches for ``example.com`` will be triggered. If a policy for ``example.com``
+is desired that includes all of its subdomains, this is possible by adding a
+wildcard record:
 
 .. code-block:: text
 
   $ORIGIN rpz.nlnetlabs.nl.
   example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
-  *.example.com.rpz.nlnetlabs.nl. TXT  "trigger for *.example.com"
+  *.example.com.rpz.nlnetlabs.nl.  TXT  "trigger for *.example.com"
 
 RPZ Actions
 """""""""""
 
 The action that will be applied for above example is the *Local Data* action.
 This means that queries for ``example.com`` for the *TXT* type will be answered
-with our newly created record. Queries for types that do not exist in our policy
+with the newly created record. Queries for types that do not exist in the policy
 zones will result in a NODATA answer.
 
 .. code-block:: text
@@ -104,7 +105,7 @@ zones will result in a NODATA answer.
 
   ;; ANSWER SECTION:
 
-Other RPZ actions that are supported by Unbound are: the *NXDOMAIN*, *NODATA*,
+Other RPZ actions that are supported by Unbound are the *NXDOMAIN*, *NODATA*,
 *PASSTHRU*, and *DROP* actions. All of these actions are defined by having a
 CNAME to a specific name. A policy for the NXDOMAIN action is created by having
 a CNAME to the root:
@@ -128,17 +129,17 @@ triggered:
 
 The CNAME targets for the other RPZ actions are:
 
-+----------+---------------------+
-|  Action  |  RR type and RDATA  |
-+==========+=====================+
-| NXDOMAIN | CNAME .             |
-+----------+---------------------+
-| NODATA   | CNAME \*.           |
-+----------+---------------------+
-| PASSTHRU | CNAME rpz-passthru. |
-+----------+---------------------+
-| DROP     | CNAME rpz-drop.     |
-+----------+---------------------+
++--------------+-------------------------+
+|    Action    |    RR type and RDATA    |
++==============+=========================+
+| ``NXDOMAIN`` | ``CNAME .``             |
++--------------+-------------------------+
+| ``NODATA``   | ``CNAME *.``            |
++--------------+-------------------------+
+| ``PASSTHRU`` | ``CNAME rpz-passthru.`` |
++--------------+-------------------------+
+| ``DROP``     | ``CNAME rpz-drop.``     |
++--------------+-------------------------+
 
 The NODATA action is self-explanatory. The DROP action will simply ignore (drop)
 the query. The PASSTHRU action makes it possible to exclude a domain, or IP
