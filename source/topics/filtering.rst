@@ -468,11 +468,10 @@ It is also possible to get statistics per applied RPZ action using
 ``unbound-control stats``. This requires the ``extended-statistics`` to be
 enabled.
 
-Unbound’s RPZ implementation works together with the `tags functionality
-<https://medium.com/nlnetlabs/client-based-filtering-in-unbound-d7da3f1ef639>`_.
-This makes is possible to enable (some of) the policy zones only for a set of
-the users. To do this the tags need to be defined using ``define-tag``, the
-correct tags need to be matched with the client IP addresses using
+Unbound’s RPZ implementation works together with the tags functionality. This
+makes is possible to enable (some of) the policy zones only for a set of the
+users. To do this the tags need to be defined using ``define-tag``, the correct
+tags need to be matched with the client IP addresses using
 ``access-control-tag``, and the tags need to be specified for the policy zones
 for which they apply.
 
