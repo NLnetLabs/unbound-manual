@@ -76,7 +76,7 @@ omitted to keep the text compact:
 
 .. code-block:: text
 
-zebra.example.net.  2710 IN RRSIG NSEC 8 2 10200 20180226143900 20180129143900 42393 example.net. [..]
+  zebra.example.net.  2710 IN RRSIG NSEC 8 2 10200 20180226143900 20180129143900 42393 example.net. [..]
 
 This RRSIG record has a label count of two, while the number of labels in the
 owner name (excluding the root label) is three. Using that information a
@@ -124,12 +124,13 @@ lookup for the TLSA record we could have used that already obtained NSEC record
 to generate a DNSSEC secure answer, without the need to send another query to
 the authoritative name server.
 
-The feature to use already cached NSEC records to generate responses can be
-enabled in Unbound using the *aggressive-nsec* option in unbound.conf:
+.. Important:: To use previously cached NSEC records to generate responses in
+              Unbound, use the *aggressive-nsec* option in unbound.conf:
 
-.. code-block:: text
+              .. code-block:: text
 
-  aggressive-nsec: yes
+                aggressive-nsec: yes
+
 
 Generating NXDOMAIN Answers
 ---------------------------
