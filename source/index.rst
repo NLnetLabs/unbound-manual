@@ -47,9 +47,9 @@ mailing list.
    :maxdepth: 2
    :caption: Topics
 
-   topics/privacy
+   topics/privacy/index
    topics/performance
-   topics/filtering
+   topics/filtering/index
    topics/monitoring
    topics/ecs
    topics/resiliency
