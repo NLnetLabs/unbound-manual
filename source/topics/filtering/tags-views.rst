@@ -1,3 +1,5 @@
+.. _doc_filtering_tags_views:
+
 Tags and Views
 ==============
 
@@ -5,7 +7,7 @@ The tags and views functionality make it possible to send specific DNS answers
 based on the IP address of the client.
 
 Tags
-""""
+----
 
 The tags functionality makes it possible to divide client source addresses
 in categories (tags), and use `local-zone
@@ -83,7 +85,7 @@ regardless the type configured using access-control-tag action. This override
 can be done using *local-zone-override*.
 
 Views
-"""""
+-----
 
 Tags make is possible to divide a large number of local-zones in
 categories, and assign these categories to a large number of IP address blocks. As tags

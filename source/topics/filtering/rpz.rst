@@ -1,11 +1,14 @@
+.. _doc_filtering_rpz:
+
 Response Policy Zones
 =====================
 
-Response Policy Zones is a mechanism that makes it possible to define your local
-policies in a standardised way and load your policies from external sources.
+Response Policy Zones (RPZ) is a mechanism that makes it possible to define your
+local policies in a standardised way and load your policies from external
+sources.
 
 Introduction
-""""""""""""
+------------
 
 Unbound has support for `local-zones
 <https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-zone>`_ and
@@ -28,7 +31,7 @@ implementations, and that has capabilities to be directly transferred and loaded
 from external sources: Response Policy Zones (RPZ).
 
 RPZ Policies
-""""""""""""
+------------
 
 RPZ policies are formatted in DNS zone files. This makes it possible to easily
 consume and keep them to up-to-date by using DNS zone transfers. Something that
@@ -47,7 +50,7 @@ different policy triggers of which Unbound supports two: the QNAME trigger and
 the Response IP Address trigger.
 
 QNAME Trigger
-"""""""""""""
+-------------
 
 A policy with the *QNAME* trigger will be applied when the target domain name in
 the query (the query name, or QNAME) matches the trigger name. The trigger name
@@ -71,7 +74,7 @@ wildcard record:
   *.example.com.rpz.nlnetlabs.nl.  TXT  "trigger for *.example.com"
 
 RPZ Actions
-"""""""""""
+-----------
 
 The action that will be applied for above example is the *Local Data* action.
 This means that queries for ``example.com`` for the *TXT* type will be answered
@@ -166,7 +169,7 @@ normally.
   www.example.com. 86400 IN TXT "v=spf1 -all"
 
 Response IP Address Trigger
-"""""""""""""""""""""""""""
+---------------------------
 
 The other RPZ trigger supported by Unbound is the *Response IP Address* trigger.
 This trigger makes it possible to apply the same RPZ actions as mentioned above,
@@ -212,8 +215,8 @@ containing a Local Data action. For example, the IPv4 address for
 
   example.com. 3600 IN A 192.0.2.1
 
-RPZ in Unbound
-""""""""""""""
+Implementation
+--------------
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
 needs to be loaded using ``module-config``. Each policy zone is configured in

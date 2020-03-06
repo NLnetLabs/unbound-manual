@@ -1,3 +1,5 @@
+.. _doc_filtering:
+
 Filtering and Manipulating Data
 ===============================
 
