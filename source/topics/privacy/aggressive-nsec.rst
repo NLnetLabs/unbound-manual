@@ -4,7 +4,9 @@ Aggressive NSEC
 ===============
 
 Unbound has implemented the aggressive use of the DNSSEC-Validated cache, also
-known as *Aggressive NSEC*, based on :RFC:`8198`.
+known as *Aggressive NSEC*, based on :RFC:`8198`. This section first describes
+how NSEC works, and then describes how synthesised answers can be generated
+based on the DNSSEC-Validated cache.
 
 Introduction
 ------------
@@ -20,6 +22,67 @@ a name does not exist (an answer with the response code set to NXDOMAIN) or that
 the type in the query does not exist for the name in the query. The latter is
 known as an answer with the NODATA pseudo response code, as specified in section
 1 of :RFC:`2308`.
+
+NSEC (Next Secure) Records
+--------------------------
+
+DNSSEC is not only used to prove the authenticity of records in a DNS answer by
+verifying the DNSSEC signatures of the records, it is also used to prove the
+absence of records. DNSSEC uses NSEC (next secure), as well as NSEC3 records for
+these proof of non-existence answers. An NSEC record indicates that there are no
+records that are sorted between the two domain names it contains. The canonical
+DNS name order is used for the sorting, as described in section 6.1 of
+:RFC:`4034`. An NSEC record also has a type bitmap which specifies the record
+types that exist for the owner name of the NSEC record. Like any other DNS
+record, the authenticity of NSEC records can be validated using its DNSSEC
+signature which is located in the RRSIG record.
+
+This NSEC record is taken as an example:
+
+.. code-block:: text
+
+  golf.example.net NSEC kilo.example.net TXT RRSIG NSEC
+
+The record indicates that the owner name ``golf.example.net`` exists and that
+the owner name has records for the *TXT*, *RRSIG* and *NSEC* types. It therefore
+proves that there is no *A* record for ``golf.example.net``. This NSEC record
+also proves that there are no records alphabetically sorted between its owner
+and its next domain name (kilo.example.net). This record therefore proves that
+there is no record for juliett.example.net.
+
+DNSSEC Signatures on Wildcard Records
+-------------------------------------
+
+Wildcard expansion on NSEC record is specifically allowed by :RFC:`4592`. In
+order to answer a DNS query using a wildcard record, an authoritative nameserver
+replaces the owner name of the wildcard record with the name in the query.
+DNSSEC is designed in such way that it can sign a complete zone before it starts
+serving. Because the query name that will be used for the wildcard record is not
+known when the zone is being signed, it is not possible to make a DNSSEC
+signature for it. Therefore the original owner name with the wildcard label is
+used for the signature.
+
+The labels field that is part of the RRSIG record indicates the number of labels
+of the owner name without the wildcard label. This labels field can be used by a
+DNSSEC validator to detect that this is a signature for a wildcard record. A
+DNSSEC validator then knows it needs to validate the signature using the
+original wildcard owner, and not the expanded owner that matches the query name.
+A validator gets the original owner name by taking the number of rightmost
+labels defined in the labels field from the expanded owner and then prepend it
+with the wildcard label ``*``.
+
+This is an example of a wildcard expanded RRSIG record, with the signature
+omitted to keep the text compact:
+
+.. code-block:: text
+
+zebra.example.net.  2710 IN RRSIG NSEC 8 2 10200 20180226143900 20180129143900 42393 example.net. [..]
+
+This RRSIG record has a label count of two, while the number of labels in the
+owner name (excluding the root label) is three. Using that information a
+validator will take the two last labels of the owner name (example.net) and
+prepend the wildcard label to it. It therefore checks the signature using the
+original wildcard name, which is ``*.example.net``.
 
 Generating NODATA Answers
 -------------------------
@@ -39,7 +102,7 @@ non-existing type, for example *SRV*, will once again not result in a cache hit
 and will generate yet another query with again a NODATA answer as result.
 
 In this example the ``example.net`` zone is DNSSEC signed. This means the
-absence of these records need to be proven using NSEC (next secure) records.
+absence of these records need to be proven using NSEC records.
 NSEC records indicate which types exist for a name and which names exist in a
 zone. NSEC records have a cryptographic signature which make them tamper proof.
 By knowing the existing record and types in a zone, a DNSSEC validator can prove
