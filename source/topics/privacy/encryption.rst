@@ -1,4 +1,5 @@
 .. _doc_privacy_encryption:
+.. index:: Encryption
 
 Encryption
 ==========

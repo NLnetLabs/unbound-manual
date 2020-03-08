@@ -1,4 +1,5 @@
 .. _doc_filtering_tags_views:
+.. index:: Tags, Views
 
 Tags and Views
 ==============

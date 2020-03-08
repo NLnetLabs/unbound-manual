@@ -1,11 +1,12 @@
 .. _doc_privacy_aggressive_nsec:
+.. index:: Aggressive NSEC, NSEC, DNSSEC-Validated cache
 
 Aggressive NSEC
 ===============
 
 Unbound has implemented the aggressive use of the DNSSEC-Validated cache, also
 known as *Aggressive NSEC*, based on :RFC:`8198`. This section first describes
-how NSEC works, and then describes how synthesised answers can be generated
+how NSEC works, and then covers how synthesised answers can be generated
 based on the DNSSEC-Validated cache.
 
 Introduction

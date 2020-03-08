@@ -1,4 +1,5 @@
 .. _doc_filtering_rpz:
+.. index:: RPZ, Response Policy Zones
 
 Response Policy Zones
 =====================
