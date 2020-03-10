@@ -34,7 +34,7 @@ mailing list.
 
 All the contents are under the permissive Creative Commons Attribution 3.0
 (`CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_) license, with
-attribution to "The RPKI team at NLnet Labs and the RPKI community".
+attribution to NLnet Labs.
 
 
 .. toctree::
