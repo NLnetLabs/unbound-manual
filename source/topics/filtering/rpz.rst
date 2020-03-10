@@ -1,5 +1,6 @@
-.. _doc_filtering_rpz:
 .. index:: RPZ, Response Policy Zones
+
+.. _doc_filtering_rpz:
 
 Response Policy Zones
 =====================
@@ -31,6 +32,8 @@ There is, however, a policy format that will work on different resolver
 implementations, and that has capabilities to be directly transferred and loaded
 from external sources: Response Policy Zones (RPZ).
 
+.. index:: RPZ policies
+
 RPZ Policies
 ------------
 
@@ -49,6 +52,8 @@ The latest `RPZ draft
 <https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_ describes five
 different policy triggers of which Unbound supports two: the QNAME trigger and
 the Response IP Address trigger.
+
+.. index:: QNAME Trigger
 
 QNAME Trigger
 -------------
@@ -73,6 +78,8 @@ wildcard record:
   $ORIGIN rpz.nlnetlabs.nl.
   example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
   *.example.com.rpz.nlnetlabs.nl.  TXT  "trigger for *.example.com"
+
+.. index:: RPZ actions
 
 RPZ Actions
 -----------
@@ -168,6 +175,8 @@ normally.
   ;; www.example.com. IN TXT
   ;; ANSWER SECTION:
   www.example.com. 86400 IN TXT "v=spf1 -all"
+
+.. index:: Response IP trigger
 
 Response IP Address Trigger
 ---------------------------
@@ -368,9 +377,3 @@ only the policies from the social.rpz.example.com zone will be used, for
 127.0.0.30 only the policies from the malware.rpz.example.com zone will be used,
 and queries originated from 127.0.0.20 will be subjected to the policies from
 both zones.
-
-
-.. todo
-
-   Local Zones and Local Data
-   --------------------------

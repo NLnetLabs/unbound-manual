@@ -21,7 +21,7 @@
 
 project = 'Unbound'
 copyright = '2020, NLnet Labs'
-author = 'NLnet Labs'
+author = 'NLnet Labs (CC-BY 3.0)'
 
 # The short X.Y version
 version = ''

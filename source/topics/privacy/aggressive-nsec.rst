@@ -1,5 +1,6 @@
+.. index:: Aggressive NSEC, DNSSEC-Validated cache
+
 .. _doc_privacy_aggressive_nsec:
-.. index:: Aggressive NSEC, NSEC, DNSSEC-Validated cache
 
 Aggressive NSEC
 ===============
@@ -23,6 +24,8 @@ a name does not exist (an answer with the response code set to NXDOMAIN) or that
 the type in the query does not exist for the name in the query. The latter is
 known as an answer with the NODATA pseudo response code, as specified in section
 1 of :RFC:`2308`.
+
+.. index:: NSEC records
 
 NSEC (Next Secure) Records
 --------------------------

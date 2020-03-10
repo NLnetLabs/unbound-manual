@@ -1,3 +1,5 @@
+.. index:: ! Filtering data, ! Manipulating data
+
 .. _doc_filtering:
 
 Filtering and Manipulating Data
