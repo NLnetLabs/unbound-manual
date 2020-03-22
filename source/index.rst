@@ -30,11 +30,9 @@ We always appreciate your feedback and improvements. You can submit an issue or
 pull request on the `GitHub repository
 <https://github.com/NLnetLabs/unbound-manual/issues>`_, or post a message on the
 `Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_
-mailing list.
-
-All the contents are under the permissive Creative Commons Attribution 3.0
-(`CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_) license, with
-attribution to NLnet Labs.
+mailing list. All the contents are under the permissive Creative Commons
+Attribution 3.0 (`CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_)
+license, with attribution to NLnet Labs.
 
 
 .. toctree::
