@@ -166,13 +166,16 @@ normally.
   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
   ;; QUESTION SECTION:
   ;; withpolicy.example.com. IN TXT
+
   ;; ANSWER SECTION:
   withpolicy.example.com. 3600 IN TXT "local data policy"
+
   $ drill txt www.example.com
   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 42053
   ;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
   ;; QUESTION SECTION:
   ;; www.example.com. IN TXT
+
   ;; ANSWER SECTION:
   www.example.com. 86400 IN TXT "v=spf1 -all"
 
