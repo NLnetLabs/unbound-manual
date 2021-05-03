@@ -120,7 +120,6 @@ Since this tutorial cannot (and does not try to) be comprehensive, we wil look a
 While not all, some machines use the resolver “recommended” by your router. To change this, we need to log into the router and configure it to use the DNS resolver that we just set up. This configuration step varies greatly from vendor to vendor, but the rule of thumb is that your router is accessible on either 192.168.1.1 or 192.168.0.1.
 
 Another possibility is a machine does not use a resolver that is “recommended” by your router. This can be its own resolver, such as is the case on Ubuntu, or another. On Ubuntu this can be can be changed by changing the “nameserver” to IP address of our DNS resolver in:
-
 ::
 	cat /etc/resolv.conf
 
