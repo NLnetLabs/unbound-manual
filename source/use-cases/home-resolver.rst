@@ -35,27 +35,22 @@ Setting up for a single machine
 -------------------------------
 
 Now that we have configured and tested our Unbound server, we can tell our machine to use by default. We do this at:
-
 ::
 	sudo nano /etc/systemd/resolved.conf
-
 Here we change the entries under [Resolve] to use our own instance running at 127.0.0.1 
 ::
 	sudo systemctl restart systemd-resolved
 
 We then need to stop the currently running pre-installed resolver:
-
 ::
 	sudo systemctl disable systemd-resolved.service
 	sudo systemctl stop systemd-resolved
 
 And now we can then start using our new configuration:
-
 ::
 	  sudo service network-manager restart
 
 And as a quick test a *dig* without specifying our Unbound server should give the same result as specifying it (with the *@127.0.0.1*)!
-
 ::
 	dig example.com
 
@@ -73,7 +68,6 @@ The Unbound example config uses the 10.0.0.0/8, so that’s what we use in this 
 Let’s look at a snippet of the example config file. The full example config is almost 1200 lines long, as the capabilities of Unbound are considerable, but we won’t need nearly as much. (If you are interested, any and all configurables can be found in the extensive manual page with *man unbound*)
 
 The example config is found at:
-
 ::
 	/etc/unbound/unbound.conf
 
@@ -101,7 +95,6 @@ you can kill the current version with
 	pkill -f unbound
 
 And you can restart Unbound with:
-
 ::
 	unbound -c /etc/unbound.conf
 
@@ -109,7 +102,6 @@ Testing the resolver from a remote machine
 ------------------------------------------
 
 So now we have a DNS resolver which should be reachable from within the network. To verify this we need to find the IP address of the resolver machine which can be found on the machine itself. For this tutorial we will use the address “10.10.10.10” (not 127.0.0.1 as we saw earlier) as an example. Armed with the IP address we can send a query to our DNS resolver from another machine which is within our home network. To do this we use the same dig command, only we change the IP address where the query is asked.
-
 ::
 	dig example.com @10.10.10.10
 
