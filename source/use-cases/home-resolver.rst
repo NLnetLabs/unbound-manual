@@ -11,7 +11,7 @@ Unbound is a powerful validating, recursive, caching DNS resolver. It’s used b
 
 Setting up your own DNS resolver for your entire home network requires a couple of things. Namely, a recursive DNS resolver (who knew!), and a dedicated machine where the resolver runs, which is always on and accessible to the entire network. This can be as simple as a Raspberry Pi connected to your home router or any other machine that is always online.
 
-Because of the variety of machines that Unbound can run on we cannot create a comprehensive tutorial for all possible options. For the extent of this tutorial we will use Ubuntu as a stepping stone which you could use for other machines. For this tutorial `Ubuntu 20.04.1 LTS` was used.
+Because of the variety of machines that Unbound can run on we cannot create a comprehensive tutorial for all possible options. For the extent of this tutorial we will use Ubuntu as a stepping stone which you could use for other machines. For this tutorial ``Ubuntu 20.04.1 LTS`` was used.
 
 While you could download the code from Github and build it yourself, getting a copy can be as simple as running:
 
@@ -35,8 +35,8 @@ The command for local testing is:
 
 	dig example.com @127.0.0.1
 
-So we tell the dig tool to look up the IP address for example.com, and to ask this information to the server running at the ip address `127.0.0.1`, which is where our Unbound machine is running.
-Note on the output from `dig` there is a "SERVER" section where, hopefully, we can verify that the server is indeed running as expected.
+So we tell the dig tool to look up the IP address for example.com, and to ask this information to the server running at the ip address ``127.0.0.1``, which is where our Unbound machine is running.
+Note on the output from ``dig`` there is a "SERVER" section where, hopefully, we can verify that the server is indeed running as expected.
 
 .. code-block:: bash
 
@@ -45,7 +45,7 @@ Note on the output from `dig` there is a "SERVER" section where, hopefully, we c
 Setting up for a single machine
 -------------------------------
 
-Now that we have configured and tested our Unbound server, we can tell our machine to use it by default. We do this at `/etc/systemd/resolved.conf`. In `resolved.conf` we change the current entry under `[Resolve]` to use our own instance running at `127.0.0.1 `. This is done by adding/subsituting the following.
+Now that we have configured and tested our Unbound server, we can tell our machine to use it by default. We do this at ``/etc/systemd/resolved.conf``. In ``resolved.conf`` we change the current entry under ``[Resolve]`` to use our own instance running at ``127.0.0.1 ``. This is done by adding/subsituting the following.
 
 .. code-block:: bash
 
@@ -64,13 +64,13 @@ Now we can start the network manager again, and start using our new configuratio
 
 	  sudo service network-manager restart
 
-And as a quick test a `dig` without specifying our Unbound server should give the same result as specifying it (with the `@127.0.0.1` like we did above).
+And as a quick test a ``dig`` without specifying our Unbound server should give the same result as specifying it (with the ``@127.0.0.1`` like we did above).
 
 .. code-block:: bash
 
 	dig example.com
 
-Note that the "SERVER" section in the output from `dig` should also contain the local ip address of our server.
+Note that the "SERVER" section in the output from ``dig`` should also contain the local ip address of our server.
 
 .. code-block:: bash
 
@@ -87,9 +87,9 @@ While we currently have a working instance of Unbound, we need it to be reachabl
 	172.16.0.0 - 172.31.255.255 (172.16/12)
 	192.168.0.0 - 192.168.255.255 (192.168/16)
 
-The Unbound example config uses the 10.0.0.0/8, so that’s what we use in this example, but note that this can be a source of connectivity errors further on.
+The Unbound example config uses the ``10.0.0.0/8``, so that’s what we use in this example, but note that this can be a source of connectivity errors further on.
 
-Let’s look at a snippet of the example config file. The full example config is almost 1200 lines long, as the capabilities of Unbound are considerable, but we won’t need nearly as much. (If you are interested, any and all configurables can be found in the extensive manual page with `man unbound.conf`)
+Let’s look at a snippet of the example config file. The full example config is almost 1200 lines long, as the capabilities of Unbound are considerable, but we won’t need nearly as much. (If you are interested, any and all configurables can be found in the extensive manual page with ``man unbound.conf``)
 
 The example config is found at:
 
@@ -111,12 +111,12 @@ The options that we add to the current config file to make it a "minimal usable 
             access-control: 10.0.0.0/8 allow
             # access-control: 2001:DB8.. code-block:: bash/64 allow
 
-The access-control is currently configured to listen to any address on the machine, and only allow queries from the `10.0.0.0/8` IP range.
+The access-control is currently configured to listen to any address on the machine, and only allow queries from the ``10.0.0.0/8`` IP range.
 
-To prepare our config we are going to modify the existing config in `/etc/unbound/unbound.conf`. 
-If you open the file we see that there is already an “include” in there. This include enables us to do DNSSEC, which allows Unbound to verify the source of the answers that it receives [LINK ?], so we want to keep this. If you don't have the files that the unclude links to, they can be created using the `unbound-anchor` command.
+To prepare our config we are going to modify the existing config in ``/etc/unbound/unbound.conf``. 
+If you open the file we see that there is already an “include” in there. This include enables us to do DNSSEC, which allows Unbound to verify the source of the answers that it receives [LINK ?], so we want to keep this. If you don't have the files that the unclude links to, they can be created using the ``unbound-anchor`` command.
 
-With your favourite text editor then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend to keep the `include` that is already in the file. When you are happy with your config, we first need to kill the currently running Unbound server and restart it with our new configuration.
+With your favourite text editor then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend to keep the ``include`` that is already in the file. When you are happy with your config, we first need to kill the currently running Unbound server and restart it with our new configuration.
 
 you can kill the current version with 
 
@@ -133,7 +133,7 @@ And you can restart Unbound with:
 Testing the resolver from a remote machine
 ------------------------------------------
 
-So now we have a DNS resolver which should be reachable from within the network. To verify this we need to find the IP address of the resolver machine which can be found on the machine itself. For this tutorial we will use the address `10.10.10.10` (not `127.0.0.1` as we saw earlier) as an example. Armed with the IP address we can send a query to our DNS resolver from another machine which is within our home network. To do this we use the same dig command, only we change the IP address where the query is asked.
+So now we have a DNS resolver which should be reachable from within the network. To verify this we need to find the IP address of the resolver machine which can be found on the machine itself. For this tutorial we will use the address ``10.10.10.10`` (not ``127.0.0.1`` as we saw earlier) as an example. Armed with the IP address we can send a query to our DNS resolver from another machine which is within our home network. To do this we use the same dig command, only we change the IP address where the query is asked.
 
 .. code-block:: bash
 
@@ -151,12 +151,11 @@ The next step then becomes a little tricky. We have a choice of which machines i
 
 Since this tutorial cannot (and does not try to) be comprehensive, we wil look at some of the basic examples on which you can expand.
 
-While not all, some machines use the resolver “recommended” by your router. To change this, we need to log into the router and configure it to use the DNS resolver that we just set up. This configuration step varies greatly from vendor to vendor, but the rule of thumb is that your router is accessible on either `192.168.1.1` or `192.168.0.1`.
+While not all, some machines use the resolver “recommended” by your router. To change this, we need to log into the router and configure it to use the DNS resolver that we just set up. This configuration step varies greatly from vendor to vendor, but the rule of thumb is that your router is accessible on either ``192.168.1.1`` or ``192.168.0.1``.
 
 Another possibility is a machine that does not use a resolver that is “recommended” by your router. This can be its own resolver, such as is the case on Ubuntu, or another. On Ubuntu this can be can be changed by changing the “nameserver” to IP address of our DNS resolver in:
 
 .. code-block:: bash
-
 	cat /etc/resolv.conf
 
 
