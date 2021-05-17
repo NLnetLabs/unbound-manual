@@ -121,7 +121,7 @@ The example config is found at:
 
 	/etc/unbound/unbound.conf
 
-If you open this for the first time it looks very empty. It is still usable for one machine, as this is this is how the Unbound defaults are configured. It's not, however, enough for our purposes so we will add the minimal configuration options needed.
+If you open this for the first time it looks very empty. It is still usable for one machine, as this is how the Unbound defaults are configured. It's not, however, enough for our purposes, so we will add the minimal configuration options needed.
 
 The options that we add to the current config file to make it a "minimal usable config" are as follows. Note that the IPv6 options are commented out, but we recommend to uncomment them if your router and network supports it.
 
@@ -144,7 +144,7 @@ The access-control is currently configured to listen to any address on the machi
 To prepare our config we are going to modify the existing config in :file:`/etc/unbound/unbound.conf`.
 If you open the file we see that there is already an “include” in there. This include enables us to do `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which allows Unbound to verify the source of the answers that it receives, which we want to keep in. If you don't have the files that the include links to, they can be created using the :command:`unbound-anchor` command.
 
-Using the text editor again, we can then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend to keep the :option:`include` that is already in the file. We also add the :option:`remote-control` in the config to enable controlling Unbound using :option:`unbound-control` command which is useful if you want to modify the config later on. When you are happy with your config, we first need to stop the currently running Unbound server and restart it with our new configuration. You can stop the currently running instance with:
+Using the text editor again, we can then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend keeping the :option:`include` that is already in the file. We also add the :option:`remote-control` in the config to enable controlling Unbound using :option:`unbound-control` command which is useful if you want to modify the config later on. When you are happy with your config, we first need to stop the currently running Unbound server and restart it with our new configuration. You can stop the currently running instance with:
 
 .. code-block:: bash
 
@@ -174,7 +174,7 @@ Where it all comes together
 
 We should now have a functioning DNS resolver that is accessible to all machines in our network (make sure you do before you continue). 
 
-The next step then becomes a little tricky as there are many options and variations possible. We have a choice of which machines in our network will be using our configured DNS resolver. This can range from a single machine to all the machines that are connected. Since this tutorial cannot (and does not try to) be comprehensive for the range of choices, we wil look at some of the basic examples which you can implement and expand on.
+The next step then becomes a little tricky as there are many options and variations possible. We have a choice of which machines in our network will be using our configured DNS resolver. This can range from a single machine to all the machines that are connected. Since this tutorial cannot (and does not try to) be comprehensive for the range of choices, we will look at some of the basic examples which you can implement and expand on.
 
 Most machines when they first connect to a network get a “recommended resolver” from your router using DHCP (Dynamic Host Configuration Protocol). To change this, we need to log into the router. To find the IP address of our home router we use which is likely be under :option:`default gateway`:
 
@@ -182,7 +182,7 @@ Most machines when they first connect to a network get a “recommended resolver
 
 	ip route
 
-When you've found the IP address of your home router, you can copy the address to a web browser, which should give you access to the router configuration portal. If you can't find the portal using this method, we suggest to consulting the manual or the manufacturers website. When you have access, you shoudl change the defautlt gateway to the IP address of the machien runnign Unbound. In the case of our example, that would be 10.0.0.2.
+When you've found the IP address of your home router, you can copy the address to a web browser, which should give you access to the router configuration portal. If you can't find the portal using this method, we suggest to consulting the manual or the manufacturer's website. When you have access, you should change the default gateway to the IP address of the machine running Unbound. In the case of our example, that would be 10.0.0.2.
 
 Another possibility is a machine that does not use a resolver that is “recommended” by your router. This machine can be running its own resolver or be connected to a different one altogether. If you want these machines to use the Unbound resolver you set up, you need to change to configuration of the machine.
 
