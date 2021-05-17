@@ -78,6 +78,7 @@ pygments_style = 'sphinx'
 #
 html_theme = 'sphinx_rtd_theme'
 html_logo = 'img/unbound-duotone-white.svg'
+html_favicon = 'img/favicon.ico'
 html_theme_options = {
     'logo_only': True,
     'display_version': True,
