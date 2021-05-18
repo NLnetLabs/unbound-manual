@@ -28,22 +28,6 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = ''
 
-# -- Man Page base URL -------------------------------------------------------
-
-manpages_url = 'https://www.nlnetlabs.nl/documentation/unbound/{path}'
-
-# This lets you use the :manpage: text role which automatically links to the
-# specific man page, e.g. :manpage:`unbound.conf`.
-# Possible options:
-#
-# unbound
-# unbound-checkconf
-# unbound.conf
-# unbound-host
-# libunbound
-# unbound-control
-# unbound-anchor
-
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
