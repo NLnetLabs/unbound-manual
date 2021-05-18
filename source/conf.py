@@ -29,6 +29,7 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = ''
 
+manpages_url = 'https://www.nlnetlabs.nl/documentation/unbound/{path}'
 
 # -- General configuration ---------------------------------------------------
 
