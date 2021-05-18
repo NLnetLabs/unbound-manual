@@ -7,8 +7,8 @@ Resolver for Home Networks
 
 To start off, let's ask the all-important question "Why would you want Unbound as a resolver for your home network?" |br|
 First off, Unbound supports DNSSEC which, through an authentication chain, verifies that the DNS queries you send get a response from the appropriate server as opposed to anyone who has access to the query.
-Secondly, by using your own resolver you can increase your DNS privacy. Because you're not sending out queries to parties who do the resolving for you (your ISP, Google, Cloudflare, Quad9, etc.), you bypass this middle man. While you still send out (parts of) your query unencrypted, you could configure Unbound to take it a step further [:doc:`privacy-aware-resolver`].
-Lastly, when you run your own resolver your DNS cache will be locally in your network. Even though the first time you resolve a domain name may be slightly slower than using your ISP’s resolver, all subsequent visits will likely be much faster.
+Secondly, by using your own resolver you can increase your DNS privacy. Because you're not sending out queries to parties who do the resolving for you (your ISP, Google, Cloudflare, Quad9, etc.), you bypass this middle man. While you still send out (parts of) your query unencrypted, you could configure Unbound to take it a step further, which we'll talk about in an upcoming guide.
+Lastly, when you run your own resolver your DNS cache will be locally in your network. Even though the first time you resolve a domain name may be slightly slower than using your ISP’s resolver, all subsequent queries will likely be much faster.
 
 In this tutorial we'll look at setting up Unbound as a DNS resolver; Firstly for your own machine, and then for your entire network.
 
@@ -47,7 +47,11 @@ The command for local testing is:
 	dig example.com @127.0.0.1
 
 Here we tell the :command:`dig` tool to look up the IP address for example.com, and to ask this information to the server running at the IP address ``127.0.0.1``, which is where our Unbound machine is running by default.
-We can verify that Unbound has indeed answered our query instead of the default resolver that is present on Ubuntu by default. In the output of every :command:`dig` command there is ``ANSWER SECTION`` which specifies the server which has answer the query under ``SERVER`` entry. The entry should be ``;; SERVER: 127.0.0.1#53(127.0.0.1)``.
+We can verify that Unbound has indeed answered our query instead of the default resolver that is present on Ubuntu by default. In the output of every :command:`dig` command there is ``ANSWER SECTION`` which specifies the server which has answer the query under ``SERVER`` entry. The entry should be:
+
+.. code-block:: bash
+
+	;; SERVER: 127.0.0.1#53(127.0.0.1)
 
 In the next section we will be disabling the default Ubuntu resolver. To verify that we do it correctly there it is useful to know the address of the default resolver as a baseline. For this baseline, we also use a :command:`dig` query but time without specifying an IP address which the uses the machines default DNS resolver.
 
@@ -55,7 +59,13 @@ In the next section we will be disabling the default Ubuntu resolver. To verify 
 
 	dig example.com
 
-While the response should be the same, the ``SERVER`` in the response should look like ``;; SERVER: 127.0.0.53#53(127.0.0.53)``. Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
+While the response should be the same, the ``SERVER`` in the response should look like:
+
+.. code-block:: bash
+
+	;; SERVER: 127.0.0.53#53(127.0.0.53)
+
+Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
 
 Setting up for a single machine
 -------------------------------
@@ -75,7 +85,7 @@ So with :file:`nano /etc/resolv.conf` we create the new file and enter:
 	nameserver 127.0.0.1
 	options edns0
 
-We then need to stop and disable the currently running pre-installed resolver. Note that you lose connectivity to the web until the next step.
+We then need to stop and disable the currently running pre-installed resolver. Note that you cannot go to new websites until the next step after this, as you have no DNS resolver assigned for the system.
 
 .. code-block:: bash
 
@@ -109,11 +119,11 @@ To find the IP address of the machine that is running Unbound, we use:
 
 .. code-block:: bash
 
-	hostname -I
+	hostname --all-ip-addresses
 
-If you just have one IP address as output from the :option:`hostname` command that will be the correct one. If you have multiple IP addresses the easiest way which IP address to use, is to find out which connection goes to your home router. Keep in mind that finding the wrong IP address here this can be a source of connectivity errors further on. For purpose of this tutorial we imagine that our home router has ``10.0.0.1`` as IP address, and our resolver machine (the machine that is running our Unbound instance) has ``10.0.0.2``, which we will get into in the next section.
+If you just have one IP address as output from the :command:`hostname` command that will be the correct one. If you have multiple IP addresses the easiest way which IP address to use, is to find out which connection goes to your home router. Keep in mind that finding the wrong IP address here this can be a source of connectivity errors further on. For purpose of this tutorial we imagine that our home router has ``10.0.0.1`` as IP address, and our resolver machine (the machine that is running our Unbound instance) has ``10.0.0.2``, which we will get into in the next section.
 
-As prerequisite for the next step we need to configure our Unbound instance to be reachable from other devices than only the machine on which the instance is running. The full example config is almost 1200 lines long, as the capabilities of Unbound are considerable, but we won’t need nearly as much. (If you are interested, any and all configurables can be found in the extensive manual page with :file:`man unbound.conf`)
+As prerequisite for the next step we need to configure our Unbound instance to be reachable from other devices than only the machine on which the instance is running. The full example config is almost 1200 lines long, as the capabilities of Unbound are considerable, but we won’t need nearly as much. (If you are interested, any and all configurables can be found in the extensive manual page with :manpage:`unbound.conf`.
 
 The example config is found at:
 
@@ -144,7 +154,7 @@ The access-control is currently configured to listen to any address on the machi
 To prepare our config we are going to modify the existing config in :file:`/etc/unbound/unbound.conf`.
 If you open the file we see that there is already an “include” in there. This include enables us to do `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which allows Unbound to verify the source of the answers that it receives, which we want to keep in. If you don't have the files that the include links to, they can be created using the :command:`unbound-anchor` command.
 
-Using the text editor again, we can then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend keeping the :option:`include` that is already in the file. We also add the :option:`remote-control` in the config to enable controlling Unbound using :option:`unbound-control` command which is useful if you want to modify the config later on. When you are happy with your config, we first need to stop the currently running Unbound server and restart it with our new configuration. You can stop the currently running instance with:
+Using the text editor again, we can then add the minimal config as shown above, making any changes to the access control where needed. Do note that we strongly recommend keeping the :command:`include` that is already in the file. We also add the :command:`remote-control` in the config to enable controlling Unbound using :command:`unbound-control` command which is useful if you want to modify the config later on. When you are happy with your config, we first need to stop the currently running Unbound server and restart it with our new configuration. You can stop the currently running instance with:
 
 .. code-block:: bash
 
