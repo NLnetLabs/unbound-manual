@@ -7,7 +7,7 @@ Resolver for Home Networks
 
 To start off, let's ask the all-important question "Why would you want Unbound as a resolver for your home network?" |br|
 First off, Unbound supports DNSSEC which, through an authentication chain, verifies that the DNS queries you send get a response from the appropriate server as opposed to anyone who has access to the query.
-Secondly, by using your own resolver you can increase your DNS privacy. Because you're not sending out queries to parties who do the resolving for you (your ISP, Google, Cloudflare, Quad9, etc.), you bypass this middle man. While you still send out (parts of) your query unencrypted, you could configure Unbound to take it a step further. [LINK maximum privacy resolver].
+Secondly, by using your own resolver you can increase your DNS privacy. Because you're not sending out queries to parties who do the resolving for you (your ISP, Google, Cloudflare, Quad9, etc.), you bypass this middle man. While you still send out (parts of) your query unencrypted, you could configure Unbound to take it a step further [:doc:`privacy-aware-resolver`].
 Lastly, when you run your own resolver your DNS cache will be locally in your network. Even though the first time you resolve a domain name may be slightly slower than using your ISP’s resolver, all subsequent visits will likely be much faster.
 
 In this tutorial we'll look at setting up Unbound as a DNS resolver; Firstly for your own machine, and then for your entire network.
@@ -47,7 +47,7 @@ The command for local testing is:
 	dig example.com @127.0.0.1
 
 Here we tell the :command:`dig` tool to look up the IP address for example.com, and to ask this information to the server running at the IP address ``127.0.0.1``, which is where our Unbound machine is running by default.
-We can verify that Unbound has indeed answered our query instead of the default resolver that is present on Ubuntu by default. In the output of every :command:`dig` there is ``ANSWER SECTION`` which specifies the server which has answer the query under ``SERVER`` entry. The entry should be ``;; SERVER: 127.0.0.1#53(127.0.0.1)``.
+We can verify that Unbound has indeed answered our query instead of the default resolver that is present on Ubuntu by default. In the output of every :command:`dig` command there is ``ANSWER SECTION`` which specifies the server which has answer the query under ``SERVER`` entry. The entry should be ``;; SERVER: 127.0.0.1#53(127.0.0.1)``.
 
 In the next section we will be disabling the default Ubuntu resolver. To verify that we do it correctly there it is useful to know the address of the default resolver as a baseline. For this baseline, we also use a :command:`dig` query but time without specifying an IP address which the uses the machines default DNS resolver.
 
