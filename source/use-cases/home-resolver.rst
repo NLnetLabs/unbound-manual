@@ -29,7 +29,7 @@ While you could download the code from GitHub and build it yourself, getting a c
 	sudo apt update
 	sudo apt install unbound -y
 
-This gives you a full, compiled, and running version of Unbound which behaves as a caching recursive DNS resolver out of the box for the local machine. You can check which version of Unbound you have installed with :option:`unbound -V`. The version installed will vary depending on the operating system. If the version is installed is quite old (at the time of writing it isn't) or you'd simply like to run the latest and greatest version you can download the latest release tarball from our website <https://nlnetlabs.nl/projects/unbound/about/>_ and build it yourself.
+This gives you a full, compiled, and running version of Unbound which behaves as a caching recursive DNS resolver out of the box for the local machine. You can check which version of Unbound you have installed with :option:`unbound -V`. The version installed will vary depending on the operating system. If the version is installed is quite old (at the time of writing it isn't) or you'd simply like to run the latest and greatest version you can download the latest release tarball from our `website <https://nlnetlabs.nl/projects/unbound/about/>`_ and build it yourself.
 
 Do note that the current setup is only reachable on this machine.
 
@@ -51,7 +51,7 @@ We can verify that Unbound has indeed answered our query instead of the default 
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
 
-In the next section we will be disabling the default Ubuntu resolver. To verify that we do it correctly it is useful to know the address of the default resolver as a baseline. For this baseline we also use a :command:dig query, but this time without specifying an IP address (which causes dig to use the machine's default DNS resolver).
+In the next section we will be disabling the default Ubuntu resolver. To verify that we do it correctly it is useful to know the address of the default resolver as a baseline. For this baseline we also use a :command:`dig` query, but this time without specifying an IP address (which causes dig to use the machine's default DNS resolver).
 
 .. code-block:: bash
 
