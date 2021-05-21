@@ -1,5 +1,5 @@
 # unbound-manual
-The Official Unbound User Manual, published at [unbound.readthedocs.io](https://unbound.readthedocs.io)
+The Official Unbound User Manual, published at [unbound.docs.nlnetlabs.nl](https://unbound.docs.nlnetlabs.nl/)
 
 
 ## Style Guide
