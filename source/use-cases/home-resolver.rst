@@ -192,7 +192,7 @@ We should now have a functioning DNS resolver that is accessible to all machines
 
 The next step then becomes a little tricky as there are many options and variations possible. We have a choice of which machines in our network will be using our configured DNS resolver. This can range from a single machine to all the machines that are connected. Since this tutorial cannot (and does not try to) be comprehensive for the range of choices, we will look at some of the basic examples which you can implement and expand on.
 
-Most machines when they first connect to a network get a “recommended resolver” from your router using DHCP (Dynamic Host Configuration Protocol). To change this, we need to log into the router. To find the IP address of our home router which is likely be under :option:`default gateway`:
+Most machines when they first connect to a network get a “recommended resolver” from your router using :abbr:`DHCP (Dynamic Host Configuration Protocol)`. To change this, we need to log into the router. To find the IP address of our home router which is likely be under :option:`default gateway`:
 
 .. code-block:: bash
 
