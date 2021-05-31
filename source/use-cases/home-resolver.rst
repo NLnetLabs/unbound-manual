@@ -68,8 +68,8 @@ Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
 Setting up for a single machine
 -------------------------------
 
-Now that we have tested our Unbound resolver, we can tell our machine to use it by default. The nameserver (i.e. resolver) your machine uses by default is defined in :file:`/etc/systemd/resolved.conf` in the :option:`DNS` entry.
-While just changing this file will work as long as the machine doesn't reboot, we need to make sure that this change is permanent. To do that, we need to change the :option:`DNS` entry to be equal to ``127.0.0.1`` and set the :option:`DNSStubListener` to :option:`no`. We also want to enable the :option:`DNSSEC` option so that we can verify the integrity the responses we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`) we can modify the file:
+Now that we have tested our Unbound resolver, we can tell our machine to use it by default. The resolver your machine uses by default is defined in :file:`/etc/systemd/resolved.conf` in the :option:`DNS` entry (It uses ``127.0.0.53`` ).
+While just changing this file will work as long as the machine doesn't reboot, we need to make sure that this change is persistent. To do that, we need to change the :option:`DNS` entry to be equal to ``127.0.0.1`` so the machine uses Unbound as default. To make the change persistent, we also need to set the :option:`DNSStubListener` to :option:`no` so that is not changed by our router (such as with a "recommended resolver" mentioned below). We also want to enable the :option:`DNSSEC` option so that we can verify the integrity the responses we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`) we can modify the file:
 
 .. code-block:: bash
 
@@ -162,7 +162,7 @@ The options that we add to the current config file to make it a "minimal usable 
 The interface is currently configured to listen to any address on the machine, and the access-control only allows queries from the ``192.168.0.0/16`` `IP subnet <https://www.ripe.net/about-us/press-centre/understanding-ip-addressing>`_ range. Note that the IP address we chose above (``192.168.0.1`` and ``192.168.0.2``) fall within the ``192.168.0.0/16`` range.
 
 To prepare our config we are going to modify the existing config in :file:`/etc/unbound/unbound.conf`.
-If you open the file for the first time, you see that there is already an “include” in there. The include enables us to do `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which allows Unbound to verify the source of the answers that it receives, as well as QNAME minimisation. For convienience these configuration options have already been added in the minimal config. The config also includes the :command:`remote-control` in the config to enable controlling Unbound using :command:`unbound-control` command which is useful if you want to modify the config later on. 
+If you open the file for the first time, you see that there is already an “include” in there. The "include" enables us to do `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which allows Unbound to verify the source of the answers that it receives, as well as QNAME minimisation. For convienience these configuration options have already been added in the minimal config. The config also includes the :command:`remote-control` in the config to enable controlling Unbound using :command:`unbound-control` command which is useful if you want to modify the config later on.
 
 Using the text editor again, we can then add the minimal config shown above, making any changes to the access control where needed.When we've modified the configuration we check it for mistakes with the :command:`unbound-checkconf` command:
 
