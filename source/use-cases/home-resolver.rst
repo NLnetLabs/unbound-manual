@@ -82,6 +82,7 @@ So with :file:`nano /etc/resolv.conf` we create the new file and enter:
 
 	nameserver 127.0.0.1
 	options edns0
+	
 
 We then need to stop and disable the currently running pre-installed resolver. Note that you cannot visit new websites until the next step after this, as you have no DNS resolver assigned for the system.
 
@@ -101,6 +102,22 @@ Note that the "SERVER" section in the output from :command:`dig` should also con
 .. code-block:: bash
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
+	
+In order to prevent Network Manager from overwriting :file:`/etc/resolv.conf` upon reboot, we will add :option:`dns=none` option in :file:`/etc/NetworkManager/NetworkManager.conf` under the :option:`[main]` section
+
+So we open :file:`nano /etc/NetworkManager/NetworkManager.conf` and add the option. The final content of the file should look something like this, 
+
+.. code-block:: bash
+	
+	[main]
+	plugins=ifupdown,keyfile
+	dns=none
+
+	[ifupdown]
+	managed=false
+
+	[device]
+	wifi.scan-rand-mac-address=no
 
 Setting up for the rest of the network
 --------------------------------------
