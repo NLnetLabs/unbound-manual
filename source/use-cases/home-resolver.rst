@@ -68,27 +68,34 @@ Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
 Setting up for a single machine
 -------------------------------
 
-Now that we have configured and tested our Unbound server, we can tell our machine to use it by default. The nameserver (i.e. resolver) your machine uses by default is defined in :file:`/etc/resolv.conf`.
-While just changing this file will work as long as the machine doesn't reboot, the more permanent and better solution is to replace the file with our own. The reason for this is that the :file:`resolv.conf` file is a `symbolic link`, which gets overwritten on reboot. We will remove the link and create a new file ourselves.
+Now that we have tested our Unbound resolver, we can tell our machine to use it by default. The nameserver (i.e. resolver) your machine uses by default is defined in :file:`/etc/systemd/resolved.conf` in the :option:`DNS` entry.
+While just changing this file will work as long as the machine doesn't reboot, we need to make sure that this change is permanent. To do that, we need to change the :option:`DNS` entry to be equal to ``127.0.0.1`` and set the :option:`DNSStubListener` to :option:`no`. We also want to enable the :option:`DNSSEC` option so that we can verify the integrity the responses we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`) we can modify the file:
 
 .. code-block:: bash
 
-	rm /etc/resolv.conf
+	nano /etc/systemd/resolved.conf
 
-With your favourite text editor (e.g. :command:`nano`), create a new file by that name and specify the IP address that our Unbound instance is running at in the file. We also include the :option:`edns0` option as this enables header extensions used in DNSSEC and is an overall standard used in DNS nowadays. |br|
-So with :file:`nano /etc/resolv.conf` we create the new file and enter:
-
-.. code-block:: bash
-
-	nameserver 127.0.0.1
-	options edns0
-
-We then need to stop and disable the currently running pre-installed resolver. Note DNS resolution will not function until the next step is complete, as you'll have no DNS resolver assigned for the system until then.
+Here, under there ``[Resolve]`` header we add (or rather enable by removing the "#") the options:
 
 .. code-block:: bash
 
-	sudo systemctl disable systemd-resolved.service
-	sudo systemctl stop systemd-resolved
+	[Resolve]
+	DNS=127.0.0.1
+	#FallbackDNS=
+	#Domains=
+	DNSSEC=yes
+	#DNSOverTLS=no
+	#MulticastDNS=no
+	#LLMNR=no
+	#Cache=no-negative
+	DNSStubListener=no
+	#DNSStubListenerExtra=
+
+With this file modified, we can start using this configuration with: 
+
+.. code-block:: bash
+
+	systemctl restart systemd-resolved
 
 Now the operating system should use our Unbound instance as default. A quick test a :command:`dig` without specifying the address of the Unbound server should give the same result as specifying it did above (with ``@127.0.0.1``).
 
@@ -96,11 +103,12 @@ Now the operating system should use our Unbound instance as default. A quick tes
 
 	dig example.com
 
-Note that the "SERVER" section in the footer of  :command:`dig` should also contain the local IP address of our server.
+Note that the "SERVER" section in the output from :command:`dig` should also contain the local IP address of our server.
 
 .. code-block:: bash
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
+
 
 Setting up for the rest of the network
 --------------------------------------
