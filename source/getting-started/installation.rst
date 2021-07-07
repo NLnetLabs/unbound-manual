@@ -10,7 +10,7 @@ Building and compiling Unbound yourself ensures that you have the latest version
 .. Link to Compiling, Setup and Remote Control Setup (page index?)
 
 Building from source/Compiling
-------------------------------
+==============================
 
 To compile Unbound on any system you need to have ``openssl`` and ``expat``, and their header files. To include the header files we need the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
 
@@ -23,11 +23,14 @@ First of all, we need our copy of the Unbound code, so we download the tarball o
     wget https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz
     tar xzf unbound-latest.tar.gz
 
+
 We'll need some tools, such as a compiler and the ``make`` program.
+
 .. code-block:: bash
 
     sudo apt update
     sudo apt install -y build-essential
+
 
 The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we need the "dev" version. Unbound also uses ``libldns``, but this is included in the tarball.
 
@@ -36,11 +39,13 @@ The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we 
     sudo apt install -y libssl-dev
     sudo apt install -y libexpat1-dev
 
+
 We'll also need the tools to build the actual program. For this, Unbound uses "make" and internally it uses "flex" and "yacc", which we need to download as well.
 
 .. code-block:: bash
 
     sudo apt-get install -y bison flex
+
 
 With all the requirements met, we can now start compiling in the Unbound directory. The first step here is configuring. With :option:`./configure -h` you can look at the extensive list of configurables for Unbound. A nice feature is that ``./configure`` will tell you what it's missing. A common error is for the paths to the two libraries we just installed, which can be specified with :option:`--with-ssl=` and :option:`--with-libexpat=`).
 
@@ -48,11 +53,13 @@ With all the requirements met, we can now start compiling in the Unbound directo
 
     ./configure
 
+
 When :command`configure` gives no errors, we can continue to actually compiling. For this Unbound uses :command`make`. Be warned that compiling might take a while
 
 .. code-block:: bash
 
     make
+
 
 When we have a succesful compilation, we can install the programs to have them available for the entire machine.
 
@@ -64,34 +71,99 @@ We now have fully compiled and installed version of Unbound, and can now move to
 
 
 
+macOS Big Sur
+-------------
+
+Get brew (website link: https://brew.sh/) give this a read if you've never used brew before
+
+.. code-block:: bash
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+use brew to install wget
+
+.. code-block:: bash
+
+    brew install wget
+
+
+get Unbound from repo
+
+.. code-block:: bash
+
+    
+
+
+get libs (with brew)
+
+.. code-block:: bash
+
+    
+
+
+optionally fix pathing issue
+
+.. code-block:: bash
+
+    
+
+
+configure (with our without path to libs)
+
+.. code-block:: bash
+
+    
+
+no errors? make
+
+.. code-block:: bash
+
+    make
+
+no errors? make install
+
+.. code-block:: bash
+
+    sudo make install
+
+
+
+Installing with a package manager
+=================================
+
+
+Ubuntu 20.04.1 LTS
+------------------
+
+Installing Unbound with the built-in package manager should be as easy as:
+
+.. code-block:: bash
+
+    sudo apt install unbound
+
+This gives you a compiled and running version of Unbound ready to be configured. In addition to the Unbound program you can find a 
+
+
+macOS Big Sur
+-------------
+
+Get brew (website link: https://brew.sh/) give this a read if you've never used brew before
+
+.. code-block:: bash
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+Then use brew to install Unbound.
+
+.. code-block:: bash
+
+    brew install unbound
 
 
 
 
 
-
-
-To compile the software you need to have ``openssl``, and its include files
-(from a package often called ``openssl-devel``).
-Run ``./configure [options]; make; make install``
-
-If you do not have the ``libldns`` library installed, a version is included
-with the unbound source tarball, which is automatically used.
-
-Options for configure.  You can customize the default config locations for
-various files and directories, as well as the install location for the
-program with ``--prefix=/usr/local``.  You can specify
-``--with-ldns=dir`` or ``--with-libevent=dir`` or
-``--with-ssl=dir`` to link with the library at that location.
-Unless you want to tweak things, no options are needed for ``./configure``.
-
-On some BSD systems you have to use gmake instead of make.
-
-You can install with ``make install``, uninstall with ``make uninstall``.
-The uninstall does not remove the config file.
-
-In the contrib directory in the unbound source are sample rc.d scripts
-for unbound (for BSD and Linux type systems).
 
 Setup
 -----
