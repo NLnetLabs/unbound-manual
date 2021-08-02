@@ -24,7 +24,7 @@ First of all, we need our copy of the Unbound code, so we download the tarball o
     tar xzf unbound-latest.tar.gz
 
 
-We'll need some tools, such as a compiler and the ``make`` program.
+We'll need some tools, such as a compiler and the :command:`make` program.
 
 .. code-block:: bash
 
@@ -40,21 +40,22 @@ The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we 
     sudo apt install -y libexpat1-dev
 
 
-We'll also need the tools to build the actual program. For this, Unbound uses "make" and internally it uses "flex" and "yacc", which we need to download as well.
+We'll also need the tools to build the actual program. For this, Unbound uses :command:``make`` and internally it uses ``flex`` and ``yacc``, which we need to download as well.
 
 .. code-block:: bash
 
-    sudo apt-get install -y bison flex
+    sudo apt-get install -y bison
+    sudo apt-get install -y flex
 
 
-With all the requirements met, we can now start compiling in the Unbound directory. The first step here is configuring. With :option:`./configure -h` you can look at the extensive list of configurables for Unbound. A nice feature is that ``./configure`` will tell you what it's missing. A common error is for the paths to the two libraries we just installed, which can be specified with :option:`--with-ssl=` and :option:`--with-libexpat=`).
+With all the requirements met, we can now start compiling in the Unbound directory. The first step here is configuring. With :option:`./configure -h` you can look at the extensive list of configurables for Unbound. A nice feature is that ``./configure`` will tell you what it's missing during configuration. A common error is for the paths to the two libraries we just installed, which can be manually specified with :option:`--with-ssl=` and :option:`--with-libexpat=`).
 
 .. code-block:: bash
 
     ./configure
 
 
-When :command`configure` gives no errors, we can continue to actually compiling. For this Unbound uses :command`make`. Be warned that compiling might take a while
+When :command`configure` gives no errors, we can continue to actually compiling Unbound. For this Unbound uses :command:`make`. Be warned that compiling might take a while
 
 .. code-block:: bash
 
@@ -69,7 +70,7 @@ When we have a succesful compilation, we can install the programs to have them a
 
 We now have fully compiled and installed version of Unbound, and can now move to configuring it.
 
-
+.. Link to configuring block
 
 macOS Big Sur
 -------------
@@ -91,8 +92,11 @@ get Unbound from repo
 
 .. code-block:: bash
 
-    
+    wget https://nlnetlabs.nl/downloads/unbound/unbound-latest.tar.gz
+    tar xzf unbound-latest.tar.gz
 
+
+.. MENTION XCODE
 
 get libs (with brew)
 
@@ -127,6 +131,9 @@ no errors? make install
     sudo make install
 
 
+We now have fully compiled and installed version of Unbound, and can now move to configuring it.
+
+.. Link to configuring block
 
 Installing with a package manager
 =================================
