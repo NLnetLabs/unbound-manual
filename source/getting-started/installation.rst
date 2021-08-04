@@ -9,13 +9,62 @@ Building and compiling Unbound yourself ensures that you have the latest version
 
 .. Ref to Compiling, Setup and Remote Control Setup (page index?)
 
+
+Installing with a package manager
+---------------------------------
+
+Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the lastest version, we recommend :ref:`building Unbound yourself<compiling>`.
+
+.. FIX REF
+
+
+Ubuntu 20.04.1 LTS
+******************
+
+Installing Unbound with the built-in package manager should be as easy as:
+
+.. code-block:: bash
+
+    sudo apt update
+    sudo apt install unbound
+
+This gives you a compiled and running version of Unbound ready to be configured.
+
+.. Link to configuring block
+
+
+macOS Big Sur
+*************
+
+In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and give `their website <https://brew.sh/>`_ a read if you've never used brew before.
+
+.. code-block:: bash
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+Then use brew to install Unbound.
+
+.. code-block:: bash
+
+    brew install unbound
+
+
+This gives you a compiled and running version of Unbound ready to be configured.
+
+.. Link to configuring block
+
+
+
 Building from source/Compiling
-==============================
+------------------------------
+
+:ref:`compiling`
 
 To compile Unbound on any system you need to have ``openssl`` and ``expat``, and their header files. To include the header files we need the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
 
 Ubuntu 20.04.1 LTS
-------------------
+******************
 
 First of all, we need our copy of the Unbound code, so we download the tarball of the latest version and untar it.
 
@@ -74,7 +123,7 @@ We now have fully compiled and installed version of Unbound, and can now move to
 .. Link to configuring block
 
 macOS Big Sur
--------------
+*************
 
 In this tutorial we make use of the :command:`brew` package installer for MacOS. Install :command:`brew` and give `their website <https://brew.sh/>`_ a read if you've never used brew before.
 
@@ -158,97 +207,10 @@ We now have fully compiled and installed version of Unbound, and can now move to
 .. Ref to configuring block
 
 
+.. TESTING
 
-Installing with a package manager
-=================================
-
-
-Ubuntu 20.04.1 LTS
-------------------
-
-Installing Unbound with the built-in package manager should be as easy as:
-
-.. code-block:: bash
-
-    sudo apt update
-    sudo apt install unbound
-
-This gives you a compiled and running version of Unbound ready to be configured.
-
-.. Link to configuring block
-
-
-macOS Big Sur
--------------
-
-In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and give `their website <https://brew.sh/>`_ a read if you've never used brew before.
-
-.. code-block:: bash
-
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-
-Then use brew to install Unbound.
-
-.. code-block:: bash
-
-    brew install unbound
-
-
-This gives you a compiled and running version of Unbound ready to be configured.
-
-.. Link to configuring block
-
-Configuration setup
--------------------
-
-The configuration of Unbound is a little less straight forward due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add options as you need them.
-
-We will assume that your system has a Unbound installed and it is available to the entire system (so the :command:`make install` step during installation). 
-
-The basic configuration is shown below. 
-
-.. code:: bash
-
-    server:
-                # location of the trust anchor file that enables DNSSEC
-                auto-trust-anchor-file: "/var/lib/unbound/root.key"
-                # send minimal amount of information to upstream servers to enhance privacy
-                qname-minimisation: yes
-                # the interface that is used to connect to the network (this will listen to all interfaces)
-                interface: 0.0.0.0
-                # interface: ::0
-                # addresses from the IP range that are allowed to connect to the resolver
-                access-control: 192.168.0.0/16 allow
-                # access-control: 2001:DB8/64 allow
-
-By default Unbound comes with `chroot <https://wiki.archlinux.org/title/chroot>`_ enabled. This provides an extra layer of defence against remote exploits. If chroot gives you trouble, you can enter file paths as full pathnames starting at the root of the filesystem (``/``) or disable it with ``chroot: ""`` in the config.
-
-Unbound assumes that a user named "unbound" exists. You can add this user with your favourite account management tool (:command:`useradd(8)`), or disable the feature with ``username: ""`` in the config.
-.. WHY IS THIS A THING? PLEASE EXPLAIN
-
-Set up Remote Control
----------------------
-
-A usefull option to add to the basic config is the :option:`remote-control`, so that Unbound can be controlled by using the :command:`unbound-control` command, which makes starting, stopping, and reloading easier.
-
-.. code::bash
-
-    remote-control:
-                # enable remote-control
-                control-enable: yes
-
-To set up for this, we need to invoke the :command:`unbound-control-setup` command. This creates a number of files in the default install director directory. The default install directory is ``/usr/local/etc/unbound/unbound.conf`` on most systems, but some distributions may put it in ``/etc/unbound/unbound.conf`` or ``/etc/unbound.conf``.
-
-Apart from an extensive config file, with just about all the possible configuration options, :command:`unbound-control-setup` creates the cryptographic keys necessary for the control option. 
-
-.. code::bash
-
-    sudo unbound-control-setup
-
-If you use a username like ``unbound`` to run the daemon from use ``sudo -u unbound unbound-control-setup`` to generate the keys, so that the server is allowed to read the keys.
-
-To test the configuration we just created, Unbound offers a handy tool: :command:`unbound-checkconf`
+    Hoe kan je testen?
+    waar kan je nu heen?
 
 
 
@@ -257,58 +219,58 @@ To test the configuration we just created, Unbound offers a handy tool: :command
 
 
 
+..
+    The default install directory is ``/usr/local/etc/unbound/unbound.conf``
+    but some distributions may put it in ``/etc/unbound/unbound.conf``
+    or ``/etc/unbound.conf``.
+    The config file is fully annotated, you can go through it and select the
+    options you like.  Or you can use the below, a quick set of common options
+    to serve the local subnet.
 
-The default install directory is ``/usr/local/etc/unbound/unbound.conf``
-but some distributions may put it in ``/etc/unbound/unbound.conf``
-or ``/etc/unbound.conf``.
-The config file is fully annotated, you can go through it and select the
-options you like.  Or you can use the below, a quick set of common options
-to serve the local subnet.
+    A basic setup for DNS service for an IPv4 subnet and IPv6 localhost is below.
+    You can change the IPv4 subnet to match the subnet that you use. And add
+    your IPv6 subnet if you have one.
 
-A basic setup for DNS service for an IPv4 subnet and IPv6 localhost is below.
-You can change the IPv4 subnet to match the subnet that you use. And add
-your IPv6 subnet if you have one.
+    .. code:: bash
 
-.. code:: bash
+        # unbound.conf for a local subnet.
+        server:
+            interface: 0.0.0.0
+            interface: ::0
+            access-control: 192.168.0.0/16 allow
+            access-control: ::1 allow
+            verbosity: 1
 
-    # unbound.conf for a local subnet.
-    server:
-        interface: 0.0.0.0
-        interface: ::0
-        access-control: 192.168.0.0/16 allow
-        access-control: ::1 allow
-        verbosity: 1
+    By default the software comes with chroot enabled. This provides an extra
+    layer of defence against remote exploits. Enter file paths as full pathnames
+    starting at the root of the filesystem (``/``). If chroot gives
+    you trouble, you can disable it with ``chroot: ""`` in the config.
 
-By default the software comes with chroot enabled. This provides an extra
-layer of defence against remote exploits. Enter file paths as full pathnames
-starting at the root of the filesystem (``/``). If chroot gives
-you trouble, you can disable it with ``chroot: ""`` in the config.
+    Also the server assumes the username ``unbound`` to drop privileges. You can add
+    this user with your favourite account management tool (:command:`useradd(8)`), or
+    disable the feature with ``username: ""`` in the config.
 
-Also the server assumes the username ``unbound`` to drop privileges. You can add
-this user with your favourite account management tool (:command:`useradd(8)`), or
-disable the feature with ``username: ""`` in the config.
+    Start the server using the rc.d script (if you or the package manager
+    installed one) as ``/etc/rc.d/init.d/unbound start``.
+    Or ``unbound -c <config>`` as root.
 
-Start the server using the rc.d script (if you or the package manager
-installed one) as ``/etc/rc.d/init.d/unbound start``.
-Or ``unbound -c <config>`` as root.
+    Set up Remote Control
+    ---------------------
 
-Set up Remote Control
----------------------
+    If you want to you can setup remote control using ``unbound-control``.
+    First run ``unbound-control-setup`` to generate the necessary
+    TLS key files (they are put in the default install directory).
+    If you use a username of ``unbound`` to run the daemon from use
+    ``sudo -u unbound unbound-control-setup`` to generate the keys, so
+    that the server is allowed to read the keys.
+    Then add the following at the end of the config file.
 
-If you want to you can setup remote control using ``unbound-control``.
-First run ``unbound-control-setup`` to generate the necessary
-TLS key files (they are put in the default install directory).
-If you use a username of ``unbound`` to run the daemon from use
-``sudo -u unbound unbound-control-setup`` to generate the keys, so
-that the server is allowed to read the keys.
-Then add the following at the end of the config file.
+    .. code:: bash
 
-.. code:: bash
+        # enable remote-control
+        remote-control:
+            control-enable: yes
 
-    # enable remote-control
-    remote-control:
-        control-enable: yes
-
-You can now use ``unbound-control`` to send commands to the daemon.
-It needs to read the key files, so you may need to ``sudo unbound-control``.
-Only connections from localhost are allowed by default.
+    You can now use ``unbound-control`` to send commands to the daemon.
+    It needs to read the key files, so you may need to ``sudo unbound-control``.
+    Only connections from localhost are allowed by default.
