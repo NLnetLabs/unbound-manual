@@ -1,9 +1,9 @@
 Installation
 ============
 
-To install your own copy of Unbound you have two options: Using the version provided by your package manager, or downloading the source and building it yourself.
+To install your own copy of Unbound you have two options: Use the version provided by your package manager, or download the source and building it yourself.
 
-Installing via the package manager is the easiest option, and on most systems even trivial. The downside is the distributed version can be outdated for some systems or not have all the compile-time options included that you want.
+Installing via the package manager is the easiest option, and on most systems even trivial. The downside is the distributed version can be outdated for some distributions or not have all the compile-time options included that you want.
 Building and compiling Unbound yourself ensures that you have the latest version and all the compile-time options you desire.
 
 
@@ -36,7 +36,7 @@ This gives you a compiled and running version of Unbound ready to be configured.
 macOS Big Sur
 *************
 
-In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and give `their website <https://brew.sh/>`_ a read if you've never used brew before.
+In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and, if you've never used brew before, give `their website <https://brew.sh/>`_ a read.
 
 .. code-block:: bash
 
@@ -59,9 +59,9 @@ This gives you a compiled and running version of Unbound ready to be configured.
 Building from source/Compiling
 ------------------------------
 
-:ref:`compiling`
+.. :ref:`compiling`
 
-To compile Unbound on any system you need to have ``openssl`` and ``expat``, and their header files. To include the header files we need the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
+To compile Unbound on any system you need to have the ``openssl`` and ``expat`` libraries, and their header files. To include the header files we need to get the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
 
 Ubuntu 20.04.1 LTS
 ******************
@@ -82,7 +82,7 @@ We'll need some tools, such as a compiler and the :command:`make` program.
     sudo apt install -y build-essential
 
 
-The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we need the "dev" version. Unbound also uses ``libldns``, but this is included in the tarball.
+The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we need the "dev" version. Unbound also uses ``libldns``, but this is included in the tarball we've already downloaded.
 
 .. code-block:: bash
 
@@ -98,7 +98,8 @@ We'll also need the tools to build the actual program. For this, Unbound uses :c
     sudo apt-get install -y flex
 
 
-With all the requirements met, we can now start the compilation process in the Unbound directory. The first step here is configuring. With :option:`./configure -h` you can look at the extensive list of configurables for Unbound. A nice feature is that :command:`configure` will tell you what it's missing during configuration. A common error is for the paths to the two libraries we just installed, which can be manually specified with :option:`--with-ssl=` and :option:`--with-libexpat=`.
+With all the requirements met, we can now start the compilation process in the Unbound directory. 
+The first step here is configuring. With :option:`./configure -h` you can look at the extensive list of configurables for Unbound. A nice feature is that :command:`configure` will tell you what it's missing during configuration. A common error is for the paths to the two libraries we just installed, which can be manually specified with :option:`--with-ssl=` and :option:`--with-libexpat=`.
 
 .. code-block:: bash
 
@@ -118,9 +119,9 @@ When we have a succesful compilation, we can install Unbound to make available f
 
     sudo make install
 
-We now have fully compiled and installed version of Unbound, and can now move to configuring it.
+We now have fully compiled and installed version of Unbound, and can continue to testing it.
 
-.. Link to configuring block
+.. Ref to testing
 
 macOS Big Sur
 *************
@@ -147,7 +148,7 @@ We can the use :command:`wget` to download the latest version of Unbound from re
     tar xzf unbound-latest.tar.gz
 
 
-To compile Unbound on MacOS (or anything really), we need to install the Mac specific development tools called "Xcode". This is available on the app store and requires ~12 GB space on the hard disk. To verify that Xcode is installed correclty we check that we have the :command:`gcc` compiler by asking for the version.
+To compile Unbound on MacOS (or anything really), we need to install the Mac specific development tools called "Xcode". This is available on the app store and requires ~12 GB space on the hard disk. To verify that Xcode is installed correctly we check that we have the :command:`gcc` compiler by asking for the version.
 
 .. code-block:: bash
 
@@ -183,7 +184,7 @@ With all the requirements met, we can now start the compilation process in the U
     ./configure 
 
 
-Or alternatively, when :command:`configure` cannot find ``libssl`` and ``libexpat`` and :command:`brew` installed them at the default directory and openssl ``1.1.1k`` and libexapt ``2.3.0`` being the latest versions at the time of writing.
+Or alternatively, when :command:`configure` cannot find ``libssl`` and ``libexpat`` and :command:`brew` installed them at the default directory (make sure you fill in the correct version, at the time of writing the latest version of openssl is ``1.1.1k`` and of libexapt is ``2.3.0``).
 
 .. code-block:: bash
 
@@ -202,19 +203,23 @@ When we have a succesful compilation, we can install Unbound to make available f
     sudo make install
 
 
-We now have fully compiled and installed version of Unbound, and can now move to configuring it.
+We now have fully compiled and installed version of Unbound, and can continue to testing it.
+
+.. Ref to testing
+
+Testing
+-------
+
+A simple test to determine if the install went correctly is to invoke the :command:`unbound` with the :option:`-h` option, which is the "help" option. This shows the options that can be used with the command, as well as proving that the install was succesfull.
+
+.. code-block:: bash
+
+    unbound -h
+
+If all the previous steps were succesfull we can continue to configuring our Unbound instance. 
+
 
 .. Ref to configuring block
-
-
-.. TESTING
-
-    Hoe kan je testen?
-    waar kan je nu heen?
-
-
-
-
 
 
 
