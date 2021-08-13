@@ -1,5 +1,5 @@
 Installation
-============
+------------
 
 To install your own copy of Unbound you have two options: Use the version provided by your package manager, or download the source and building it yourself.
 
@@ -11,9 +11,9 @@ Building and compiling Unbound yourself ensures that you have the latest version
 
 
 Installing with a package manager
----------------------------------
+=================================
 
-Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the lastest version, we recommend :ref:`building Unbound yourself<compiling>`.
+Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the latest version, we recommend :ref:`building Unbound yourself<compiling>`.
 
 .. FIX REF
 
@@ -32,11 +32,10 @@ This gives you a compiled and running version of Unbound ready to be configured.
 
 .. Link to configuring block
 
-
 macOS Big Sur
 *************
 
-In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and, if you've never used brew before, give `their website <https://brew.sh/>`_ a read.
+In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and, if you've never used ``brew`` before, give `their website <https://brew.sh/>`_ a read.
 
 .. code-block:: bash
 
@@ -50,14 +49,43 @@ Then use brew to install Unbound.
     brew install unbound
 
 
+.. THIS IS THE DEFAULT DIRECOTRY FOR MAC
+.. /opt/homebrew/etc/unbound/
+
+
+
 This gives you a compiled and running version of Unbound ready to be configured.
 
 .. Link to configuring block
 
 
+.. sudo chmod -R 666 *
+
+
+.. LOOK INTO THIS:
+
+.. sudo brew services start unbound
+.. ==> Tapping homebrew/services
+.. Cloning into '/opt/homebrew/Library/Taps/homebrew/homebrew-services'...
+.. remote: Enumerating objects: 1352, done.
+.. remote: Counting objects: 100% (231/231), done.
+.. remote: Compressing objects: 100% (166/166), done.
+.. remote: Total 1352 (delta 86), reused 190 (delta 61), pack-reused 1121
+.. Receiving objects: 100% (1352/1352), 401.78 KiB | 3.94 MiB/s, done.
+.. Resolving deltas: 100% (562/562), done.
+.. Tapped 1 command (28 files, 496KB).
+.. Warning: Taking root:admin ownership of some unbound paths:
+..   /opt/homebrew/Cellar/unbound/1.13.1/sbin
+..   /opt/homebrew/Cellar/unbound/1.13.1/sbin/unbound
+..   /opt/homebrew/opt/unbound
+..   /opt/homebrew/opt/unbound/sbin
+..   /opt/homebrew/var/homebrew/linked/unbound
+.. This will require manual removal of these paths using `sudo rm` on
+.. brew upgrade/reinstall/uninstall.
+
 
 Building from source/Compiling
-------------------------------
+==============================
 
 .. :ref:`compiling`
 
@@ -113,7 +141,7 @@ When :command:`configure` gives no errors, we can continue to actually compiling
     make
 
 
-When we have a succesful compilation, we can install Unbound to make available for the entire machine.
+When we have a successful compilation, we can install Unbound to make available for the entire machine.
 
 .. code-block:: bash
 
@@ -196,7 +224,7 @@ When :command:`configure` gives no errors, we can continue to actually compiling
 
     make
 
-When we have a succesful compilation, we can install Unbound to make available for the entire machine.
+When we have a successful compilation, we can install Unbound to make available for the entire machine.
 
 .. code-block:: bash
 
@@ -208,15 +236,15 @@ We now have fully compiled and installed version of Unbound, and can continue to
 .. Ref to testing
 
 Testing
--------
+=======
 
-A simple test to determine if the install went correctly is to invoke the :command:`unbound` with the :option:`-h` option, which is the "help" option. This shows the options that can be used with the command, as well as proving that the install was succesfull.
+A simple test to determine if the install went correctly is to invoke the :command:`unbound` with the :option:`-h` option, which is the "help" option. This shows the options that can be used with the command, as well as proving that the install was successful.
 
 .. code-block:: bash
 
     unbound -h
 
-If all the previous steps were succesfull we can continue to configuring our Unbound instance. 
+If all the previous steps were successful we can continue to configuring our Unbound instance. 
 
 
 .. Ref to configuring block

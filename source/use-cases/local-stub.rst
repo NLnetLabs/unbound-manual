@@ -1,9 +1,130 @@
-Stub Resolver of a Single Machine
----------------------------------
 
-(Is this even a stub resolver or rather a local forwarder?)
+DNS (Stub) Resolver of for Single Machine
+-----------------------------------------
 
-.. todo
+.. @TODO rename to something more easy to understand instead of the strictly correct name
 
-   Mention that Stubby might be a better option for mobile machines.
+
+Unbound is a powerful validating, recursive, caching DNS resolver. It’s used by some of the biggest tech companies in the world as well as home users, who use it together with ad blockers and firewalls, or self-run resolvers. Setting it up as a caching resolver for your own machine can be quite simple as we’ll showcase below.
+
+.. @TODO little bit about why you would want this and the caveats (discuss this with Willem)
+
+
+.. point to installation page
+
+Configuring the Local Stub resolver
+===================================
+
+For configuring Unbound we need to make sure we have Unbound installed. An easy test is by asking the verison number.
+
+.. code-block:: bash
+
+	unbound -v
+
+
+Once we have a working version of Unbound installed and running, we need tell our machine to use it by default. This works differently on different operating systems, below we will go through this for a selection of OS'es.
+
+
+Ubuntu 20.04.1 LTS
+******************
+
+The resolver your machine uses by default is defined in :file:`/etc/systemd/resolved.conf` in the :option:`DNS` entry (It uses ``127.0.0.53`` ).
+While just changing this file will work as long as the machine doesn't reboot, we need to make sure that this change is persistent. To do that, we need to change the :option:`DNS` entry to be equal to ``127.0.0.1`` (or whatever IP address Unbound is bound to) so the machine uses Unbound as default. To make the change persistent, we also need to set the :option:`DNSStubListener` to :option:`no` so that is not changed by our router (such as with a "recommended resolver" mentioned below). We also want to enable the :option:`DNSSEC` option so that we can verify the integrity the responses we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`) we can modify the file:
+
+.. code-block:: bash
+
+	nano /etc/systemd/resolved.conf
+
+Here, under there ``[Resolve]`` header we add (or rather, enable by removing the "#") the options:
+
+.. code-block:: bash
+
+	[Resolve]
+	DNS=127.0.0.1
+	#FallbackDNS=
+	#Domains=
+	DNSSEC=yes
+	#DNSOverTLS=no
+	#MulticastDNS=no
+	#LLMNR=no
+	#Cache=no-negative
+	DNSStubListener=no
+	#DNSStubListenerExtra=
+
+With this file modified, we can restart using this configuration with: 
+
+.. code-block:: bash
+
+	systemctl restart systemd-resolved
+
+If successful, the operating system should use our Unbound instance as default. A quick test a :command:`dig` without specifying the address of the Unbound server should give the same result as specifying it did above (with ``@127.0.0.1``).
+
+.. code-block:: bash
+
+	dig example.com
+
+
+.. REREAD PART BELOW
+
+Here we tell the :command:`dig` tool to look up the IP address for example.com. We did not specify where :command:`dig` should ask this, so it goes to the default resolver. To verify the default is indeed our running Unbound instance we look at the footer section of the output of the command. There we have an server IP address under the ``SERVER`` entry. If the default is correctly set to be Unbound, entry will be the IP address of the Unbound instance you configured (in this case ``127.0.0.1``):
+
+.. code-block:: bash
+
+	;; SERVER: 127.0.0.1#53(127.0.0.1)
+
+
+Note that the "SERVER" section in the output from :command:`dig` should also contain the local IP address of our server.
+
+.. code-block:: bash
+
+	;; SERVER: 127.0.0.1#53(127.0.0.1)
+
+macOS Big Sur
+*************
+
+To find out which resolver your machine uses, we can use the command :command:`scutil`. This command can be used to manage and to give information about the system configuration parameters. When used for DNS, it will show you all the configured resolvers though we are only interested in the first.
+
+.. code-block:: bash
+
+	scutil --dns
+
+The output will show all the resolvers configured, but we are interested in the first entry. Before configuring Unbound to be our resolver, the first entry is 
+(likely) the resolver recommended by your router. We will using :command:`scutil` to verify that we configured our resolver correctly in later steps, so make sure that you have the output before you make any changes.
+
+The simplest method of changing the resolver of your Mac is by using the System Preferences Window (it can also be done using the command line terminal if you want to script this step).
+
+The steps go as follows.
+
+1. Open the Network tab in System Preferences.
+
+#. Click on the Advanced button.
+
+#. Go to the DNS Tab.
+
+#. Click "+" icon
+
+#. Add IP address of Unbound instance (here we use ``127.0.0.1``)
+
+Once the IP address is added we can test our Unbound instance (assuming it's running)  with :command:`dig`. Note that the Unbound instance cannot be reached before it has been added in the DNS tab in System Preferences.
+
+.. code:: bash
+
+	dig example.com @127.0.0.1
+
+
+.. DO WE NEED TO ADD PICTURES HERE? 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -3,7 +3,7 @@
    <br />
 
 Resolver for Home Networks
-==========================
+--------------------------
 
 To start off, let's ask the all-important question "Why would you want Unbound as a resolver for your home network?" |br|
 Firstly, Unbound supports DNSSEC which, through an authentication chain, verifies that the DNS query responses you receive are unaltered, as opposed to query responses which are not DNSSEC-signed and could be changed by anyone who has access to the query.
@@ -14,7 +14,11 @@ In this tutorial we'll look at setting up Unbound as a DNS resolver; Firstly for
 
 
 Setting up Unbound
-------------------
+==================
+
+.. point to installation page
+
+
 
 Unbound is a powerful validating, recursive, caching DNS resolver. It’s used by some of the biggest tech companies in the world as well as small-office / home-office users, who use it together with ad blockers and firewalls, or self-hosted resolvers. Setting it up for your home network can be quite simple as we’ll showcase below.
 
@@ -34,7 +38,7 @@ This gives you a complete and running version of Unbound which behaves as a cach
 Do note that by default the DNS server will be queryable only from the local host, i.e. the system on which you installed Unbound. We will change that later.
 
 Testing the resolver locally
-----------------------------
+============================
 
 To verify that the server works correctly, it’s a good idea to test it before committing the entire network to it. Luckily we can test this on the machine that you installed Unbound on (locally) and from any other machine (remotely) that will be using the resolver after we expose Unbound to the network.
 
@@ -44,7 +48,7 @@ The command for testing locally on the Unbound machine is:
 
 	dig example.com @127.0.0.1
 
-Here we tell the :command:`dig` tool to look up the IP address for example.com, and to ask for this information from the server running at the IP address ``127.0.0.1``, which is where our Unbound machine is running by default.
+Here we tell the :command:`dig` tool to look up the IP address for example.com, and to ask for this information from the resolver running at the IP address ``127.0.0.1``, which is where our Unbound machine is running by default.
 We can verify that Unbound has indeed answered our query instead of the default resolver that is present on Ubuntu by default. In the output of every :command:`dig` command there is an ``ANSWER SECTION`` which gives the response to the query. In the footer section of the output, the server which has answered the query under the ``SERVER`` entry. The entry will look like:
 
 .. code-block:: bash
@@ -66,7 +70,7 @@ While the response should be the same, the ``SERVER`` entry in the response shou
 Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
 
 Setting up for a single machine
--------------------------------
+===============================
 
 Now that we have tested our Unbound resolver, we can tell our machine to use it by default. The resolver your machine uses by default is defined in :file:`/etc/systemd/resolved.conf` in the :option:`DNS` entry (It uses ``127.0.0.53`` ).
 While just changing this file will work as long as the machine doesn't reboot, we need to make sure that this change is persistent. To do that, we need to change the :option:`DNS` entry to be equal to ``127.0.0.1`` so the machine uses Unbound as default. To make the change persistent, we also need to set the :option:`DNSStubListener` to :option:`no` so that is not changed by our router (such as with a "recommended resolver" mentioned below). We also want to enable the :option:`DNSSEC` option so that we can verify the integrity the responses we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`) we can modify the file:
@@ -75,7 +79,7 @@ While just changing this file will work as long as the machine doesn't reboot, w
 
 	nano /etc/systemd/resolved.conf
 
-Here, under there ``[Resolve]`` header we add (or rather enable by removing the "#") the options:
+Here, under there ``[Resolve]`` header we add (or rather, enable by removing the "#") the options:
 
 .. code-block:: bash
 
@@ -91,13 +95,13 @@ Here, under there ``[Resolve]`` header we add (or rather enable by removing the 
 	DNSStubListener=no
 	#DNSStubListenerExtra=
 
-With this file modified, we can start using this configuration with: 
+With this file modified, we can restart using this configuration with: 
 
 .. code-block:: bash
 
 	systemctl restart systemd-resolved
 
-Now the operating system should use our Unbound instance as default. A quick test a :command:`dig` without specifying the address of the Unbound server should give the same result as specifying it did above (with ``@127.0.0.1``).
+If successful, the operating system should use our Unbound instance as default. A quick test a :command:`dig` without specifying the address of the Unbound server should give the same result as specifying it did above (with ``@127.0.0.1``).
 
 .. code-block:: bash
 
@@ -111,7 +115,7 @@ Note that the "SERVER" section in the output from :command:`dig` should also con
 
 
 Setting up for the rest of the network
---------------------------------------
+======================================
 
 While we currently have a working instance of Unbound, we need it to be reachable from within our entire network. With that comes the headache of dealing with (local) IP addresses. It’s likely that your home router distributed local IP addresses to your devices. If this is the case (i.e. you didn’t change it by hand), they should be :rfc:`1918` ranges:
 
@@ -125,7 +129,7 @@ To find the IP address of the machine that is running Unbound, we use:
 
 .. code-block:: bash
 
-	hostname --all-ip-addresses
+	hostname ==all-ip-addresses
 
 If you just have one IP address as output from the :command:`hostname` command that will be the correct one. If you have multiple IP addresses, the easiest way to determine which IP address to use, is to find out which connection goes to your home router. Keep in mind that using the wrong IP address here can be a source of connectivity errors further on. For the purpose of this tutorial we assume that our home router has the IP address ``192.168.0.1``, as this is typical for home routers, and our resolver machine (the machine that is running our Unbound instance) has IP address ``192.168.0.2``, which we will get into in the next section.
 
@@ -144,20 +148,20 @@ The options that we add to the current config file to make it a "minimal usable 
 .. code-block:: bash
 
 	server:
-			# location of the trust anchor file that enables DNSSEC
-			auto-trust-anchor-file: "/var/lib/unbound/root.key"
-			# send minimal amount of information to upstream servers to enhance privacy
-			qname-minimisation: yes
-			# the interface that is used to connect to the network (this will listen to all interfaces)
-			interface: 0.0.0.0
-			# interface: ::0
-			# addresses from the IP range that are allowed to connect to the resolver
-			access-control: 192.168.0.0/16 allow
-			# access-control: 2001:DB8/64 allow
+		# location of the trust anchor file that enables DNSSEC
+		auto-trust-anchor-file: "/var/lib/unbound/root.key"
+		# send minimal amount of information to upstream servers to enhance privacy
+		qname-minimisation: yes
+		# the interface that is used to connect to the network (this will listen to all interfaces)
+		interface: 0.0.0.0
+		# interface: ::0
+		# addresses from the IP range that are allowed to connect to the resolver
+		access-control: 192.168.0.0/16 allow
+		# access-control: 2001:DB8/64 allow
 
 	remote-control:
-			# allows controling unbound using "unbound-control"
-			control-enable: yes
+		# allows controling unbound using "unbound-control"
+		control-enable: yes
 
 The interface is currently configured to listen to any address on the machine, and the access-control only allows queries from the ``192.168.0.0/16`` `IP subnet <https://www.ripe.net/about-us/press-centre/understanding-ip-addressing>`_ range. Note that the IP address we chose above (``192.168.0.1`` and ``192.168.0.2``) fall within the ``192.168.0.0/16`` range.
 
@@ -185,7 +189,7 @@ And you can restart Unbound with:
 From this point on, we can :command:`stop`, :command:`start`, and :command:`reload` Unbound with :command:`unbound-control` if you want to make changes to the configuration.
 
 Testing the resolver from a remote machine
-------------------------------------------
+==========================================
 
 So now we have a DNS resolver which should be reachable from within the network. To be able to verify that our resolver is working correctly, we want to test it from anoither machine in the network. As mentioned above, this tutorial uses the address ``192.168.0.2`` (not ``127.0.0.1`` as we saw earlier) as an example for the machine running Unbound. Armed with the IP address we can send a query to our DNS resolver from another machine which is within our home network. To do this we use the same dig command, only we change the IP address where the query is asked.
 
@@ -196,7 +200,7 @@ So now we have a DNS resolver which should be reachable from within the network.
 This should give the same result as above. The ``SERVER`` entry in the footer reflects from which server the response was received.
 
 Where it all comes together
----------------------------
+===========================
 
 We should now have a functioning DNS resolver that is accessible to all machines in our network (**make sure you do before you continue**).
 
