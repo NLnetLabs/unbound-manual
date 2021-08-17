@@ -48,12 +48,6 @@ Then use brew to install Unbound.
 
     brew install unbound
 
-
-.. THIS IS THE DEFAULT DIRECOTRY FOR MAC
-.. /opt/homebrew/etc/unbound/
-
-
-
 This gives you a compiled and running version of Unbound ready to be configured.
 
 .. Link to configuring block
@@ -245,6 +239,9 @@ A simple test to determine if the install went correctly is to invoke the :comma
     unbound -h
 
 If all the previous steps were successful we can continue to configuring our Unbound instance. 
+
+Another handy trick you can use during testing is to run Unbound in the foreground using the :option:`-d` option and increase the verbosity level using the :option:`-vvv` option. This allows you to see steps Unbound takes and also where it fails.
+
 
 
 .. Ref to configuring block
