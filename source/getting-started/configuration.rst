@@ -1,9 +1,9 @@
 Configuration
 -------------
 
-The configuration of Unbound can be a little tricky due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them. Also feel free to remove lines that are commented out (uncommenting bu removing the "#") if they are not nesecary in your setup.
+The configuration of Unbound can be a little tricky due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them. Also feel free to remove lines that are commented out (uncommenting by removing"#") if they are not necessary in your setup.
 
-For the configuration step, we will assume that your system has a Unbound installed and it is available to the entire system (so the :command:`make install` step during installation). 
+Note that the instructions in this page assume that Unbound is already installed.
 
 The basic configuration is shown below. 
 
@@ -32,22 +32,22 @@ The basic configuration is shown below.
         access-control: 192.168.0.0/16 allow
         # access-control: 2001:DB8/64 allow
 
-By default Unbound comes with `chroot <https://wiki.archlinux.org/title/chroot>`_ enabled. This provides an extra layer of defence against remote exploits. If :command:`chroot` gives you trouble, you can enter file paths as full pathnames starting at the root of the filesystem (``/``) or disable it in the config if this feature is not required.
+By default Unbound comes with `chroot <https://wiki.archlinux.org/title/chroot>`_ enabled. This provides an extra layer of defence against remote exploits. If Unbound is not starting because it cannot access files due to permission errors caused by :command:`chroot`, a solution can be to enter file paths as full pathnames starting at the root of the filesystem (``/``). Otherwise, if :command:`chroot`is not required you can disable it in the config.
 
 .. code::bash
 
 	# disable chroot
 	chroot: ""
 
-Unbound assumes that a user named "unbound" exists. You can add this user with your favourite account management tool (:command:`useradd(8)`), or disable the feature with ``username: ""`` in the config. If it is enabled, after the setup, any other user privileges are dropped and the configured username is assumed.
+By default Unbound assumes that a user named "unbound" exists, which you can add this user with an account management tool available on your system. You can also disable this feature by adding ``username: ""`` in the config. If it is enabled, after the setup, any other user privileges are dropped and the configured username is assumed.
 
-Unbound comes with the :command:`unbound-checkconf` tool. This tool allows you to check a config for errors before loading. This tool is very convenient because if any errors are found it tells you where they are and it allows you to check this before loading Unbound to a network interface on your machine.
+Unbound comes with the :command:`unbound-checkconf` tool. This tool allows you to check the config file for errors before starting Unbound. It is very convenient because if any errors are found it tells you where they are, which is particularly useful when Unbound is already running to avoid failure to restart due to a configuration error.
 
 
 Set up Remote Control
 =====================
 
-A useful functionality to enable is the use of the :command:`unbound-control` command. Enabling this allows Unbound to be controlled by using the :command:`unbound-control` command, which makes starting, stopping, and reloading Unbound easier. To enable this functionality we need to add :option:`remote-control` to the config and enable it.
+A useful functionality to enable is the use of the :command:`unbound-control` command. This allows command makes starting, stopping, and reloading Unbound easier. To enable this functionality we need to add :option:`remote-control` to the config and enable it.
 
 .. code:: bash
 
@@ -61,7 +61,7 @@ A useful functionality to enable is the use of the :command:`unbound-control` co
         #control-key-file: "/usr/local/etc/unbound/unbound_control.key"
         #control-cert-file: "/usr/local/etc/unbound/unbound_control.pem"
 
-To set up for using the :command:`unbound-control` command, we need to invoke the :command:`unbound-control-setup` command. This creates a number of files in the default install director directory. The default install directory is ``/usr/local/etc/unbound/unbound.conf`` on most systems, but some distributions may put it in ``/etc/unbound/unbound.conf`` or ``/etc/unbound.conf``.
+To use the :command:`unbound-control` command, we need to invoke the :command:`unbound-control-setup` command. This creates a number of files in the default install directory. The default install directory is ``/usr/local/etc/unbound/`` on most systems, but some distributions may put it in ``/etc/unbound/`` or ``/var/lib/unbound``.
 
 Apart from an extensive config file, with just about all the possible configuration options, :command:`unbound-control-setup` creates the cryptographic keys necessary for the control option. 
 
@@ -69,34 +69,38 @@ Apart from an extensive config file, with just about all the possible configurat
 
     unbound-control-setup
 
-If you use a username like ``unbound`` in the config to run the daemon, you can use sudo to create the file in that user's name, so that the server is allowed to read the keys. This also works for other users if the ``/usr/local/etc/unbound/`` directory is write-protected.
+If you use a username like ``unbound`` in the config to run the daemon (which is the default setting), you can use :command:`sudo` to create the files in that user's name, so that the user running Unbound is allowed to read the keys. 
+This is also a solution if the ``/usr/local/etc/unbound/`` (or any other default direcotry) directory is write-protected, which is the case for some distributions.
 
 .. code:: bash
 
-	``sudo -u unbound unbound-control-setup``
+	sudo -u unbound unbound-control-setup
 
-When these steps succeed, you can now control Unbound using the :command:`unbound-control` command. Note that if you're not using the name ``unbound.conf`` in the default directory, the name (and possibly path) need to be provided when using the command using the :option:`-c` flag.
+You can now control Unbound using the :command:`unbound-control` command. Note that if your configuration file is not in the default location or not named ``unbound.conf``, the name (and possibly path) need to be provided when using the command using the :option:`-c` flag.
+
 
 Set up trust anchor
 ===================
 
-To enable `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which we strongly recommend, we need to create a trust anchor as it ensures the integrity of the responses to your queries.
+To enable `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which we strongly recommend, we need to create a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
 
-To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by creating a root key. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usualy the default directory is ``/usr/local/etc/unbound/``.
+To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by creating a root key. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
 
 .. code::bash
 
 	unbound-anchor
 
-Note that using a package manager to install Unbound, on some distributions, creates the root key during installation. On Ubuntu 20.04.1 LTS for example, this location is ``/var/lib/unbound/root.key``. On macOS Big Sur this location is ``/opt/homebrew/etc/unbound/root.key`` If you create the root key yourself (by using the :command:`unbound-anchor` command), then the file path in the config should be changed in the config to the default location. To find out the default location you can use the :command:`unbound-anchor` command again with the ``-vvv`` option enabled.
-To enable DNSSEC, we add ``auto-trust-anchor-file`` under the ``server`` tab in the config.
+Note that using a package manager to install Unbound, on some distributions, creates the root key during installation. On Ubuntu 20.04.1 LTS for example, this location is ``/var/lib/unbound/root.key``. On macOS Big Sur this location is ``/opt/homebrew/etc/unbound/root.key`` If you create the root key yourself (by using the :command:`unbound-anchor` command), then the path to the anchor file in the configuration file should be changed to the correct location. To find out the default location you can use the :command:`unbound-anchor` command again with the ``-vvv`` option enabled.
+To enable DNSSEC, we add ``auto-trust-anchor-file`` under the ``server`` options in the config.
 
 .. code:: bash
 
 	# enable DNSSEC
 	auto-trust-anchor-file: "/var/lib/unbound/root.key"
 
-Note that on some systems the ``/usr/local/etc/unbound/`` directory might be write-protected. If this is the case, the same trick as with :command:`unbound-control-setup` can be used for the username that will run the Unbound daemon.
+Note that on some systems the ``/usr/local/etc/unbound/`` directory might be write-protected. 
+
+If the :command:`unbound-control-setup` command fails due to the insufficient permissions, instead run the command as the correct user.
 
 .. code:: bash
 
