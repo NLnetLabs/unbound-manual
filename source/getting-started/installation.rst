@@ -232,11 +232,11 @@ We now have fully compiled and installed version of Unbound, and can continue to
 Testing
 =======
 
-A simple test to determine if the install went correctly is to invoke the :command:`unbound` with the :option:`-h` option, which is the "help" option. This shows the options that can be used with the command, as well as proving that the install was successful.
+A simple test to determine if the installation was successful is to invoke the :command:`unbound` command with the :option:`-V` option, which is the "version" option. This shows the version and build options used, as well as proving that the install was successful.
 
 .. code-block:: bash
 
-    unbound -h
+    unbound -V
 
 If all the previous steps were successful we can continue to configuring our Unbound instance. 
 
