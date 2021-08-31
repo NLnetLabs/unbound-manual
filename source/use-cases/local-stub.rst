@@ -90,7 +90,8 @@ To find out which resolver your machine uses, we can use the :command:`scutil` c
 	scutil --dns
 
 The output will show all the resolvers configured, but we are interested in the first entry. Before configuring Unbound to be our resolver, the first entry is 
-(likely) the resolver recommended by your router. 
+(likely) the resolver recommended by your router.
+
 .. We will using :command:`scutil` to verify that we configured our resolver correctly in later steps, so make sure that you invoke the command before you make any changes.
 
 .. Do we use scutil later?
@@ -120,12 +121,12 @@ Once the IP address is added we can test our Unbound instance (assuming it's run
 
 **Beware**: if you restart your mac at this stage in the process, you will not have access to the internet anymore. This is because Unbound does not automatically restart if your machine restarts. To make remedy this, we need to add Unbound to the startup routine on your Mac.
 
-Depending on your installation method, either via Homebrew or compiling Unbound yourself, the method of making Unbound persistant differs slightly. For both methods we use :command:`launchd` to start Unbound on the startup of your machine.
+Depending on your installation method, either via Homebrew or compiling Unbound yourself, the method of making Unbound persistant differs slightly. For both methods we use :command:`launchctl` to start Unbound on the startup of your machine.
 
 Homebrew
 ^^^^^^^^
 
-If you installed Unbound using Homebrew, the XML file required by :command:`launchd` is already supplied during installation. The file can be found at ``/Library/LaunchDaemons/homebrew.mxcl.unbound.plist``. To load this file we invoke the following command.
+If you installed Unbound using Homebrew, the XML file required by :command:`launchctl` is already supplied during installation. The file can be found at ``/Library/LaunchDaemons/homebrew.mxcl.unbound.plist``. To load this file we invoke the following command.
 
 .. code:: bash
 
@@ -136,7 +137,7 @@ Now everytime you restart your machine, Unbound should restart too.
 Compilation
 ^^^^^^^^^^^
 
-If you installed Unbound by compiling it yourself, we need to create an XML file for :command:`launchd`. Luckily we've created one for you:
+If you installed Unbound by compiling it yourself, we need to create an XML file for :command:`launchctl`. Conveniently we've created one for you:
 
 .. zet XML in unbound/contrib (contributed code)
 
@@ -167,9 +168,9 @@ If you installed Unbound by compiling it yourself, we need to create an XML file
 	  </dict>
 	</plist>
 
-The main component that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke unbound from the location that it has been installed using ``make install``. Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The file location in the XML can be changed to another location if this is convienient.
+The main component that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke Unbound from the location that it has been installed using ``make install``. Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The location in the XML can be changed to another location if this is convienient.
 
-Using the text editor of choice, we then create the file ``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and add the above supplied XML code. To be able to use the file, we need to change the permissions of the file using :command:`chmod`
+Using the text editor of choice, we then create the file ``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and insert the above supplied XML code. To be able to use the file, we need to change the permissions of the file using :command:`chmod`
 
 .. code:: bash
 
