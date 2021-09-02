@@ -1,17 +1,15 @@
+.. _doc_unbound_local_stub:
 
-DNS (Stub) Resolver of for Single Machine
------------------------------------------
+Local DNS (Stub) Resolver of for Single Machine
+-----------------------------------------------
 
 .. @TODO rename to something more easy to understand instead of the strictly correct name
 
 Unbound is a powerful validating, recursive, caching DNS resolver. It’s used by some of the biggest tech companies in the world as well as home users, who use it together with ad blockers and firewalls, or self-run resolvers. Setting it up as a caching resolver for your own machine can be quite simple as we’ll showcase below.
 
-We strongly recommend setting up `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_ during the Unbound configuration step, as it allows the verification of the integrity of the responses to the queries you send.
+We strongly recommend setting up `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_ during the Unbound configuration step, as it allows the verification of the integrity of the responses to the queries you send.
 
-.. @TODO little bit about why you would want this and the caveats (discuss this with Willem)
-
-
-.. point to installation page
+If you need to install Unbound first visit the :ref:`installation page<doc_unbound_installation>`.
 
 Configuring the Local Stub resolver
 ===================================
@@ -22,10 +20,11 @@ For configuring Unbound we need to make sure we have Unbound installed. An easy 
 
 	unbound -V
 
-Once we have a working version of Unbound installed and running, we need tell our machine to use it by default. This works differently on different operating systems, below we will go through this for a selection of OS'es.
+Once we have a working version of Unbound installed we need to configure it to be a recursive cacheing resolver (information about recursive resolvers can be found
+`here <https://www.cloudflare.com/en-gb/learning/dns/dns-server-types/>`_, but is not necessary for our purposes here).
+Luckily for us Unbound already behaves as such by default, so for basic purposes we can use the configuration from the :ref:`configuration page<doc_unbound_configuration>`. We always recommend enabling `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, for which the setup can also be found in the configuration page.
 
-
-.. ADD CONFIG FILE EXAMPLE (SPECIFIC TO THIS)
+Once we have a installed, configured and running Unbound instance, we need tell our machine to use this instance by default instead of what it is currently using. This works differently on different operating systems, below we will go through this for a selection of OS'es.
 
 
 Ubuntu 20.04.1 LTS
@@ -80,10 +79,12 @@ Note that the "SERVER" section in the output from :command:`dig` should also con
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
 
+.. IS UNBOUND PERSISTENT HERE?!
+
 macOS Big Sur
 *************
 
-To find out which resolver your machine uses, we can use the :command:`scutil` command. This command can be used to manage and give information about the system configuration parameters. When used for DNS, it will show you all the configured resolvers though we are only interested in the first.
+To find out which resolver your machine uses, we have two options: Look at the DNS tab under the Network tab in the System Preferences app, or we can use the :command:`scutil` command in the terminal. The :command:`scutil` command can be used to manage and give information about the system configuration parameters. When used for DNS, it will show you all the configured resolvers though we are only interested in the first.
 
 .. code-block:: bash
 
@@ -92,13 +93,8 @@ To find out which resolver your machine uses, we can use the :command:`scutil` c
 The output will show all the resolvers configured, but we are interested in the first entry. Before configuring Unbound to be our resolver, the first entry is 
 (likely) the resolver recommended by your router.
 
-.. We will using :command:`scutil` to verify that we configured our resolver correctly in later steps, so make sure that you invoke the command before you make any changes.
-
-.. Do we use scutil later?
-
 The simplest method of changing the resolver of your Mac is by using the System Preferences Window (the option of doing this step via the command line terminal also exists if you want to script this step).
-
-The steps go as follows.
+The steps go as follows:
 
 1. Open the Network tab in System Preferences.
 
@@ -168,7 +164,7 @@ If you installed Unbound by compiling it yourself, we need to create an XML file
 	  </dict>
 	</plist>
 
-The main component that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke Unbound from the location that it has been installed using ``make install``. Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The location in the XML can be changed to another location if this is convienient.
+The main component that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke Unbound from the location that it has been installed (for example using ``make install``). Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The location in the XML can be changed to another location if this is convienient.
 
 Using the text editor of choice, we then create the file ``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and insert the above supplied XML code. To be able to use the file, we need to change the permissions of the file using :command:`chmod`
 

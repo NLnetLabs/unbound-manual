@@ -1,7 +1,9 @@
+.. _doc_unbound_configuration:
+
 Configuration
 -------------
 
-The configuration of Unbound can be a little tricky due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them. Also feel free to remove lines that are commented out (uncommenting by removing"#") if they are not necessary in your setup.
+The configuration of Unbound can be a little tricky due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them. Also feel free to remove lines that are commented out (uncommenting by removing ``#``) if they are not necessary in your setup.
 
 Note that the instructions in this page assume that Unbound is already installed.
 
@@ -32,9 +34,9 @@ The basic configuration is shown below.
         access-control: 192.168.0.0/16 allow
         # access-control: 2001:DB8/64 allow
 
-By default the Unbound config uses `chroot <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer of defence against remote exploits. If Unbound is not starting because it cannot access files due to permission errors caused by :command:`chroot`, a solution can be to enter file paths as full pathnames starting at the root of the filesystem (``/``). Otherwise, if :command:`chroot`is not required you can disable it in the config.
+By default the Unbound config uses `chroot <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer of defence against remote exploits. If Unbound is not starting because it cannot access files due to permission errors caused by :command:`chroot`, a solution can be to enter file paths as full pathnames starting at the root of the filesystem (``/``). Otherwise, if :command:`chroot` is not required you can disable it in the config.
 
-.. code::bash
+.. code:: bash
 
 	# disable chroot
 	chroot: ""
@@ -79,10 +81,10 @@ This is also a solution if the ``/usr/local/etc/unbound/`` (or any other default
 You can now control Unbound using the :command:`unbound-control` command. Note that if your configuration file is not in the default location or not named ``unbound.conf``, the name (and possibly path) need to be provided when using the command using the :option:`-c` flag.
 
 
-Set up trust anchor (Enable DNSSEC)
-===================
+Set up Trust Anchor (Enable DNSSEC)
+===================================
 
-To enable `DNSSEC <https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions>`_, which we strongly recommend, we need to create a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
+To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which we strongly recommend, we need to create a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
 
 To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by creating a root key. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
 

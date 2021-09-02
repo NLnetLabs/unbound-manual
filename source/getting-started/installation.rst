@@ -1,3 +1,5 @@
+.. _doc_unbound_installation:
+
 Installation
 ------------
 
@@ -7,15 +9,10 @@ Installing via the package manager is the easiest option, and on most systems ev
 Building and compiling Unbound yourself ensures that you have the latest version and all the compile-time options you desire.
 
 
-.. Ref to Compiling, Setup and Remote Control Setup (page index?)
-
-
 Installing with a package manager
 =================================
 
-Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the latest version, we recommend :ref:`building Unbound yourself<compiling>`.
-
-.. FIX REF
+Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the latest version, we recommend :ref:`compiling Unbound yourself<Building from source/Compiling>`.
 
 
 Ubuntu 20.04.1 LTS
@@ -28,9 +25,7 @@ Installing Unbound with the built-in package manager should be as easy as:
     sudo apt update
     sudo apt install unbound
 
-This gives you a compiled and running version of Unbound ready to be configured.
-
-.. Link to configuring block
+This gives you a compiled and running version of Unbound ready to :ref:`be configured<doc_unbound_configuration>`.
 
 macOS Big Sur
 *************
@@ -48,40 +43,12 @@ Then use brew to install Unbound.
 
     brew install unbound
 
-This gives you a compiled and running version of Unbound ready to be configured.
-
-.. Link to configuring block
-
-
-.. sudo chmod -R 666 *
-
-
-.. LOOK INTO THIS:
-
-.. sudo brew services start unbound
-.. ==> Tapping homebrew/services
-.. Cloning into '/opt/homebrew/Library/Taps/homebrew/homebrew-services'...
-.. remote: Enumerating objects: 1352, done.
-.. remote: Counting objects: 100% (231/231), done.
-.. remote: Compressing objects: 100% (166/166), done.
-.. remote: Total 1352 (delta 86), reused 190 (delta 61), pack-reused 1121
-.. Receiving objects: 100% (1352/1352), 401.78 KiB | 3.94 MiB/s, done.
-.. Resolving deltas: 100% (562/562), done.
-.. Tapped 1 command (28 files, 496KB).
-.. Warning: Taking root:admin ownership of some unbound paths:
-..   /opt/homebrew/Cellar/unbound/1.13.1/sbin
-..   /opt/homebrew/Cellar/unbound/1.13.1/sbin/unbound
-..   /opt/homebrew/opt/unbound
-..   /opt/homebrew/opt/unbound/sbin
-..   /opt/homebrew/var/homebrew/linked/unbound
-.. This will require manual removal of these paths using `sudo rm` on
-.. brew upgrade/reinstall/uninstall.
-
+This gives you a compiled and running version of Unbound ready to :ref:`be configured<doc_unbound_configuration>`.
 
 Building from source/Compiling
 ==============================
 
-.. :ref:`compiling`
+
 
 To compile Unbound on any system you need to have the ``openssl`` and ``expat`` libraries, and their header files. To include the header files we need to get the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
 
@@ -112,7 +79,7 @@ The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we 
     sudo apt install -y libexpat1-dev
 
 
-We'll also need the tools to build the actual program. For this, Unbound uses :command:``make`` and internally it uses ``flex`` and ``yacc``, which we need to download as well.
+We'll also need the tools to build the actual program. For this, Unbound uses :command:`make` and internally it uses ``flex`` and ``yacc``, which we need to download as well.
 
 .. code-block:: bash
 
@@ -141,7 +108,7 @@ When we have a successful compilation, we can install Unbound to make available 
 
     sudo make install
 
-We now have fully compiled and installed version of Unbound, and can continue to testing it.
+We now have fully compiled and installed version of Unbound, and :ref:`continue to testing it<Testing>`.
 
 .. Ref to testing
 
@@ -225,7 +192,7 @@ When we have a successful compilation, we can install Unbound to make available 
     sudo make install
 
 
-We now have fully compiled and installed version of Unbound, and can continue to testing it.
+We now have fully compiled and installed version of Unbound, and can :ref:`continue to testing it<Testing>`.
 
 .. Ref to testing
 
@@ -242,65 +209,4 @@ If all the previous steps were successful we can continue to configuring our Unb
 
 Another handy trick you can use during testing is to run Unbound in the foreground using the :option:`-d` option and increase the verbosity level using the :option:`-vvv` option. This allows you to see steps Unbound takes and also where it fails.
 
-
-
-.. Ref to configuring block
-
-
-
-
-..
-    The default install directory is ``/usr/local/etc/unbound/unbound.conf``
-    but some distributions may put it in ``/etc/unbound/unbound.conf``
-    or ``/etc/unbound.conf``.
-    The config file is fully annotated, you can go through it and select the
-    options you like.  Or you can use the below, a quick set of common options
-    to serve the local subnet.
-
-    A basic setup for DNS service for an IPv4 subnet and IPv6 localhost is below.
-    You can change the IPv4 subnet to match the subnet that you use. And add
-    your IPv6 subnet if you have one.
-
-    .. code:: bash
-
-        # unbound.conf for a local subnet.
-        server:
-            interface: 0.0.0.0
-            interface: ::0
-            access-control: 192.168.0.0/16 allow
-            access-control: ::1 allow
-            verbosity: 1
-
-    By default the software comes with chroot enabled. This provides an extra
-    layer of defence against remote exploits. Enter file paths as full pathnames
-    starting at the root of the filesystem (``/``). If chroot gives
-    you trouble, you can disable it with ``chroot: ""`` in the config.
-
-    Also the server assumes the username ``unbound`` to drop privileges. You can add
-    this user with your favourite account management tool (:command:`useradd(8)`), or
-    disable the feature with ``username: ""`` in the config.
-
-    Start the server using the rc.d script (if you or the package manager
-    installed one) as ``/etc/rc.d/init.d/unbound start``.
-    Or ``unbound -c <config>`` as root.
-
-    Set up Remote Control
-    ---------------------
-
-    If you want to you can setup remote control using ``unbound-control``.
-    First run ``unbound-control-setup`` to generate the necessary
-    TLS key files (they are put in the default install directory).
-    If you use a username of ``unbound`` to run the daemon from use
-    ``sudo -u unbound unbound-control-setup`` to generate the keys, so
-    that the server is allowed to read the keys.
-    Then add the following at the end of the config file.
-
-    .. code:: bash
-
-        # enable remote-control
-        remote-control:
-            control-enable: yes
-
-    You can now use ``unbound-control`` to send commands to the daemon.
-    It needs to read the key files, so you may need to ``sudo unbound-control``.
-    Only connections from localhost are allowed by default.
+Now that Unbound is installed we can :ref:`continue to configuring it<doc_unbound_configuration>`.
