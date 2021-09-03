@@ -3,9 +3,11 @@
 Configuration
 -------------
 
-The configuration of Unbound can be a little tricky due to the extensive array of configurable options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them. Also feel free to remove lines that are commented out (uncommenting by removing ``#``) if they are not necessary in your setup.
+Unbound has a vast array of configuration options for advanced use cases, which can seem a little overwhelming at first. Luckily, all of the defaults are sensible and secure, so in a lot of environments you can run Unbound without changing any options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them.
 
-Note that the instructions in this page assume that Unbound is already installed.
+.. @TODO in the future we can put a forward link to the configuration options + explanations for advanced users.
+
+.. Note:: The instructions in this page assume that Unbound is already installed.
 
 The basic configuration is shown below. 
 
@@ -43,7 +45,7 @@ By default the Unbound config uses `chroot <https://wiki.archlinux.org/title/chr
 
 By default Unbound assumes that a user named "unbound" exists, which you can add this user with an account management tool available on your system. You can also disable this feature by adding ``username: ""`` in the config. If it is enabled, after the setup, any other user privileges are dropped and the configured username is assumed.
 
-Unbound comes with the :command:`unbound-checkconf` tool. This tool allows you to check the config file for errors before starting Unbound. It is very convenient because if any errors are found it tells you where they are, which is particularly useful when Unbound is already running to avoid failure to restart due to a configuration error.
+.. Important:: Unbound comes with the :command:`unbound-checkconf` tool. This tool allows you to check the config file for errors before starting Unbound. It is very convenient because if any errors are found it tells you where they are, which is particularly useful when Unbound is already running to avoid failure to restart due to a configuration error.
 
 
 Set up Remote Control
@@ -84,9 +86,9 @@ You can now control Unbound using the :command:`unbound-control` command. Note t
 Set up Trust Anchor (Enable DNSSEC)
 ===================================
 
-To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which we strongly recommend, we need to create a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
+To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which we strongly recommend, we need to set up a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
 
-To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by creating a root key. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
+To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by configuring a trust anchor. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
 
 .. code::bash
 

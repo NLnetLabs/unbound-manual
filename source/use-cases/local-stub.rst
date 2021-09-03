@@ -115,7 +115,7 @@ Once the IP address is added we can test our Unbound instance (assuming it's run
 
 	dig example.com @127.0.0.1
 
-**Beware**: if you restart your mac at this stage in the process, you will not have access to the internet anymore. This is because Unbound does not automatically restart if your machine restarts. To make remedy this, we need to add Unbound to the startup routine on your Mac.
+.. Attention:: if you restart your mac at this stage in the process, you will not have access to the internet anymore. This is because Unbound does not automatically restart if your machine restarts. To make remedy this, we need to add Unbound to the startup routine on your Mac.
 
 Depending on your installation method, either via Homebrew or compiling Unbound yourself, the method of making Unbound persistant differs slightly. For both methods we use :command:`launchctl` to start Unbound on the startup of your machine.
 
