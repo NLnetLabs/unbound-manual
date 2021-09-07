@@ -9,7 +9,7 @@ Unbound has a vast array of configuration options for advanced use cases, which 
 
 .. Note:: The instructions in this page assume that Unbound is already installed.
 
-The basic configuration is shown below. 
+The basic configuration which you can use out of the box is shown below. To use it, you need to create a file with this config as its content (or copy the config to the default config file which can be found during the installation process).
 
 .. code:: bash
 
