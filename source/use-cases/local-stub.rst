@@ -164,7 +164,7 @@ If you installed Unbound by compiling it yourself, we need to create an XML file
 	  </dict>
 	</plist>
 
-The main component that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke Unbound from the location that it has been installed (for example using ``make install``). Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The location in the XML can be changed to another location if this is convienient.
+The main components that interest us, are the items in the ``<array>`` which execute the command. Firstly, we invoke Unbound from the location that it has been installed (for example using ``make install``). Secondly, we add the :option:`-c` option to supply a config file. Lastly, we add the location of the default configuration file. The location in the XML can be changed to another location if this is convienient.
 
 Using the text editor of choice, we then create the file ``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and insert the above supplied XML code. To be able to use the file, we need to change the permissions of the file using :command:`chmod`
 
