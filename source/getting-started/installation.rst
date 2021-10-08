@@ -8,7 +8,7 @@ To install your own copy of Unbound you have two options: Use the version provid
 Installing via the package manager is the easiest option, and on most systems even trivial. The downside is the distributed version can be outdated for some distributions or not have all the compile-time options included that you want.
 Building and compiling Unbound yourself ensures that you have the latest version and all the compile-time options you desire.
 
-If you're a first-time user we recommend instaling via a package manager.
+If you're a first-time user we recommend installing via a package manager.
 
 Installing with a package manager
 =================================
