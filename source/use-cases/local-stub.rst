@@ -1,7 +1,7 @@
 .. _doc_unbound_local_stub:
 
-Local DNS (Stub) Resolver of for Single Machine
------------------------------------------------
+Local DNS (Stub) Resolver for a Single Machine
+----------------------------------------------
 
 .. @TODO rename to something more easy to understand instead of the strictly correct name
 
