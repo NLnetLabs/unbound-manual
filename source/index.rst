@@ -81,10 +81,11 @@ license, with attribution to NLnet Labs.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Other
+   :caption: Reference
 
-   libunbound
-   reference
+   reference/manual-pages
+   reference/libunbound
+   
 
 Indices and tables
 ==================
