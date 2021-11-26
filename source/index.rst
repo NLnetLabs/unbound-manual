@@ -84,6 +84,7 @@ license, with attribution to NLnet Labs.
    :caption: Reference
 
    reference/manual-pages
+   reference/unbound-conf
    reference/libunbound
    
 
