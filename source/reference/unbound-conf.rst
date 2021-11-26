@@ -1,7 +1,7 @@
 .. _doc_unbound.conf_manpage:
 
-Manual Page for unbound.conf(5)
--------------------------------
+unbound.conf(5)
+---------------
 
 .. raw:: html
 
