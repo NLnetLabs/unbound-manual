@@ -89,6 +89,7 @@ license, with attribution to NLnet Labs.
    manpages/unbound-host
    manpages/libunbound
    manpages/unbound-control
+   manpages/unbound-anchor
 
 .. toctree::
    :maxdepth: 2
