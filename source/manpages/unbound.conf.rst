@@ -1,4 +1,4 @@
-.. _doc_unbound.conf_manpage:
+.. _doc_unbound_conf_manpage:
 
 unbound.conf(5)
 ---------------
@@ -16,14 +16,14 @@ unbound.conf(5)
            <b>unbound.conf</b>
 
     <b>DESCRIPTION</b>
-           <b>unbound.conf</b>  is used to configure <a href="/documentation/unbound/unbound/"><i>unbound</i>(8)</a>.  The file format has at-
+           <b>unbound.conf</b>  is used to configure <a href="/manpages/unbound/"><i>unbound</i>(8)</a>.  The file format has at-
            tributes and values. Some attributes have attributes inside them.   The
            notation is: attribute: value.
 
            Comments  start with # and last to the end of line. Empty lines are ig-
            nored as is whitespace at the beginning of a line.
 
-           The utility <a href="/documentation/unbound/unbound-checkconf/"><i>unbound-checkconf</i>(8)</a> can  be  used  to  check  unbound.conf
+           The utility <a href="/manpages/unbound-checkconf/"><i>unbound-checkconf</i>(8)</a> can  be  used  to  check  unbound.conf
            prior to usage.
 
     <b>EXAMPLE</b>
@@ -88,7 +88,7 @@ unbound.conf(5)
                   Level 3 gives query level information, output per query.   Level
                   4  gives algorithm level information.  Level 5 logs client iden-
                   tification for cache misses.  Default is level 1.  The verbosity
-                  can also be increased from the commandline, see <a href="/documentation/unbound/unbound/"><i>unbound</i>(8)</a>.
+                  can also be increased from the commandline, see <a href="/manpages/unbound/"><i>unbound</i>(8)</a>.
 
            <a id="statistics-interval"><b>statistics-interval:</b></a> <i>&lt;seconds&gt;</i>
                   The number of seconds between printing statistics to the log for
@@ -106,7 +106,7 @@ unbound.conf(5)
            <a id="extended-statistics"><b>extended-statistics:</b></a> <i>&lt;yes</i> <i>or</i> <i>no&gt;</i>
                   If enabled, extended statistics are  printed  from  <i>unbound-con-</i>
                   <i>trol</i>(8).   Default is off, because keeping track of more statis-
-                  tics takes time.  The counters are listed in <a href="/documentation/unbound/unbound-control/"><i>unbound-control</i>(8)</a>.
+                  tics takes time.  The counters are listed in <a href="/manpages/unbound-control/"><i>unbound-control</i>(8)</a>.
 
            <a id="num-threads"><b>num-threads:</b></a> <i>&lt;number&gt;</i>
                   The number of threads to create to serve clients. Use 1  for  no
@@ -1812,7 +1812,7 @@ unbound.conf(5)
 
        <b>Remote</b> <b>Control</b> <b>Options</b>
            In the <b>remote-control:</b> clause are the declarations for the remote  con-
-           trol  facility.  If this is enabled, the <a href="/documentation/unbound/unbound-control/"><i>unbound-control</i>(8)</a> utility can
+           trol  facility.  If this is enabled, the <a href="/manpages/unbound-control/"><i>unbound-control</i>(8)</a> utility can
            be used to send commands to the running  unbound  server.   The  server
            uses these clauses to setup TLSv1 security for the connection.  The <i>un-</i>
            <i>bound-control</i>(8) utility also reads the <b>remote-control</b> section for  op-
@@ -2733,7 +2733,7 @@ unbound.conf(5)
                   unbound log file. default is to log to <i>syslog</i>(3).
 
     <b>SEE</b> <b>ALSO</b>
-           <a href="/documentation/unbound/unbound/"><i>unbound</i>(8)</a>, <a href="/documentation/unbound/unbound-checkconf/"><i>unbound-checkconf</i>(8)</a>.
+           <a href="/manpages/unbound/"><i>unbound</i>(8)</a>, <a href="/manpages/unbound-checkconf/"><i>unbound-checkconf</i>(8)</a>.
 
     <b>AUTHORS</b>
            <b>Unbound</b> was written by NLnet Labs. Please see CREDITS file in the  dis-

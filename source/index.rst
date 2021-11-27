@@ -81,9 +81,15 @@ license, with attribution to NLnet Labs.
 
 .. toctree::
    :maxdepth: 2
+   :caption: Manual Pages
+
+   manpages/unbound
+   manpages/unbound.conf
+
+.. toctree::
+   :maxdepth: 2
    :caption: Reference
 
-   reference/manual-pages
    reference/unbound-conf
    reference/libunbound
    
