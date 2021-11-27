@@ -94,7 +94,7 @@ libunbound(3)
     <b>DESCRIPTION</b>
        <b>Unbound</b>  is  an implementation of a DNS resolver, that does caching and
        DNSSEC validation. This is the library API, for using the -lunbound li-
-       brary.   The  server  daemon  is  described in <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.  The library
+       brary.   The  server  daemon  is  described in <a href="unbound.html"><i>unbound</i>(8)</a>.  The library
        works independent from a running unbound server, and  can  be  used  to
        convert  hostnames to ip addresses, and back, and obtain other informa-
        tion from the DNS. The library performs public-key  validation  of  re-
@@ -132,7 +132,7 @@ libunbound(3)
 
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>set</b><i>_</i><b>option</b>
               A power-user interface that lets you specify one of the  options
-              from  the  config  file format, see <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>. Not all op-
+              from  the  config  file format, see <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>. Not all op-
               tions are relevant. For some specific options,  such  as  adding
               trust anchors, special routines exist. Pass the option name with
               the trailing ':'.
@@ -145,7 +145,7 @@ libunbound(3)
 
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>config</b>
               A  power-user  interface that lets you specify an unbound config
-              file, see <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, which is read for configuration.  Not
+              file, see <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, which is read for configuration.  Not
               all  options  are  relevant.  For some specific options, such as
               adding trust anchors, special routines exist.  This function  is
               thread-safe  only  if a single instance of ub_ctx* exists in the
@@ -310,7 +310,7 @@ libunbound(3)
 
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>data</b><i>_</i><b>add</b>
               Add  resource  record  data  to  local  authority info, like lo-
-              cal-data <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a> statement.
+              cal-data <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a> statement.
 
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>data</b><i>_</i><b>remove</b>
               Delete local authority data from the name given.
@@ -353,7 +353,7 @@ libunbound(3)
        turn with file read failure.
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.
+       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound.html"><i>unbound</i>(8)</a>.
 
     <b>AUTHORS</b>
        <b>Unbound</b> developers are mentioned in the CREDITS file in  the  distribu-

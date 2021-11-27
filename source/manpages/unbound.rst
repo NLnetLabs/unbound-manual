@@ -46,7 +46,7 @@ unbound(8)
        <b>-c</b> <i>cfgfile</i>
               Set the config file with settings for unbound to read instead of
               reading  the  file  at  the default location, /usr/local/etc/un-
-              bound/unbound.conf. The syntax is described in <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>.
+              bound/unbound.conf. The syntax is described in <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>.
 
        <b>-d</b>     Debug flag: do not fork into the background, but  stay  attached
               to  the  console.   This flag will also delay writing to the log
@@ -66,7 +66,7 @@ unbound(8)
        <b>-V</b>     Show the version number and build options, and exit.
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound-checkconf.html"><i>unbound-checkconf</i>(8)</a>, <i>nsd</i>(8).
+       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound-checkconf.html"><i>unbound-checkconf</i>(8)</a>, <i>nsd</i>(8).
 
     <b>AUTHORS</b>
        <b>Unbound</b>  developers  are mentioned in the CREDITS file in the distribu-

@@ -75,7 +75,7 @@ unbound-host(1)
               trusted-key {}; entries are read.
 
        <b>-C</b> <i>configfile</i>
-              Uses the specified unbound.conf to prime <a href="manpages/libunbound.html"><i>libunbound</i>(3)</a>.  Pass it
+              Uses the specified unbound.conf to prime <a href="libunbound.html"><i>libunbound</i>(3)</a>.  Pass it
               as  first argument if you want to override some options from the
               config file with further arguments on the commandline.
 
@@ -106,7 +106,7 @@ unbound-host(1)
        the lookup encountered a fatal error.
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.
+       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound.html"><i>unbound</i>(8)</a>.
 
 
 

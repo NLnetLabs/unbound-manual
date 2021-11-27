@@ -20,7 +20,7 @@ unbound-anchor(8)
        DNSSEC validation.  The program  fetches  the  trust  anchor  with  the
        method from RFC7958 when regular RFC5011 update fails to bring it up to
        date.  It can be run (as root) from the commandline, or run as part  of
-       startup scripts.  Before you start the <a href="manpages/unbound.html"><i>unbound</i>(8)</a> DNS server.
+       startup scripts.  Before you start the <a href="unbound.html"><i>unbound</i>(8)</a> DNS server.
 
        Suggested usage:
 
@@ -192,7 +192,7 @@ unbound-anchor(8)
               Signature on the root key information.
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.
+       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound.html"><i>unbound</i>(8)</a>.
 
 
 

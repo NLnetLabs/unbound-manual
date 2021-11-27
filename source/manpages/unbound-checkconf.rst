@@ -16,9 +16,9 @@ unbound-checkconf(8)
        <b>unbound-checkconf</b> [<b>-h</b>] [<b>-f</b>] [<b>-o</b> <i>option</i>] [<i>cfgfile</i>]
 
     <b>DESCRIPTION</b>
-       <b>Unbound-checkconf</b>  checks the configuration file for the <a href="manpages/unbound.html"><i>unbound</i>(8)</a> DNS
+       <b>Unbound-checkconf</b>  checks the configuration file for the <a href="unbound.html"><i>unbound</i>(8)</a> DNS
        resolver for syntax and other errors.  The config file  syntax  is  de-
-       scribed in <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>.
+       scribed in <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>.
 
        The available options are:
 
@@ -46,7 +46,7 @@ unbound-checkconf(8)
               unbound configuration file.
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.
+       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound.html"><i>unbound</i>(8)</a>.
 
 
 
