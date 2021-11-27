@@ -78,6 +78,9 @@
   img {
       border-color: initial;
   }
+  pre.man {
+      font-size: 0.9em;
+  }
   .chromeframe {
       background-image: initial;
       background-color: rgb(53, 57, 59);
