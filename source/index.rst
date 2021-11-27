@@ -84,6 +84,7 @@ license, with attribution to NLnet Labs.
    :caption: Manual Pages
 
    manpages/unbound
+   manpages/unbound-checkconf
    manpages/unbound.conf
 
 .. toctree::
