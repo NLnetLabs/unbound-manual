@@ -17,7 +17,7 @@ unbound-control(8)
        <b>unbound-control</b> [<b>-hq</b>] [<b>-c</b> <i>cfgfile</i>] [<b>-s</b> <i>server</i>] <i>command</i>
 
     <b>DESCRIPTION</b>
-       <b>Unbound-control</b> performs remote administration on  the  <a href="/manpages/unbound.html"><i>unbound</i>(8)</a>  DNS
+       <b>Unbound-control</b> performs remote administration on  the  <a href="manpages/unbound.html"><i>unbound</i>(8)</a>  DNS
        server.   It  reads the configuration file, contacts the unbound server
        over SSL sends the command and displays the result.
 
@@ -39,7 +39,7 @@ unbound-control(8)
     <b>COMMANDS</b>
        There are several commands that the server understands.
 
-       <b>start</b>  Start  the  server.  Simply  execs <a href="/manpages/unbound.html"><i>unbound</i>(8)</a>.  The unbound exe-
+       <b>start</b>  Start  the  server.  Simply  execs <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.  The unbound exe-
               cutable is searched for in the <b>PATH</b> set in the environment.   It
               is  started  with  the config file specified using <i>-c</i> or the de-
               fault config file.
@@ -51,7 +51,7 @@ unbound-control(8)
 
        <b>verbosity</b> <i>number</i>
               Change  verbosity  value  for  logging. Same values as <b>verbosity</b>
-              keyword in <a href="/manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>.  This new setting  lasts  until  the
+              keyword in <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>.  This new setting  lasts  until  the
               server is issued a reload (taken from config file again), or the
               next verbosity control command.
 
@@ -752,7 +752,7 @@ unbound-control(8)
               unbound_control.pem).
 
     <b>SEE</b> <b>ALSO</b>
-       <a href="/manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="/manpages/unbound.html"><i>unbound</i>(8)</a>.
+       <a href="manpages/unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="manpages/unbound.html"><i>unbound</i>(8)</a>.
 
 
 
