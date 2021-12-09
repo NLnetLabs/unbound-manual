@@ -51,33 +51,44 @@ license, with attribution to NLnet Labs.
    :maxdepth: 2
    :caption: Use Cases
 
-   use-cases/enterprise-resolver
    use-cases/home-resolver
-   use-cases/isp-resolver
    use-cases/local-stub
+..
+   use-cases/enterprise-resolver
+   use-cases/isp-resolver
    use-cases/privacy-aware-resolver
 
+..
+   .. toctree::
+      :maxdepth: 2
+      :caption: Topics
+
+      topics/privacy/index
+      topics/performance
+      topics/filtering/index
+      topics/monitoring
+      topics/ecs
+      topics/resiliency
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Topics
+      :maxdepth: 2
+      :caption: Topics
 
-   topics/privacy/index
-   topics/performance
-   topics/filtering/index
-   topics/monitoring
-   topics/ecs
-   topics/resiliency
+      topics/privacy/aggressive-nsec
+      topics/filtering/tags-views
+      topics/filtering/rpz
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Internals
+..
+   .. toctree::
+      :maxdepth: 2
+      :caption: Internals
 
-   internals/server-selection
-   internals/compliance
-   internals/architecture
-   internals/code-structure
-   internals/python-modules
-   internals/trust-anchors
+      internals/server-selection
+      internals/compliance
+      internals/architecture
+      internals/code-structure
+      internals/python-modules
+      internals/trust-anchors
 
 .. toctree::
    :maxdepth: 2
@@ -91,11 +102,12 @@ license, with attribution to NLnet Labs.
    manpages/unbound-control
    manpages/unbound-anchor
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Reference
+..
+   .. toctree::
+      :maxdepth: 2
+      :caption: Reference
 
-   reference/libunbound
+      reference/libunbound
    
 
 Indices and tables
