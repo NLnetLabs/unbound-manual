@@ -4,8 +4,8 @@ Monitoring and Reporting
 ========================
 
 There are several ways to configure statistics in Unbound. In this section we'll
-cover Munin and Cacti, but there are many other thrid-party options available
-as well using for example `Zabbix <https://github.com/jeftedelima/Unbound-DNS>`_
+cover Munin and Cacti, but there are many other third-party options available as
+well, using for example `Zabbix <https://github.com/jeftedelima/Unbound-DNS>`_
 or `Prometheus <https://github.com/svartalf/unbound-telemetry>`_.
 
 Configuration
@@ -124,7 +124,7 @@ Statistics with Cacti
 
 The setup is described in the README in the tarball in the Unbound source
 contrib directory: :download:`contrib/unbound_cacti.tar.gz
-<https://github.com/NLnetLabs/unbound/blob/master/contrib/unbound_cacti.tar.gz?raw=true>`_
+<https://github.com/NLnetLabs/unbound/blob/master/contrib/unbound_cacti.tar.gz?raw=true>`
 (contributed by Dmitriy Demidov). 
 
 Example output from unbound cacti statistics:
