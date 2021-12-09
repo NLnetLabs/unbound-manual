@@ -92,18 +92,6 @@ license, with attribution to NLnet Labs.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Manual Pages
-
-   manpages/unbound
-   manpages/unbound-checkconf
-   manpages/unbound.conf
-   manpages/unbound-host
-   manpages/libunbound
-   manpages/unbound-control
-   manpages/unbound-anchor
-
-.. toctree::
-   :maxdepth: 2
    :caption: Unbound Library Tutorial
 
    libunbound-tutorial/resolve-a-name
@@ -113,6 +101,17 @@ license, with attribution to NLnet Labs.
    libunbound-tutorial/lookup-threads
    libunbound-tutorial/dnssec-validate
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Manual Pages
+
+   manpages/unbound
+   manpages/unbound-checkconf
+   manpages/unbound.conf
+   manpages/unbound-host
+   manpages/libunbound
+   manpages/unbound-control
+   manpages/unbound-anchor
 ..
    .. toctree::
       :maxdepth: 2
