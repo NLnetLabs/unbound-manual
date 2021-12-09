@@ -66,7 +66,6 @@ license, with attribution to NLnet Labs.
       topics/privacy/index
       topics/performance
       topics/filtering/index
-      topics/monitoring
       topics/ecs
       topics/resiliency
 
@@ -77,6 +76,7 @@ license, with attribution to NLnet Labs.
       topics/privacy/aggressive-nsec
       topics/filtering/tags-views
       topics/filtering/rpz
+      topics/monitoring
 
 ..
    .. toctree::
