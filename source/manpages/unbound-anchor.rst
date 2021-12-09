@@ -5,7 +5,7 @@ unbound-anchor(8)
 
 .. raw:: html
 
-    <pre class="man">unbound-anchor(8)               unbound 1.13.2               unbound-anchor(8)
+    <pre class="man">unbound-anchor(8)               unbound 1.14.0               unbound-anchor(8)
 
 
 

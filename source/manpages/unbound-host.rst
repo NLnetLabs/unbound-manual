@@ -5,7 +5,7 @@ unbound-host(1)
 
 .. raw:: html
 
-    <pre class="man">unbound-host(1)                 unbound 1.13.2                 unbound-host(1)
+    <pre class="man">unbound-host(1)                 unbound 1.14.0                 unbound-host(1)
 
 
 

@@ -5,7 +5,7 @@ unbound-checkconf(8)
 
 .. raw:: html
 
-    <pre class="man">unbound-checkconf(8)            unbound 1.13.2            unbound-checkconf(8)
+    <pre class="man">unbound-checkconf(8)            unbound 1.14.0            unbound-checkconf(8)
 
 
 

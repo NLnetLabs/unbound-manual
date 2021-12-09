@@ -5,12 +5,12 @@ unbound(8)
 
 .. raw:: html
 
-    <pre class="man">unbound(8)                      unbound 1.13.2                      unbound(8)
+    <pre class="man">unbound(8)                      unbound 1.14.0                      unbound(8)
 
 
 
     <b>NAME</b>
-       <b>unbound</b> - Unbound DNS validating resolver 1.13.2.
+       <b>unbound</b> - Unbound DNS validating resolver 1.14.0.
 
     <b>SYNOPSIS</b>
        <b>unbound</b> [<b>-h</b>] [<b>-d</b>] [<b>-p</b>] [<b>-v</b>] [<b>-c</b> <i>cfgfile</i>]

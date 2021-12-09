@@ -5,7 +5,7 @@ unbound-control(8)
 
 .. raw:: html
 
-    <pre class="man">unbound-control(8)              unbound 1.13.2              unbound-control(8)
+    <pre class="man">unbound-control(8)              unbound 1.14.0              unbound-control(8)
 
 
 

@@ -5,7 +5,7 @@ libunbound(3)
 
 .. raw:: html
 
-    <pre class="man">libunbound(3)                   unbound 1.13.2                   libunbound(3)
+    <pre class="man">libunbound(3)                   unbound 1.14.0                   libunbound(3)
 
 
 
@@ -19,7 +19,7 @@ libunbound(3)
        <b>ub</b><i>_</i><b>resolve</b><i>_</i><b>async,</b>      <b>ub</b><i>_</i><b>cancel,</b>     <b>ub</b><i>_</i><b>resolve</b><i>_</i><b>free,</b>     <b>ub</b><i>_</i><b>strerror,</b>
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>print</b><i>_</i><b>local</b><i>_</i><b>zones,</b>     <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>zone</b><i>_</i><b>add,</b>      <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>zone</b><i>_</i><b>remove,</b>
        <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>data</b><i>_</i><b>add,</b>  <b>ub</b><i>_</i><b>ctx</b><i>_</i><b>data</b><i>_</i><b>remove</b>  - Unbound DNS validating resolver
-       1.13.2 functions.
+       1.14.0 functions.
 
     <b>SYNOPSIS</b>
        <b>#include</b> <b>&lt;unbound.h&gt;</b>
