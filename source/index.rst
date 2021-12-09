@@ -102,6 +102,17 @@ license, with attribution to NLnet Labs.
    manpages/unbound-control
    manpages/unbound-anchor
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Unbound Library Tutorial
+
+   libunbound-tutorial/resolve-a-name
+   libunbound-tutorial/setup-context
+   libunbound-tutorial/examine-results
+   libunbound-tutorial/async-lookup
+   libunbound-tutorial/lookup-threads
+   libunbound-tutorial/dnssec-validate
+
 ..
    .. toctree::
       :maxdepth: 2
