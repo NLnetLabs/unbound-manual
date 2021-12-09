@@ -3,8 +3,6 @@
 .. Warning:: This project has the goal to replace the `existing documentation
              <https://www.nlnetlabs.nl/documentation/unbound/>`_ with an
              open source community project. **This is a work in progress.**
-             A skeleton and table of contents is in place but not every page
-             has been written.
              
              Do you love to write and know your way around DNS and Unbound? 
              Help us expand unbound.readthedocs.io and we'll compensate you 
