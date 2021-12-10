@@ -62,7 +62,6 @@ license, with attribution to NLnet Labs.
       :caption: Topics
 
       topics/privacy/index
-      topics/performance
       topics/filtering/index
       topics/ecs
       topics/resiliency
@@ -74,6 +73,7 @@ license, with attribution to NLnet Labs.
       topics/privacy/aggressive-nsec
       topics/filtering/tags-views
       topics/filtering/rpz
+      topics/performance
       topics/monitoring
 
 ..
