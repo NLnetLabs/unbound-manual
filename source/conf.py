@@ -155,6 +155,9 @@ man_pages = [
 # Execute custom script to download the latest version of Unbound
 exec(open("get_unbound_latest.py").read())
 
+import subprocess
+
+rc = subprocess.call("./man2pre.sh unbound-1.14.0/doc/unbound.conf.5.in manpages/example.conf.html", shell=True)
 
 # -- Options for Texinfo output ----------------------------------------------
 

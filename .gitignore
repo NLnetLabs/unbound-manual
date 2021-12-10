@@ -3,3 +3,4 @@ build/
 .vscode
 source/_build
 source/unbound-*
+source/manpages/example.conf*
