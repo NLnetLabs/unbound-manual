@@ -76,17 +76,19 @@ license, with attribution to NLnet Labs.
       topics/performance
       topics/monitoring
 
-..
-   .. toctree::
+
+.. toctree::
       :maxdepth: 2
       :caption: Internals
-
+      
+      internals/python-modules
+..
       internals/server-selection
       internals/compliance
       internals/architecture
       internals/code-structure
-      internals/python-modules
       internals/trust-anchors
+
 
 .. toctree::
    :maxdepth: 2

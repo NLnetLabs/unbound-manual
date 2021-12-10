@@ -43,7 +43,7 @@ By default the Unbound config uses `chroot <https://wiki.archlinux.org/title/chr
 	# disable chroot
 	chroot: ""
 
-By default Unbound assumes that a user named "unbound" exists, which you can add this user with an account management tool available on your system. You can also disable this feature by adding ``username: ""`` in the config. If it is enabled, after the setup, any other user privileges are dropped and the configured username is assumed.
+By default Unbound assumes that a user named "unbound" exists, which you can add this user with an account management tool available on your system. You can also disable this feature by adding ``username: ""`` in the config. If it is enabled, after the setup, any other user privileges are dropped and the configured username is assumed. If this user  needs access to files (such as the 'trust anchor' mentioned below) these can be created by executing with ``sudo -u unbound`` in front of it.
 
 .. Important:: Unbound comes with the :command:`unbound-checkconf` tool. This tool allows you to check the config file for errors before starting Unbound. It is very convenient because if any errors are found it tells you where they are, which is particularly useful when Unbound is already running to avoid failure to restart due to a configuration error.
 
@@ -88,7 +88,8 @@ Set up Trust Anchor (Enable DNSSEC)
 
 To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which we strongly recommend, we need to set up a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
 
-To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by configuring a trust anchor. The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
+To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by configuring a trust anchor. This trust anchor will only serve as the initial anchor from builtin values. To keep this anchor up to date, Unbound must be able to read and write to this file.
+The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
 
 .. code::bash
 
@@ -104,16 +105,13 @@ To enable DNSSEC, we add ``auto-trust-anchor-file`` under the ``server`` options
 
 Note that on some systems the ``/usr/local/etc/unbound/`` directory might be write-protected. 
 
-If the :command:`unbound-control-setup` command fails due to the insufficient permissions, instead run the command as the correct user.
+If the :command:`unbound-control-setup` command fails due to the insufficient permissions, run the command as the correct user, here we use the user ``unbound`` as this is the default user.
 
 .. code:: bash
 
 	sudo -u unbound unbound-anchor
 
-
-.. https://sizeof.cat/post/unbound-on-macos/
-
-
+This step is also important when using the ``chroot`` jail.
 
 
 .. @TODO Write ACL's -> access-control
