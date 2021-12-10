@@ -109,6 +109,8 @@ When we have a successful compilation, we can install Unbound to make available 
 
 We now have fully compiled and installed version of Unbound, and :ref:`continue to testing it<Testing>`.
 
+Please note that the default configuration file is located at ``/usr/local/etc/unbound/unbound.conf`` and created during the :command:`make` step. This file contains all possible configuration options for Unbound.
+
 .. Ref to testing
 
 macOS Big Sur
