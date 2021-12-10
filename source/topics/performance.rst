@@ -49,16 +49,16 @@ On OpenBSD change header and recompile kernel. On Solaris ``ndd -set /dev/udp
 udp_max_buf 8388608``.
 
 Also set ``so-sndbuf`` to a larger value (4m or 8m) for a busy server. Same as
-``rcvbuf``, but now for spikes in replies, and it is ``net.core.wmem_max``. Might need a
-smaller value, as spikes are less common in replies, you can see rcv and snd
-buffer overruns with ``netstat -su``, ``RcvbufErrors`` and ``SndbufErrors``, and similar
-reports on BSD.
+``rcvbuf``, but now for spikes in replies, and it is ``net.core.wmem_max``.
+Might need a smaller value, as spikes are less common in replies, you can see
+rcv and snd buffer overruns with ``netstat -su``, ``RcvbufErrors`` and
+``SndbufErrors``, and similar reports on BSD.
 
 For the TCP listen backlog on Linux, it is possible to tweak the kernel
 parameters to allow larger values. Unbound attempts to increase this to enable
 it to handle spikes in incoming TCP or TLS connections. The number that unbound
-attempts is defined in ``TCP_BACKLOG`` in ``services/listen_dnsport.c``, it does not
-need to be changed if the current value, about 256, is sufficient for you.
+attempts is defined in ``TCP_BACKLOG`` in ``services/listen_dnsport.c``, it does
+not need to be changed if the current value, about 256, is sufficient for you.
 However, the Linux kernel limits this value silently to a maximum configured
 into the kernel settings. The kernel can be tweaked to enable a higher number
 with ``net.core.somaxconn = 256`` and ``net.ipv4.tcp_max_syn_backlog = 256``.
@@ -102,11 +102,11 @@ sections below.
 Using Libevent 
 --------------
 
-Libevent is a BSD licensed cross platform wrapper around platform
-specific event notification system calls. Unbound can use it to efficiently use
-more than 1024 file descriptors. Install ``libevent`` (and ``libevent-devel``, if it
-exists) with your favorite package manager. Before compiling unbound run
-``./configure --with-libevent``.
+Libevent is a BSD licensed cross platform wrapper around platform specific event
+notification system calls. Unbound can use it to efficiently use more than 1024
+file descriptors. Install ``libevent`` (and ``libevent-devel``, if it exists)
+with your favorite package manager. Before compiling unbound run ``./configure
+--with-libevent``.
 
 Now you can give any number you like for ``outgoing-range``. Also increase the
 ``num-queries-per-thread`` value.
@@ -150,11 +150,11 @@ To compile for forked operation, before compilation use ``./configure
 forked operation. Because no locking has to be done, the code speeds up (about
 10 to 20%).
 
-In the config file, ``num-threads`` still specifies the number of cores you want to
-use (even though it uses processes and not threads). And note that the
-``outgoing-range`` and cache memory values are all per thread. This means that much
-more memory is used, as every core uses its own cache. Because every core has
-its own cache, if one gets cache poisoned, the others are not affected.
+In the config file, ``num-threads`` still specifies the number of cores you want
+to use (even though it uses processes and not threads). And note that the
+``outgoing-range`` and cache memory values are all per thread. This means that
+much more memory is used, as every core uses its own cache. Because every core
+has its own cache, if one gets cache poisoned, the others are not affected.
 
 .. code-block:: text
 
