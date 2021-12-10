@@ -90,14 +90,9 @@ license, with attribution to NLnet Labs.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Unbound Library Tutorial
+   :caption: Developer
 
-   libunbound-tutorial/resolve-a-name
-   libunbound-tutorial/setup-context
-   libunbound-tutorial/examine-results
-   libunbound-tutorial/async-lookup
-   libunbound-tutorial/lookup-threads
-   libunbound-tutorial/dnssec-validate
+   developer/libunbound-tutorial/index
 
 .. toctree::
    :maxdepth: 2
