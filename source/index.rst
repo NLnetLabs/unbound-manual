@@ -76,13 +76,12 @@ license, with attribution to NLnet Labs.
       topics/performance
       topics/monitoring
 
-
-.. toctree::
+..
+   .. toctree::
       :maxdepth: 2
       :caption: Internals
       
       internals/python-modules
-..
       internals/server-selection
       internals/compliance
       internals/architecture
@@ -95,6 +94,7 @@ license, with attribution to NLnet Labs.
    :caption: Developer
 
    developer/libunbound-tutorial/index
+   internals/python-modules
 
 .. toctree::
    :maxdepth: 2
