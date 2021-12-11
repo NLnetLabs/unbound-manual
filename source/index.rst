@@ -1,12 +1,9 @@
 .. Unbound User Manual master file
 
-.. Warning:: This project has the goal to replace the `existing documentation
-             <https://www.nlnetlabs.nl/documentation/unbound/>`_ with an
-             open source community project. **This is a work in progress.**
-             
-             Do you love to write and know your way around DNS and Unbound? 
-             Help us expand unbound.readthedocs.io and we'll compensate you 
-             for your time. Contact us at docs@nlnetlabs.nl to apply.
+.. Note::  Do you love to write and know your way around DNS and Unbound? 
+           Help us expand this documentation and we'll compensate you 
+           for your time. Contact us at docs@nlnetlabs.nl or find us on
+           `Twitter <https://twitter.com/nlnetlabs>`_.
 
 Unbound by NLnet Labs
 =====================
