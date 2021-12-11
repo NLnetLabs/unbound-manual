@@ -8,8 +8,10 @@ DNS-over-HTTPS
 DNS-over-TLS (DoT) makes it possible to encrypt DNS messages and gives a DNS
 client the possibility to authenticate a resolver. As implied by the name, this
 is done by sending DNS messages over TLS. Unbound can handle TLS encrypted DNS
-messages since `2011 <https://github.com/NLnetLabs/unbound/commit/aa0536dcb5846206d016a03d8d66ad4279247d9e>`_, long before the IETF DPRIVE working group started its work
-on the `DoT specification <https://tools.ietf.org/html/rfc7858>`_. 
+messages since `2011
+<https://github.com/NLnetLabs/unbound/commit/aa0536dcb5846206d016a03d8d66ad4279247d9e>`_,
+long before the IETF DPRIVE working group started its work on the `DoT
+specification <https://tools.ietf.org/html/rfc7858>`_. 
 
 There are, however, DNS clients that do not support DoT but are able to use
 DNS-over-HTTPS (DoH) instead. Where DoT sends a DNS message directly over TLS,
@@ -109,9 +111,9 @@ Unbound to listen on the HTTPS port:
         tls-service-pem: "cert.pem"
 
 The port that Unbound will use for incoming DoH traffic is by default set to 443
-and can be changed using the https-port configuration option.
+and can be changed using the ``https-port`` configuration option.
 
-Unbound is now ready to handle DoH queries on the default HTTP endpoint, which
+Unbound is now ready to handle DoH queriess on the default HTTP endpoint, which
 is */dns-query*:
 
 .. code-block:: text
