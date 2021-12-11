@@ -104,12 +104,12 @@ license, with attribution to NLnet Labs.
    manpages/libunbound
    manpages/unbound-control
    manpages/unbound-anchor
-..
-   .. toctree::
-      :maxdepth: 2
-      :caption: Reference
 
-      reference/libunbound
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+
+   reference/history/index
    
 
 Indices and tables
