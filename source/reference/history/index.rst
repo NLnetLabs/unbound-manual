@@ -13,7 +13,8 @@ implementation was based on a prototype written in Java. It was released in May
 This section contains several historic documents. There are also presentations
 about the intial Unbound design delivered at :download:`IETF 67
 <files/ietf67-design-02.pdf>` and :download:`RIPE 56
-<files/ripe56_unbound_02.pdf>`.
+<files/ripe56_unbound_02.pdf>`, as well as the :download:`Windows Vista install
+guide <files/unbound-windows-manual-02.pdf>`.
 
 .. toctree::
    :maxdepth: 1
