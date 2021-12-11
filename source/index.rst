@@ -48,6 +48,7 @@ license, with attribution to NLnet Labs.
 
    use-cases/home-resolver
    use-cases/local-stub
+
 ..
    use-cases/enterprise-resolver
    use-cases/isp-resolver
@@ -65,14 +66,24 @@ license, with attribution to NLnet Labs.
 
 .. toctree::
       :maxdepth: 2
-      :caption: Topics
-
-      topics/privacy/aggressive-nsec
-      topics/filtering/tags-views
-      topics/filtering/rpz
+      :caption: Core
+   
       topics/performance
       topics/monitoring
 
+.. toctree::
+      :maxdepth: 2
+      :caption: Privacy
+
+      topics/privacy/aggressive-nsec
+      topics/privacy/dns-over-https
+
+.. toctree::
+      :maxdepth: 2
+      :caption: Filtering
+
+      topics/filtering/tags-views
+      topics/filtering/rpz
 ..
    .. toctree::
       :maxdepth: 2
@@ -84,7 +95,6 @@ license, with attribution to NLnet Labs.
       internals/architecture
       internals/code-structure
       internals/trust-anchors
-
 
 .. toctree::
    :maxdepth: 2
