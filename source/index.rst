@@ -91,7 +91,8 @@ license, with attribution to NLnet Labs.
    :caption: Developer
 
    developer/libunbound-tutorial/index
-   internals/python-modules
+   developer/python-modules
+   developer/doxygen-docs
 
 .. toctree::
    :maxdepth: 2
