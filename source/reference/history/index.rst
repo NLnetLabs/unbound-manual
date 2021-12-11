@@ -1,4 +1,4 @@
-.. _doc_background:
+.. _doc_history:
 
 History
 =======

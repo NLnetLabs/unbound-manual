@@ -1,5 +1,3 @@
-.. _doc_requirements:
-
 Requirements for Recursive Caching Resolver
 ===========================================
 
@@ -44,7 +42,7 @@ Sisson and Roy Arends from Nominet.  Around 2006 the idea came to create
 a full-fledged C implementation ready for deployed use.  NLnet Labs
 volunteered to write this implementation.
 
-1. Goals
+3. Goals
 --------
 
 - A validating recursive DNS resolver

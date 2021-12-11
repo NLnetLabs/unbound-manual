@@ -1,5 +1,3 @@
-.. _doc_resolver_prototype:
-
 Unbound Resolver Prototype
 ==========================
 
@@ -12,7 +10,7 @@ can be downloaded* `here
 Unbound is a project to develop independent open-source DNS software and
 documentation. It is jointly funded by `VeriSign, Inc.
 <https://www.verisign.com>`_, and the `University of Southern
-California/Information Sciences Institute <http://www.isi.edu>`.
+California/Information Sciences Institute <http://www.isi.edu>`_.
 
 This is our prototype full-service, iterative-mode, validating DNS resolver.  It
 is written entirely in Java and is licensed under the `BSD open-source license
