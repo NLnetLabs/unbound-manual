@@ -49,7 +49,6 @@ Internals
 
 - Architecture
 - Code structure
-- Compliance
 - Server selection
 - Trust Anchors
 - Python modules
