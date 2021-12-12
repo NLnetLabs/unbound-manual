@@ -1,4 +1,4 @@
-.. Unbound User Manual master file
+.. _doc_index:
 
 Unbound by NLnet Labs
 =====================
@@ -8,16 +8,15 @@ caching DNS resolver. It is designed to be fast and lean and incorporates modern
 features based on open standards.
 
 .. Note::  Do you love to write and know your way around DNS and Unbound? 
-           Help us expand this documentation and we'll compensate you 
-           for your time. Contact us at docs@nlnetlabs.nl or find us on
-           `Twitter <https://twitter.com/nlnetlabs>`_.
+           :ref:`Help us expand this documentation <doc_todo>` and we'll
+           compensate you for your time. Contact us at docs@nlnetlabs.nl or find
+           us on `Twitter <https://twitter.com/nlnetlabs>`_.
 
 Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
-with packages available for most platforms. It is included in the base-system of
-FreeBSD and OpenBSD and in the standard repositories of most Linux
-distributions. Installation and configuration is designed to be easy. Setting up
-a resolver for your machine or network can be done with only a few lines of
-configuration.
+with packages available for most platforms. It is included in the standard
+repositories of most Linux distributions. Installation and configuration is
+designed to be easy. Setting up a resolver for your machine or network can be
+done with only a few lines of configuration.
 
 This documentation is an open source project maintained by NLnet Labs. is edited
 via text files in the `reStructuredText
@@ -49,21 +48,6 @@ license, with attribution to NLnet Labs.
    use-cases/home-resolver
    use-cases/local-stub
 
-..
-   use-cases/enterprise-resolver
-   use-cases/isp-resolver
-   use-cases/privacy-aware-resolver
-
-..
-   .. toctree::
-      :maxdepth: 2
-      :caption: Topics
-
-      topics/privacy/index
-      topics/filtering/index
-      topics/ecs
-      topics/resiliency
-
 .. toctree::
       :maxdepth: 2
       :caption: Core
@@ -84,17 +68,6 @@ license, with attribution to NLnet Labs.
 
       topics/filtering/tags-views
       topics/filtering/rpz
-..
-   .. toctree::
-      :maxdepth: 2
-      :caption: Internals
-      
-      internals/python-modules
-      internals/server-selection
-      internals/compliance
-      internals/architecture
-      internals/code-structure
-      internals/trust-anchors
 
 .. toctree::
    :maxdepth: 2
@@ -121,6 +94,7 @@ license, with attribution to NLnet Labs.
    :caption: Reference
 
    reference/history/index
+   reference/todo
    
 
 Indices and tables
