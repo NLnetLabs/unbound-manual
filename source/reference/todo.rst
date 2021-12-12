@@ -27,7 +27,6 @@ Use Cases
 Topics
 ------
 
-- ECS
 - Resiliency (e.g. Rate Limiting, ACLs)
 - EDNS Client Subnet
 
@@ -50,5 +49,5 @@ Internals
 - Architecture
 - Code structure
 - Server selection
-- Trust Anchors
+- DNSSEC Trust Anchor Management (unbound-anchor and :RFC:`5011`)
 - Python modules
