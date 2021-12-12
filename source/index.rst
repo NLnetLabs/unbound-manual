@@ -93,6 +93,7 @@ license, with attribution to NLnet Labs.
    :maxdepth: 1
    :caption: Reference
 
+   reference/rfc-compliance
    reference/history/index
    reference/todo
    
