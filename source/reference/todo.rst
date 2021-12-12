@@ -9,7 +9,7 @@ the resolver has become more versatile and feature-rich over the years, the
 NLnet Labs team decided to add this documention, providing installation guides
 for different platforms, practical use cases, and background information. 
 
-The to-do list below provides and overview if the the topics we still have to
+The to-do list below provides an overview if the the topics we still have to
 cover. If you feel something is missing, please `open an issue on GitHub
 <https://github.com/NLnetLabs/unbound-manual/issues>`_ to let us know. 
 
@@ -28,9 +28,7 @@ Topics
 ------
 
 - ECS
-- Resiliency
-    - Rate Limiting
-    - ACLs
+- Resiliency (e.g. Rate Limiting, ACLs)
 - EDNS Client Subnet
 
 Filtering and Manipulating Data
