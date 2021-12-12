@@ -54,6 +54,7 @@ license, with attribution to NLnet Labs.
    
       topics/performance
       topics/monitoring
+      topics/serve-stale
 
 .. toctree::
       :maxdepth: 2
