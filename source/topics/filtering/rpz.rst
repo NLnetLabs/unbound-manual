@@ -37,6 +37,8 @@ There is, however, a policy format that will work on different resolver
 implementations, and that has capabilities to be directly transferred and loaded
 from external sources: Response Policy Zones (RPZ).
 
+We'll first discuss the different policies and RPZ actions with examples, and then show the implementation configuration.
+
 .. index:: RPZ policies
 
 RPZ Policies
@@ -222,7 +224,9 @@ containing a Local Data action. For example, the IPv4 address for
   $ORIGIN rpz.nlnetlabs.nl.
   32.34.216.184.93.rpz-ip.rpz.nlnetlabs.nl. A 192.0.2.1
 
-  ---
+And we can verify that it works:
+
+.. code-block:: text
 
   $ drill example.com
   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 13670
@@ -244,10 +248,10 @@ zone can look like:
 .. code-block:: text
 
   server:
-    module-config: "respip validator iterator"
+      module-config: "respip validator iterator"
   rpz:
-    name: rpz.nlnetlabs.nl
-    zonefile: rpz.nlnetlabs.nl
+      name: rpz.nlnetlabs.nl
+      zonefile: rpz.nlnetlabs.nl
 
 In above example the policy zone will be loaded from file. It is also possible
 to load the zone using DNS zone transfers. Both AXFR and IXFR is supported, all
@@ -258,11 +262,11 @@ as specifying the server to get the zone from:
 .. code-block:: text
 
   server:
-    module-config: "respip validator iterator"
+      module-config: "respip validator iterator"
   rpz:
-    name: rpz.nlnetlabs.nl
-    master: <ip address of server to transfer from>
-    zonefile: rpz.nlnetlabs.nl
+      name: rpz.nlnetlabs.nl
+      master: <ip address of server to transfer from>
+      zonefile: rpz.nlnetlabs.nl
 
 The zone will now be transferred from the configured address and saved to a
 zonefile on disk. It is possible to have more than one policy zone in Unbound.
@@ -271,13 +275,13 @@ Having multiple policy zones is as simple as having multiple ``rpz`` clauses:
 .. code-block:: text
 
   server:
-    module-config: "respip validator iterator"
+      module-config: "respip validator iterator"
   rpz:
-    name: rpz.nlnetlabs.nl
-    zonefile: rpz.nlnetlabs.nl
+      name: rpz.nlnetlabs.nl
+      zonefile: rpz.nlnetlabs.nl
   rpz:
-    name: rpz2.nlnetlabs.nl
-    zonefile: rpz2.nlnetlabs.nl
+      name: rpz2.nlnetlabs.nl
+      zonefile: rpz2.nlnetlabs.nl
 
 The policy zones will be applied in the configured order. In the example,
 Unbound will only look at the ``rpz2.nlnetlabs.nl`` policies if there is no
@@ -297,7 +301,7 @@ actions with the same name.
 The ``cname`` override option will make it possible to apply a local data action
 using a CNAME for all matching triggers in the policy zone. The CNAME to use in
 the answer can be configured using the ``rpz-cname-override`` configuration
-option. Using these overrides are nice if you use an external feed to get a list
+option. Using these overrides is nice if you use an external feed to get a list
 of triggers, but would like to redirect all your users to your own domain:
 
 .. code-block:: text
@@ -307,21 +311,23 @@ of triggers, but would like to redirect all your users to your own domain:
   drop.example.com.rpz.nlnetlabs.nl. CNAME rpz-drop.
   32.34.216.184.93.rpz-ip.rpz.nlnetlabs.nl. A 192.0.2.1
 
-  ---
+This also requires a change in the Unbound config:
 
-  Unbound config:
+.. code-block:: text
+
   server:
-    module-config: "respip validator iterator"
+      module-config: "respip validator iterator"
 
   rpz:
-    name: rpz.nlnetlabs.nl
-    zonefile: rpz.nlnetlabs.nl
-    rpz-action-override: cname
-    rpz-cname-override: "example.nl."
+      name: rpz.nlnetlabs.nl
+      zonefile: rpz.nlnetlabs.nl
+      rpz-action-override: cname
+      rpz-cname-override: "example.nl."
 
-  ---
+Then we can verify that it works:
 
-  Example queries:
+.. code-block:: text
+
   $ drill drop.example.com
   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 14547
   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0
@@ -366,19 +372,19 @@ for which they apply.
 .. code-block:: text
 
   server:
-    module-config: "respip validator iterator"
-    define-tag: "malware social"
-    access-control-tag 127.0.0.10/32 "social"
-    access-control-tag 127.0.0.20/32 "social malware"
-    access-control-tag 127.0.0.30/32 "malware"
+      module-config: "respip validator iterator"
+      define-tag: "malware social"
+      access-control-tag 127.0.0.10/32 "social"
+      access-control-tag 127.0.0.20/32 "social malware"
+      access-control-tag 127.0.0.30/32 "malware"
   rpz:
-    name: malware.rpz.example.com
-    zonefile: malware.rpz.example.com
-    tags: "malware"
+      name: malware.rpz.example.com
+      zonefile: malware.rpz.example.com
+      tags: "malware"
   rpz:
-    name: social.rpz.example.com
-    zonefile: social.rpz.example.com
-    tags: "social"
+      name: social.rpz.example.com
+      zonefile: social.rpz.example.com
+      tags: "social"
 
 Queries from 127.0.0.1 will not be filtered. For queries coming from 127.0.0.10
 only the policies from the social.rpz.example.com zone will be used, for
