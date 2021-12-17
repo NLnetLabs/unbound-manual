@@ -3,9 +3,8 @@
 Unbound by NLnet Labs
 =====================
 
-Welcome to the Unbound documentation. Unbound is a validating, recursive,
-caching DNS resolver. It is designed to be fast and lean and incorporates modern
-features based on open standards.
+Unbound is a validating, recursive, caching DNS resolver. It is designed to be
+fast and lean and incorporates modern features based on open standards.
 
 .. Note::  Do you love to write and know your way around DNS and Unbound? 
            :ref:`Help us expand this documentation <doc_todo>` and we'll
@@ -18,12 +17,11 @@ repositories of most Linux distributions. Installation and configuration is
 designed to be easy. Setting up a resolver for your machine or network can be
 done with only a few lines of configuration.
 
-This documentation is an open source project maintained by NLnet Labs. is edited
-via text files in the `reStructuredText
-<http://www.sphinx-doc.org/en/stable/rest.html>`_ markup language and then
-compiled into a static website/offline document using the open source `Sphinx
-<http://www.sphinx-doc.org>`_  and `ReadTheDocs <https://readthedocs.org/>`_
-tools.
+This documentation is an `open source project
+<https://github.com/NLnetLabs/unbound-manual/>`_ and is edited via text files in
+the `reStructuredText <http://www.sphinx-doc.org/en/stable/rest.html>`_ markup
+language and then compiled into a static website/offline document using `Sphinx
+<http://www.sphinx-doc.org>`_  and `ReadTheDocs <https://readthedocs.org/>`_.
 
 We always appreciate your feedback and improvements. You can submit an issue or
 pull request on the `GitHub repository
