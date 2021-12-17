@@ -21,7 +21,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'Unbound'
-copyright = '2020-2022, NLnet Labs'
+copyright = '2007-2022, NLnet Labs'
 author = 'NLnet Labs (CC-BY 3.0)'
 
 # The short X.Y version
@@ -147,7 +147,29 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
+man_pages = [
+    ('manpages/unbound', 'unbound', 'Unbound DNS validating resolver',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
 
+    ('manpages/unbound-checkconf', 'unbound-checkconf', 'Check unbound configuration file for errors.',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
+
+    ('manpages/unbound-anchor', 'unbound-anchor', 'Unbound anchor utility.',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
+
+    ('manpages/unbound.conf', 'unbound.conf', 'Unbound configuration file.',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 5),
+
+    ('manpages/unbound-control', 'unbound-control', 'Unbound remote server control utility.',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
+
+    ('manpages/unbound-host', 'unbound-host', 'Unbound DNS lookup utility',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 1),
+    
+    ('manpages/libunbound', 'libunbound', 'Unbound DNS validating resolver functions.',
+    "Unbound developers are mentioned in the CREDITS file in the distribution.", 3)
+]
+manpages_url = '{page}.html'
 
 # -- Options for Texinfo output ----------------------------------------------
 
