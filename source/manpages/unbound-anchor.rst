@@ -37,10 +37,10 @@ certificate files.
 
 It tests if the root anchor file works, and if not, and an update is possible,
 attempts to update the root anchor using the root update certificate. It
-performs a https fetch of :file:`root-anchors.xml` and checks the results (:RFC:`7958`), if
-all checks are successful, it updates the root anchor file. Otherwise the root
-anchor file is unchanged. It performs :RFC:`5011` tracking if the DNSSEC information
-available via the DNS makes that possible.
+performs a https fetch of :file:`root-anchors.xml` and checks the results
+(:RFC:`7958`), if all checks are successful, it updates the root anchor file.
+Otherwise the root anchor file is unchanged. It performs :RFC:`5011` tracking if
+the DNSSEC information available via the DNS makes that possible.
 
 It does not perform an update if the certificate is expired, if the network is
 down or other errors occur.
