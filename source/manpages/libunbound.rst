@@ -52,7 +52,7 @@ Synopsis
 *int* **ub_process**\ (*struct ub_ctx\** ctx);
 
 *int* **ub_resolve**\ (*struct ub_ctx\** ctx, *char\** name,
-*int* rrtype, *int* rrclass, struct ub_result** result);
+*int* rrtype, *int* rrclass, *struct ub_result\*\** result);
 
 *int* **ub_resolve_async**\ (*struct ub_ctx\** ctx, *char\** name,
 *int* rrtype, *int* rrclass, *void\** mydata,
