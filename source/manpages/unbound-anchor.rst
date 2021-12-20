@@ -11,7 +11,7 @@ Synopsis
 Description
 -----------
 
-:command:`Unbound-anchor`` performs setup or update of the root trust anchor for
+:command:`Unbound-anchor` performs setup or update of the root trust anchor for
 DNSSEC validation. The program fetches the trust anchor with the method from
 :RFC:`7958` when regular :RFC:`5011` update fails to bring it up to date. It can
 be run (as root) from the commandline, or run as part of startup scripts. Before

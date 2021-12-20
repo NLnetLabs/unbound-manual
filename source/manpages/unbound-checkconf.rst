@@ -14,7 +14,7 @@ Description
 
 :command:`Unbound-checkconf` checks the configuration file for the
 :manpage:`unbound(8)` DNS resolver for syntax and other errors. The config file
-syntax is de- scribed in :manpage:`unbound.conf(5)`.
+syntax is described in :manpage:`unbound.conf(5)`.
 
 The available options are:
 
