@@ -1,54 +1,55 @@
 .. _doc_unbound_checkconf_manpage:
 
 unbound-checkconf(8)
---------------------
+====================
 
-.. raw:: html
+Synopsis
+--------
 
-    <pre class="man">unbound-checkconf(8)            unbound 1.14.0            unbound-checkconf(8)
+:command:`unbound-checkconf` [:option:`-h`] [:option:`-f`] [:option:`-o`
+``option``] cfgfile
 
+Description
+-----------
 
+:command:`Unbound-checkconf` checks the configuration file for the
+:manpage:`unbound(8)` DNS resolver for syntax and other errors. The config file
+syntax is described in :manpage:`unbound.conf(5)`.
 
-    <b>NAME</b>
-       unbound-checkconf - Check unbound configuration file for errors.
+The available options are:
 
-    <b>SYNOPSIS</b>
-       <b>unbound-checkconf</b> [<b>-h</b>] [<b>-f</b>] [<b>-o</b> <i>option</i>] [<i>cfgfile</i>]
+.. option:: -h
 
-    <b>DESCRIPTION</b>
-       <b>Unbound-checkconf</b>  checks the configuration file for the <a href="unbound.html"><i>unbound</i>(8)</a> DNS
-       resolver for syntax and other errors.  The config file  syntax  is  de-
-       scribed in <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>.
+    Show the version and commandline option help.
 
-       The available options are:
+.. option:: -f
+    
+    Print full pathname, with chroot applied to it. Use with the :option:`-o`
+    option.
 
-       <b>-h</b>     Show the version and commandline option help.
+.. option:: -o option
 
-       <b>-f</b>     Print full pathname, with chroot applied to it.  Use with the -o
-              option.
+    If given, after checking the config file the value of this option is printed
+    to stdout. For ``""`` (disabled) options an empty line is printed.
 
-       <b>-o</b> <i>option</i>
-              If given, after checking the config file the value of  this  op-
-              tion  is  printed to stdout.  For "" (disabled) options an empty
-              line is printed.
+.. option:: cfgfile
 
-       <i>cfgfile</i>
-              The config file  to  read  with  settings  for  unbound.  It  is
-              checked.  If omitted, the config file at the default location is
-              checked.
+    The config file to read with settings for unbound. It is checked. If
+    omitted, the config file at the default location is checked.
 
-    <b>EXIT</b> <b>CODE</b>
-       The unbound-checkconf program exits with status code 1 on error, 0  for
-       a correct config file.
+Exit Code
+---------
 
-    <b>FILES</b>
-       <i>/usr/local/etc/unbound/unbound.conf</i>
-              unbound configuration file.
+The :command:`unbound-checkconf` program exits with status code 1 on error, 0
+for a correct config file.
 
-    <b>SEE</b> <b>ALSO</b>
-       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound.html"><i>unbound</i>(8)</a>.
+Files
+-----
 
+/usr/local/etc/unbound/unbound.conf
+    unbound configuration file.
 
+See Also
+--------
 
-    NLnet Labs                       Aug 12, 2021             unbound-checkconf(8)
-    </pre>
+:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.

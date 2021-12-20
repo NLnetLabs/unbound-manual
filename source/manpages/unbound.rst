@@ -1,78 +1,76 @@
 .. _doc_unbound_manpage:
 
 unbound(8)
-----------
+==========
 
-.. raw:: html
+Synopsis
+--------
 
-    <pre class="man">unbound(8)                      unbound 1.14.0                      unbound(8)
+:command:`unbound` [:option:`-h`] [:option:`-d`] [:option:`-p`] [:option:`-v`]
+[:option:`-c` ``cfgfile``]
 
+Description
+-----------
 
+:command:`Unbound` is a caching DNS resolver.
 
-    <b>NAME</b>
-       <b>unbound</b> - Unbound DNS validating resolver 1.14.0.
+It uses a built in list of authoritative nameservers for the root zone (.), the
+so called root hints. On receiving a DNS query it will ask the root nameservers
+for an answer and will in almost all cases receive a delegation to a top level
+domain (TLD) authoritative nameserver. It will then ask that nameserver for an
+answer. It will recursively continue until an answer is found or no answer is
+available (NXDOMAIN). For performance and efficiency reasons that answer is
+cached for a certain time (the answer's time-to-live or TTL). A second query
+for the same name will then be answered from the cache. Unbound can also do
+DNSSEC validation.
 
-    <b>SYNOPSIS</b>
-       <b>unbound</b> [<b>-h</b>] [<b>-d</b>] [<b>-p</b>] [<b>-v</b>] [<b>-c</b> <i>cfgfile</i>]
+To use a locally running :command:`Unbound` for resolving put
 
-    <b>DESCRIPTION</b>
-       <b>Unbound</b> is a caching DNS resolver.
+.. code-block:: text
 
-       It  uses a built in list of authoritative nameservers for the root zone
-       (.), the so called root hints.  On receiving a DNS query  it  will  ask
-       the root nameservers for an answer and will in almost all cases receive
-       a delegation to a top level domain (TLD) authoritative nameserver.   It
-       will  then ask that nameserver for an answer.  It will recursively con-
-       tinue until an answer is found or no answer  is  available  (NXDOMAIN).
-       For performance and efficiency reasons that answer is cached for a cer-
-       tain time (the answer's time-to-live or TTL).  A second query  for  the
-       same  name  will  then be answered from the cache.  Unbound can also do
-       DNSSEC validation.
+   nameserver 127.0.0.1
 
-       To use a locally running <b>Unbound</b> for resolving put
+into :manpage:`resolv.conf(5)`.
 
-             nameserver 127.0.0.1
+If authoritative DNS is needed as well using *nsd(8)*, careful setup is required
+because authoritative nameservers and resolvers are using the same port number
+(53).
 
-       into <i>resolv.conf</i>(5).
+The available options are:
 
-       If authoritative DNS is needed as well using <i>nsd</i>(8), careful  setup  is
-       required  because authoritative nameservers and resolvers are using the
-       same port number (53).
+.. option:: -h 
 
-       The available options are:
+ Show the version number and commandline option help, and exit.
 
-       <b>-h</b>     Show the version number and commandline option help, and exit.
+.. option:: -c cfgfile
 
-       <b>-c</b> <i>cfgfile</i>
-              Set the config file with settings for unbound to read instead of
-              reading  the  file  at  the default location, /usr/local/etc/un-
-              bound/unbound.conf. The syntax is described in <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>.
+   Set the config file with settings for unbound to read instead of reading the
+   file at the default location, :file:`/usr/local/etc/unbound/unbound.conf`.
+   The syntax is described in :manpage:`unbound.conf(5)`.
 
-       <b>-d</b>     Debug flag: do not fork into the background, but  stay  attached
-              to  the  console.   This flag will also delay writing to the log
-              file until the thread-spawn time, so that most config and  setup
-              errors  appear  on  stderr. If given twice or more, logging does
-              not switch to the log file or to syslog, but  the  log  messages
-              are printed to stderr all the time.
+.. option:: -d
 
-       <b>-p</b>     Don't  use  a pidfile.  This argument should only be used by su-
-              pervision systems which can ensure that only one instance of un-
-              bound will run concurrently.
+   Debug flag: do not fork into the background, but stay attached to the
+   console. This flag will also delay writing to the log file until the
+   thread-spawn time, so that most config and setup errors appear on stderr. If
+   given twice or more, logging does not switch to the log file or to syslog,
+   but the log messages are printed to stderr all the time.
 
-       <b>-v</b>     Increase verbosity. If given multiple times, more information is
-              logged.  This is in addition to the verbosity (if any) from  the
-              config file.
+.. option:: -p  
+   
+   Don't use a pidfile. This argument should only be used by supervision systems
+   which can ensure that only one instance of unbound will run concurrently.
 
-       <b>-V</b>     Show the version number and build options, and exit.
+.. option:: -v  
+   
+   Increase verbosity. If given multiple times, more information is logged. This
+   is in addition to the verbosity (if any) from the config file.
 
-    <b>SEE</b> <b>ALSO</b>
-       <a href="unbound.conf.html"><i>unbound.conf</i>(5)</a>, <a href="unbound-checkconf.html"><i>unbound-checkconf</i>(8)</a>, <i>nsd</i>(8).
+.. option:: -V  
+   
+   Show the version number and build options, and exit.
 
-    <b>AUTHORS</b>
-       <b>Unbound</b>  developers  are mentioned in the CREDITS file in the distribu-
-       tion.
+See Also
+--------
 
-
-
-    NLnet Labs                       Aug 12, 2021                       unbound(8)
-    </pre>
+:manpage:`unbound.conf(5)`, :manpage:`unbound-checkconf(8)`, *nsd(8)*.
