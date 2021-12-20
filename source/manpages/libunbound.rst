@@ -6,74 +6,146 @@ libunbound(3)
 Synopsis
 --------
 
-**#include <unbound.h>**
+.. only:: html
 
-*struct ub_ctx* \* **ub_ctx_create**\ (*void*);
+    .. code-block:: c
 
-*void* **ub_ctx_delete**\ (*struct ub_ctx\** ctx);
+        #include <unbound.h>
 
-*int* **ub_ctx_set_option**\ (*struct ub_ctx\** ctx, *char\** opt, *char\** val);
+        struct ub_ctx * ub_ctx_create(void);
 
-*int* **ub_ctx_get_option**\ (*struct ub_ctx\** ctx, *char\** opt, *char\*** val);
+        void ub_ctx_delete(struct ub_ctx* ctx);
 
-*int* **ub_ctx_config**\ (*struct ub_ctx\** ctx, char* fname);
+        int ub_ctx_set_option(struct ub_ctx* ctx, char* opt, char* val);
 
-*int* **ub_ctx_set_fwd**\ (*struct ub_ctx\** ctx, *char\** addr);
+        int ub_ctx_get_option(struct ub_ctx* ctx, char* opt, char** val);
 
-*int* **ub_ctx_set_stub**\ (*struct ub_ctx\** ctx, *char\** zone, *char\** addr,
-*int* isprime);
+        int ub_ctx_config(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_set_tls**\ (*struct ub_ctx\** ctx, *int* tls);
+        int ub_ctx_set_fwd(struct ub_ctx* ctx, char* addr);
 
-*int* **ub_ctx_resolvconf**\ (*struct ub_ctx\** ctx, *char\** fname);
+        int ub_ctx_set_stub(struct ub_ctx* ctx, char* zone, char* addr, int isprime);
 
-*int* **ub_ctx_hosts**\ (*struct ub_ctx\** ctx, *char\** fname);
+        int ub_ctx_set_tls(struct ub_ctx* ctx, int tls);
 
-*int* **ub_ctx_add_ta**\ (*struct ub_ctx\** ctx, *char\** ta);
+        int ub_ctx_resolvconf(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_add_ta_autr**\ (*struct ub_ctx\** ctx, *char\** fname);
+        int ub_ctx_hosts(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_add_ta_file**\ (*struct ub_ctx\** ctx, *char\** fname);
+        int ub_ctx_add_ta(struct ub_ctx* ctx, char* ta);
 
-*int* **ub_ctx_trustedkeys**\ (*struct ub_ctx\** ctx, *char\** fname);
+        int ub_ctx_add_ta_autr(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_debugout**\ (*struct ub_ctx\** ctx, FILE* out);
+        int ub_ctx_add_ta_file(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_debuglevel**\ (*struct ub_ctx\** ctx, *int* d);
+        int ub_ctx_trustedkeys(struct ub_ctx* ctx, char* fname);
 
-*int* **ub_ctx_async**\ (*struct ub_ctx\** ctx, *int* dothread);
+        int ub_ctx_debugout(struct ub_ctx* ctx, FILE* out);
 
-*int* **ub_poll**\ (*struct ub_ctx\** ctx);
+        int ub_ctx_debuglevel(struct ub_ctx* ctx, int d);
 
-*int* **ub_wait**\ (*struct ub_ctx\** ctx);
+        int ub_ctx_async(struct ub_ctx* ctx, int dothread);
 
-*int* **ub_fd**\ (*struct ub_ctx\** ctx);
+        int ub_poll(struct ub_ctx* ctx);
 
-*int* **ub_process**\ (*struct ub_ctx\** ctx);
+        int ub_wait(struct ub_ctx* ctx);
 
-*int* **ub_resolve**\ (*struct ub_ctx\** ctx, *char\** name,
-*int* rrtype, *int* rrclass, *struct ub_result\*\** result);
+        int ub_fd(struct ub_ctx* ctx);
 
-*int* **ub_resolve_async**\ (*struct ub_ctx\** ctx, *char\** name,
-*int* rrtype, *int* rrclass, *void\** mydata,
-*ub_callback_type* callback, *int** async_id);
+        int ub_process(struct ub_ctx* ctx);
 
-*int* **ub_cancel**\ (*struct ub_ctx\** ctx, *int* async_id);
+        int ub_resolve(struct ub_ctx* ctx, char* name, int rrtype, int rrclass, 
+                       struct ub_result** result);
 
-*void* **ub_resolve_free**\ (*struct ub_result\** result);
+        int ub_resolve_async(struct ub_ctx* ctx, char* name, int rrtype, int rrclass, 
+                             void* mydata, ub_callback_type callback, int* async_id);
 
-*const char* * **ub_strerror**\ (*int* err);
+        int ub_cancel(struct ub_ctx* ctx, int async_id);
 
-*int* **ub_ctx_print_local_zones**\ (*struct ub_ctx\** ctx);
+        void ub_resolve_free(struct ub_result* result);
 
-*int* **ub_ctx_zone_add**\ (*struct ub_ctx\** ctx, *char\** zone_name, *char\**
-zone_type);
+        const char * ub_strerror(int err);
 
-*int* **ub_ctx_zone_remove**\ (*struct ub_ctx\** ctx, *char\** zone_name);
+        int ub_ctx_print_local_zones(struct ub_ctx* ctx);
 
-*int* **ub_ctx_data_add**\ (*struct ub_ctx\** ctx, *char\** data);
+        int ub_ctx_zone_add(struct ub_ctx* ctx, char* zone_name, char* zone_type);
 
-*int* **ub_ctx_data_remove**\ (*struct ub_ctx\** ctx, *char\** data);
+        int ub_ctx_zone_remove(struct ub_ctx* ctx, char* zone_name);
+
+        int ub_ctx_data_add(struct ub_ctx* ctx, char* data);
+
+        int ub_ctx_data_remove(struct ub_ctx* ctx, char* data);
+
+.. only:: man
+
+    **#include <unbound.h>**
+
+    *struct ub_ctx* \* **ub_ctx_create**\ (*void*);
+
+    *void* **ub_ctx_delete**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_ctx_set_option**\ (*struct ub_ctx\** ctx, *char\** opt, *char\** val);
+
+    *int* **ub_ctx_get_option**\ (*struct ub_ctx\** ctx, *char\** opt, *char\*** val);
+
+    *int* **ub_ctx_config**\ (*struct ub_ctx\** ctx, char* fname);
+
+    *int* **ub_ctx_set_fwd**\ (*struct ub_ctx\** ctx, *char\** addr);
+
+    *int* **ub_ctx_set_stub**\ (*struct ub_ctx\** ctx, *char\** zone, *char\** addr,
+    *int* isprime);
+
+    *int* **ub_ctx_set_tls**\ (*struct ub_ctx\** ctx, *int* tls);
+
+    *int* **ub_ctx_resolvconf**\ (*struct ub_ctx\** ctx, *char\** fname);
+
+    *int* **ub_ctx_hosts**\ (*struct ub_ctx\** ctx, *char\** fname);
+
+    *int* **ub_ctx_add_ta**\ (*struct ub_ctx\** ctx, *char\** ta);
+
+    *int* **ub_ctx_add_ta_autr**\ (*struct ub_ctx\** ctx, *char\** fname);
+
+    *int* **ub_ctx_add_ta_file**\ (*struct ub_ctx\** ctx, *char\** fname);
+
+    *int* **ub_ctx_trustedkeys**\ (*struct ub_ctx\** ctx, *char\** fname);
+
+    *int* **ub_ctx_debugout**\ (*struct ub_ctx\** ctx, FILE* out);
+
+    *int* **ub_ctx_debuglevel**\ (*struct ub_ctx\** ctx, *int* d);
+
+    *int* **ub_ctx_async**\ (*struct ub_ctx\** ctx, *int* dothread);
+
+    *int* **ub_poll**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_wait**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_fd**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_process**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_resolve**\ (*struct ub_ctx\** ctx, *char\** name,
+    *int* rrtype, *int* rrclass, *struct ub_result\*\** result);
+
+    *int* **ub_resolve_async**\ (*struct ub_ctx\** ctx, *char\** name,
+    *int* rrtype, *int* rrclass, *void\** mydata,
+    *ub_callback_type* callback, *int** async_id);
+
+    *int* **ub_cancel**\ (*struct ub_ctx\** ctx, *int* async_id);
+
+    *void* **ub_resolve_free**\ (*struct ub_result\** result);
+
+    *const char* * **ub_strerror**\ (*int* err);
+
+    *int* **ub_ctx_print_local_zones**\ (*struct ub_ctx\** ctx);
+
+    *int* **ub_ctx_zone_add**\ (*struct ub_ctx\** ctx, *char\** zone_name, *char\**
+    zone_type);
+
+    *int* **ub_ctx_zone_remove**\ (*struct ub_ctx\** ctx, *char\** zone_name);
+
+    *int* **ub_ctx_data_add**\ (*struct ub_ctx\** ctx, *char\** data);
+
+    *int* **ub_ctx_data_remove**\ (*struct ub_ctx\** ctx, *char\** data);
 
 Description
 -----------
@@ -293,25 +365,25 @@ Result Data structure
 The result of the DNS resolution and validation is returned as struct
 **ub_result**. The result structure contains the following entries.
 
-.. code-block:: text
+.. code-block:: c
 
         struct ub_result {
              char* qname; /* text string, original question */
-             *int* qtype;   /* type code asked for */
-             *int* qclass;  /* class code asked for */
+             int qtype;   /* type code asked for */
+             int qclass;  /* class code asked for */
              char** data; /* array of rdata items, NULL terminated*/
-             *int** len;    /* array with lengths of rdata items */
+             int* len;    /* array with lengths of rdata items */
              char* canonname; /* canonical name of result */
-             *int* rcode;   /* additional error code in case of no data */
+             int rcode;   /* additional error code in case of no data */
              void* answer_packet; /* full network format answer packet */
-             *int* answer_len;  /* length of packet in octets */
-             *int* havedata; /* true if there is data */
-             *int* nxdomain; /* true if nodata because name does not exist */
-             *int* secure;   /* true if result is secure */
-             *int* bogus;    /* true if a security failure happened */
+             int answer_len;  /* length of packet in octets */
+             int havedata; /* true if there is data */
+             int nxdomain; /* true if nodata because name does not exist */
+             int secure;   /* true if result is secure */
+             int bogus;    /* true if a security failure happened */
              char* why_bogus; /* string with error if bogus */
-             *int* was_ratelimited; /* true if the query was ratelimited (SERVFAIL) by unbound */
-             *int* ttl;     /* number of seconds the result is valid */
+             int was_ratelimited; /* true if the query was ratelimited (SERVFAIL) by unbound */
+             int ttl;     /* number of seconds the result is valid */
         };
 
 If both secure and bogus are false, security was not enabled for the domain of
@@ -321,10 +393,13 @@ Return Values
 -------------
 
 Many routines return an error code. The value 0 (zero) denotes no error
-happened. Other values can be passed to **ub_strerror** to obtain a readable error string. **ub_strerror** returns a zero terminated string.
-**ub_ctx_create** returns NULL on an error (a malloc failure). **ub_poll** returns true if some information may be available, false otherwise.
-**ub_fd** returns a file descriptor or -1 on error. **ub_ctx_config** and
-**ub_ctx_resolvconf** attempt to leave errno informative on a function return with file read failure.
+happened. Other values can be passed to **ub_strerror** to obtain a readable
+error string. **ub_strerror** returns a zero terminated string.
+**ub_ctx_create** returns NULL on an error (a malloc failure). **ub_poll**
+returns true if some information may be available, false otherwise. **ub_fd**
+returns a file descriptor or -1 on error. **ub_ctx_config** and
+**ub_ctx_resolvconf** attempt to leave errno informative on a function return
+with file read failure.
 
 See Also
 --------
