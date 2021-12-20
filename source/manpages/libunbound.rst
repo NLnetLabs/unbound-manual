@@ -60,7 +60,7 @@ Synopsis
 
 *int* **ub_cancel**\ (*struct ub_ctx\** ctx, *int* async_id);
 
-void **ub_resolve_free**\ (struct ub_result* result);
+*void* **ub_resolve_free**\ (*struct ub_result\** result);
 
 *const char* * **ub_strerror**\ (*int* err);
 
