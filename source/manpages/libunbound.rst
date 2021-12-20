@@ -321,10 +321,10 @@ ub_resolve_async
     mydata pointer, that you can use to pass information to the callback. The
     callback type is a function pointer to a function declared as
 
-    .. code-block:: text
+    .. code-block:: c
 
-        void my_callback_function(void* my_arg, *int* err,
-        struct ub_result* result);
+        void my_callback_function(void* my_arg, int err,
+                          struct ub_result* result);
 
     The **async_id** is returned so you can (at your option) decide to track it
     and cancel the request if needed. If you pass a NULL pointer the
