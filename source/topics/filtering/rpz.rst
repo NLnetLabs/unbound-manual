@@ -18,10 +18,8 @@ sources.
 Introduction
 ------------
 
-Unbound has support for `local-zones
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-zone>`_ and
-`local-data
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-data>`_. This
+Unbound has support for :term:`local-zone<local-zone: <zone> <type>>` and
+:term:`local-data<local-data: "<resource record string>">`. This
 makes it possible to give a custom answer back for certain domain names. It also
 contains the ``respip`` module which makes it possible to rewrite answers
 containing certain IP addresses. Although these options are heavily used, they
@@ -31,8 +29,7 @@ own syntax. Using the Unbound specific configuration also makes it challenging
 to consume policies from external sources. You will have to fetch the external
 policies in the offered format, and reformat it in such a way that Unbound will
 understand it. You then have to keep this list up-to-date, for example using
-`unbound-control
-<https://nlnetlabs.nl/documentation/unbound/unbound-control/>`_.
+:doc:`/manpages/unbound-control`.
 
 There is, however, a policy format that will work on different resolver
 implementations, and that has capabilities to be directly transferred and loaded
@@ -45,8 +42,8 @@ RPZ Policies
 
 RPZ policies are formatted in DNS zone files. This makes it possible to easily
 consume and keep them to up-to-date by using DNS zone transfers. Something that
-Unbound is already capable of doing for its `auth-zone
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#master>`_ feature.
+Unbound is already capable of doing for its
+:ref:`auth-zone<manpages/unbound.conf:Authority Zone Options>` feature.
 
 Each policy in the policy zone consists of a trigger and an action. The trigger
 describes when the policy should be applied. The action describes what action
