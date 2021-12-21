@@ -19,7 +19,7 @@ Installing with a Package Manager
 Most package managers maintain a version of Unbound, although this version can
 be outdated if this package has not been updated recently. If you like to
 upgrade to the latest version, we recommend :ref:`compiling Unbound
-yourself<Building from source/Compiling>`.
+yourself<getting-started/installation:Building from source/Compiling>`.
 
 Ubuntu 20.04.1 LTS
 ^^^^^^^^^^^^^^^^^^
@@ -127,7 +127,7 @@ for the machine.
     sudo make install
 
 We now have fully compiled and installed version of Unbound, and :ref:`continue
-to testing it<Testing>`.
+to testing it<getting-started/installation:Testing>`.
 
 Please note that the default configuration file is located at
 :file:`/usr/local/etc/unbound/unbound.conf` and created during the
@@ -233,7 +233,7 @@ for the machine.
     sudo make install
 
 We now have fully compiled and installed version of Unbound, and can
-:ref:`continue to testing it<Testing>`.
+:ref:`continue to testing it<getting-started/installation:Testing>`.
 
 Testing
 -------
@@ -252,8 +252,8 @@ Unbound instance.
 
 Another handy trick you can use during testing is to run Unbound in the
 foreground using the :option:`-d` option and increase the verbosity level using
-the :option:`-vvv` option. This allows you to see steps Unbound takes and also
-where it fails.
+the :option:`-v` option multiple times. This allows you to see steps Unbound
+takes and also where it fails.
 
 Now that Unbound is installed we can :doc:`continue to configuring
 it<configuration>`.
