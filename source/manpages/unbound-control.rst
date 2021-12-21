@@ -228,24 +228,24 @@ insecure_add *zone*
 insecure_remove *zone*
     Removes domain-insecure for the given zone.
 
-forward_add [:option:`+i`] *zone addr ...*
-    Add a new forward zone to running unbound. With :option:`+i` option also
+forward_add [``+i``] *zone addr ...*
+    Add a new forward zone to running unbound. With ``+i`` option also
     adds a domain-insecure for the zone (so it can resolve insecurely if you
     have a DNSSEC root trust anchor configured for other names). The addr can be
     IP4, IP6 or nameserver names, like forward-zone config in unbound.conf.
 
-forward_remove [:option:`+i`] *zone*
-    Remove a forward zone from running unbound. The :option:`+i` also removes a
+forward_remove [``+i``] *zone*
+    Remove a forward zone from running unbound. The ``+i`` also removes a
     domain-insecure for the zone.
 
-stub_add [:option:`+i`] *zone addr ...*
-    Add a new stub zone to running unbound. With :option:`+i` option also adds a
-    domain-insecure for the zone. With :option:`+p` the stub zone is set to
+stub_add [``+i``] *zone addr ...*
+    Add a new stub zone to running unbound. With ``+i`` option also adds a
+    domain-insecure for the zone. With ``p`` the stub zone is set to
     prime, without it it is set to notprime. The addr can be IP4, IP6 or
     nameserver names, like the *stub-zone* config in un- bound.conf.
 
-stub_remove [:option:`+i`] *zone*
-Remove a stub zone from running unbound. The :option:`+i` also removes a
+stub_remove [``+i``] *zone*
+Remove a stub zone from running unbound. The ``+i`` also removes a
 domain-insecure for the zone.
 
 forward [*off* | *addr ...* ]
@@ -272,16 +272,16 @@ forward [*off* | *addr ...* ]
     changes are gone. Other forward zones from the config file are not affected
     by this command.
 
-ratelimit_list [:option:`+a`]
+ratelimit_list [``a``]
     List the domains that are ratelimited. Printed one per line with current
-    estimated qps and qps limit from config. With :option:`+a` it prints all
+    estimated qps and qps limit from config. With ``a`` it prints all
     domains, not just the ratelimited domains, with their estimated qps. The
     ratelimited domains return an error for uncached (new) queries, but cached
     queries work as normal.
 
-ip_ratelimit_list [:option:`+a`]
+ip_ratelimit_list [``a``]
     List the ip addresses that are ratelimited. Printed one per line with
-    current estimated qps and qps limit from config. With :option:`+a` it prints
+    current estimated qps and qps limit from config. With ``a`` it prints
     all ips, not just the ratelimited ips, with their estimated qps. The
     ratelimited ips are dropped before checking the cache.
 

@@ -99,11 +99,10 @@ download as well.
     sudo apt-get install -y bison
     sudo apt-get install -y flex
 
-
 With all the requirements met, we can now start the compilation process in the
-Unbound directory. The first step here is configuring. With :option:`./configure
--h` you can look at the extensive list of configurables for Unbound. A nice
-feature is that :command:`configure` will tell you what it's missing during
+Unbound directory. The first step here is configuring. With ``./configure
+-h`` you can look at the extensive list of configurables for Unbound. A nice
+feature is that ``configure`` will tell you what it's missing during
 configuration. A common error is for the paths to the two libraries we just
 installed, which can be manually specified with ``--with-ssl=`` and
 ``--with-libexpat=``.
@@ -197,8 +196,8 @@ which can become important in the :command:`configure` step.
     brew install expat
 
 With all the requirements met, we can now start the compilation process in the
-Unbound directory. The first step here is configuring. With :option:`./configure
--h` you can look at the extensive list of configurables for Unbound. A nice
+Unbound directory. The first step here is configuring. With ``./configure
+-h`` you can look at the extensive list of configurables for Unbound. A nice
 feature is that :command:`configure` will tell you what it's missing during
 configuration. A common error is for the paths to the two libraries we just
 installed, which can be manually specified with ``--with-ssl=`` and

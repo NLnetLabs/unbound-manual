@@ -129,8 +129,8 @@ The available options are:
 
 .. option:: -R 
        
-       Allow fallback from :option:`-f resolv.conf` file to direct root servers
-       query. It allows you to prefer local resolvers, but fallback
+       Allow fallback from :option:`-f` ``resolv.conf`` file to direct root
+       servers query. It allows you to prefer local resolvers, but fallback
        automatically to direct root query if they do not respond or do not
        support DNSSEC.
 

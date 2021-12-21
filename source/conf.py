@@ -165,7 +165,7 @@ man_pages = [
     "Unbound developers are mentioned in the CREDITS file in the distribution.", 3)
 ]
 
-manpages_url = '{page}.html'
+manpages_url = '/manpages/{page}.html'
 
 # -- Options for Texinfo output ----------------------------------------------
 
