@@ -25,20 +25,20 @@ Example
 An example config file is shown below. Copy this to
 :file:`/etc/unbound/unbound.conf` and start the server with:
 
-.. code-block: bash
+.. code-block:: text
 
     $ unbound -c /etc/unbound/unbound.conf
 
 Most settings are the defaults. Stop the server with:
 
-.. code-block: bash
+.. code-block:: text
 
     $ kill `cat /etc/unbound/unbound.pid`
 
 Below is a minimal config file. The source distribution contains an extensive
 :file:`example.conf` file with all the options.
 
-.. code-block: text
+.. code-block:: text
 
     # unbound.conf(5) config file for unbound(8).
     server:
@@ -57,8 +57,6 @@ Below is a minimal config file. The source distribution contains an extensive
     interface: ::0
     access-control: 10.0.0.0/8 allow
     access-control: 2001:DB8::/64 allow
-
-.. _unbound_conf_local_zone:
 
 File Format
 -----------
