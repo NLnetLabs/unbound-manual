@@ -1,7 +1,5 @@
 .. index:: RPZ, Response Policy Zones
 
-.. _doc_filtering_rpz:
-
 .. versionadded:: 1.10.0
     Intial release with QNAME and Response IP Address triggers
 .. versionchanged:: 1.14.0

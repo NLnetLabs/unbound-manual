@@ -1,5 +1,3 @@
-.. _doc_privacy_doh:
-
 .. versionadded:: 1.12.0
 
 DNS-over-HTTPS

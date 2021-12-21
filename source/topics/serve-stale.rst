@@ -126,7 +126,7 @@ If more client-side performance is required, the default original serve-expired
 behavior can keep the cache-hit ratio higher. Using it together with the
 prefetch option is highly recommended in order to try and keep an updated cache.
 
-In all cases make sure to consult the :manpage:`unbound.conf(5)` manpage of your
-installed Unbound for defaults and suggested values. And always remember that
-serving expired records should be approached with caution; you may be directing
-your clients to places long gone.
+In all cases make sure to consult the :doc:`/manpages/unbound.conf` manpage of
+your installed Unbound for defaults and suggested values. And always remember
+that serving expired records should be approached with caution; you may be
+directing your clients to places long gone.

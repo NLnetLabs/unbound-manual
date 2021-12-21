@@ -1,7 +1,5 @@
 .. index:: Aggressive NSEC, DNSSEC-Validated cache
 
-.. _doc_privacy_aggressive_nsec:
-
 Aggressive NSEC
 ===============
 

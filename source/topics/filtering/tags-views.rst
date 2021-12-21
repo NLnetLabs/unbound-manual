@@ -1,4 +1,3 @@
-.. _doc_filtering_tags_views:
 .. index:: Tags, Views
 
 Tags and Views
@@ -7,15 +6,15 @@ Tags and Views
 The tags and views functionality make it possible to send specific DNS answers
 based on the IP address of the client.
 
+.. Seealso:: :ref:`manpages/unbound.conf:View Options` in 
+             the :doc:`/manpages/unbound.conf` manpage.
+
 Tags
 ----
 
 The tags functionality makes it possible to divide client source addresses
-in categories (tags), and use `local-zone
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-zone>`_ and
-`local-data
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-data>`_
-information for these specific tags.
+in categories (tags), and use local-zone and local-data information for these 
+specific tags.
 
 Before these tags can be used, you need to define them in the Unbound
 configuration using *define-tags*. In this example, a tag for domains containing
@@ -100,10 +99,7 @@ space, without having other local-zone elements of subdomains overriding this.
 Configuring a client specific local-zone tree can be done using views.
 
 A view is a named list of configuration options. The supported view
-configuration options are `local-zone
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-zone>`_ and
-`local-data
-<https://nlnetlabs.nl/documentation/unbound/unbound.conf/#local-data>`_.
+configuration options are local-zone and local-data.
 
 A view is configured using a view clause. There may be multiple view clauses,
 each with a unique name. For example:
