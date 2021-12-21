@@ -1,11 +1,9 @@
-.. _doc_libunbound_lookup_threads:
-
 Lookup from Threads
 ===================
 
 This example shows how to use libunbound from a threaded program. It is a
-modification of the example program from the :ref:`doc_libunbound_setup_context`
-section. It creates two threads and resolves from both threads.
+modification of the example program from the :doc:`setup-context` section. It
+creates two threads and resolves from both threads.
 
 This example uses ``pthreads``, and assumes that libunbound was compiled with
 threading enabled (which is the default, if ``pthreads`` can be found). To

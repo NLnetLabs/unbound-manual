@@ -1,5 +1,3 @@
-.. _doc_todo:
-
 Docs To-Do List
 ===============
 

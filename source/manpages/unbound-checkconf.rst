@@ -1,5 +1,3 @@
-.. _doc_unbound_checkconf_manpage:
-
 unbound-checkconf(8)
 ====================
 

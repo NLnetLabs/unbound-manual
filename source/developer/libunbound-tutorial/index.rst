@@ -1,5 +1,3 @@
-.. _doc_libunbound:
-
 Unbound Library Tutorial
 ========================
 

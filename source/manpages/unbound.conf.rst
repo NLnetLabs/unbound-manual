@@ -1,5 +1,3 @@
-.. _doc_unbound_conf_manpage:
-
 unbound.conf(5)
 ===============
 
@@ -756,6 +754,7 @@ logfile: *<filename>*
     logfile is appended to, in the following format: 
 
     .. code-block:: text
+        
         [seconds since 1970] unbound[pid:tid]: type: message. 
         
     If this option is given, the use-syslog is option is set to "no". The
@@ -1135,7 +1134,7 @@ val-bogus-ttl: *<number>*
     The time to live for bogus data. This is data that has failed validation;
     due to invalid signatures or other checks. The TTL from that data cannot be
     trusted, and this value is used instead. The value is in seconds, default
-    60. The time interval prevents repeated revalidation of bogus data.
+    1.  The time interval prevents repeated revalidation of bogus data.
 
 val-clean-additional: *<yes or no>*
     Instruct the validator to remove data from the additional section of secure

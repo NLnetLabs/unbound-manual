@@ -1,5 +1,3 @@
-.. _doc_doxygen:
-
 Source Code Docs
 ================
 

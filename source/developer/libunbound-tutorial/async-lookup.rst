@@ -1,11 +1,9 @@
-.. _doc_libunbound_async_lookup:
-
 Asynchronous Lookup
 ===================
 
 This example performs the name lookup in the background. The original program
 keeps running, while the name is resolved. It is a modification of the example
-program from the :ref:`doc_libunbound_resolve_name` section.
+program from the :doc:`resolve-a-name` section.
 
 .. code-block:: c
 

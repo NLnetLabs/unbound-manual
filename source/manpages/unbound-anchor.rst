@@ -1,5 +1,3 @@
-.. _doc_unbound_anchor_manpage:
-
 unbound-anchor(8)
 =================
 

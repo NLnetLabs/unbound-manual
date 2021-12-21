@@ -1,5 +1,3 @@
-.. _doc_index:
-
 Unbound by NLnet Labs
 =====================
 
@@ -7,7 +5,7 @@ Unbound is a validating, recursive, caching DNS resolver. It is designed to be
 fast and lean and incorporates modern features based on open standards.
 
 .. Note::  Do you love to write and know your way around DNS and Unbound? 
-           :ref:`Help us expand this documentation <doc_todo>` and we'll
+           :doc:`Help us expand this documentation <reference/todo>` and we'll
            compensate you for your time. Contact us at docs@nlnetlabs.nl or find
            us on `Twitter <https://twitter.com/nlnetlabs>`_.
 

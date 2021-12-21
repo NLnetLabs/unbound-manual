@@ -1,7 +1,5 @@
-.. _doc_unbound_configuration:
-
 Configuration
--------------
+=============
 
 Unbound has a vast array of configuration options for advanced use cases, which can seem a little overwhelming at first. Luckily, all of the defaults are sensible and secure, so in a lot of environments you can run Unbound without changing any options. Below we will go through a basic, recommended config, but feel free to add and experiment with options as you need them.
 
@@ -49,7 +47,7 @@ By default Unbound assumes that a user named "unbound" exists, which you can add
 
 
 Set up Remote Control
-=====================
+---------------------
 
 A useful functionality to enable is the use of the :command:`unbound-control` command. This allows command makes starting, stopping, and reloading Unbound easier. To enable this functionality we need to add :option:`remote-control` to the config and enable it.
 
@@ -84,7 +82,7 @@ You can now control Unbound using the :command:`unbound-control` command. Note t
 
 
 Set up Trust Anchor (Enable DNSSEC)
-===================================
+-----------------------------------
 
 To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which we strongly recommend, we need to set up a trust anchor as it allows the verification of the integrity of the responses to the queries you send.
 

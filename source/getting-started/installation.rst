@@ -1,7 +1,5 @@
-.. _doc_unbound_installation:
-
 Installation
-------------
+============
 
 To install your own copy of Unbound you have two options: Use the version provided by your package manager, or download the source and building it yourself.
 
@@ -10,14 +8,14 @@ Building and compiling Unbound yourself ensures that you have the latest version
 
 If you're a first-time user we recommend installing via a package manager.
 
-Installing with a package manager
-=================================
+Installing with a Package Manager
+---------------------------------
 
 Most package managers maintain a version of Unbound, although this version can be outdated if this package has not been updated recently. If you like to upgrade to the latest version, we recommend :ref:`compiling Unbound yourself<Building from source/Compiling>`.
 
 
 Ubuntu 20.04.1 LTS
-******************
+^^^^^^^^^^^^^^^^^^
 
 Installing Unbound with the built-in package manager should be as easy as:
 
@@ -29,7 +27,7 @@ Installing Unbound with the built-in package manager should be as easy as:
 This gives you a compiled and running version of Unbound ready to :ref:`be configured<doc_unbound_configuration>`.
 
 macOS Big Sur
-*************
+^^^^^^^^^^^^^
 
 In this tutorial we make use of the Brew package installer for MacOS. Install ``brew`` and, if you've never used ``brew`` before, give `their website <https://brew.sh/>`_ a read.
 
@@ -47,12 +45,12 @@ Then use brew to install Unbound.
 This gives you a compiled and running version of Unbound ready to :ref:`be configured<doc_unbound_configuration>`.
 
 Building from source/Compiling
-==============================
+------------------------------
 
 To compile Unbound on any system you need to have the ``openssl`` and ``expat`` libraries, and their header files. To include the header files we need to get the development version, usually called ``libssl-dev`` and ``libexpat1-dev`` respectively.
 
 Ubuntu 20.04.1 LTS
-******************
+^^^^^^^^^^^^^^^^^^
 
 First of all, we need our copy of the Unbound code, so we download the tarball of the latest version and untar it.
 
@@ -114,7 +112,7 @@ Please note that the default configuration file is located at ``/usr/local/etc/u
 .. Ref to testing
 
 macOS Big Sur
-*************
+^^^^^^^^^^^^^
 
 In this tutorial we make use of the :command:`brew` package installer for MacOS. Install :command:`brew` and give `their website <https://brew.sh/>`_ a read if you've never used brew before.
 
@@ -195,7 +193,7 @@ We now have fully compiled and installed version of Unbound, and can :ref:`conti
 .. Ref to testing
 
 Testing
-=======
+-------
 
 A simple test to determine if the installation was successful is to invoke the :command:`unbound` command with the :option:`-V` option, which is the "version" option. This shows the version and build options used, as well as proving that the install was successful.
 
@@ -207,4 +205,4 @@ If all the previous steps were successful we can continue to configuring our Unb
 
 Another handy trick you can use during testing is to run Unbound in the foreground using the :option:`-d` option and increase the verbosity level using the :option:`-vvv` option. This allows you to see steps Unbound takes and also where it fails.
 
-Now that Unbound is installed we can :ref:`continue to configuring it<doc_unbound_configuration>`.
+Now that Unbound is installed we can :doc:`continue to configuring it<configuration>`.

@@ -1,12 +1,10 @@
-.. _doc_libunbound_resolve_name:
-
 Resolve a Name
 ==============
 
 First, obtain `ldns <https://www.nlnetlabs.nl/projects/ldns/about/>`_ and
-:ref:`Unbound <doc_unbound_installation>`, compile and install them. To compile
-a program with its library use this command, assuming unbound was installed in
-``/usr/local``:
+:doc:`Unbound </getting-started/installation>`, compile and install them. To
+compile a program with its library use this command, assuming unbound was
+installed in ``/usr/local``:
 
 .. code-block:: bash
 

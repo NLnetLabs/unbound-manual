@@ -1,11 +1,9 @@
-.. _doc_libunbound_setup_context:
-
 Setup the Context
 =================
 
 In the second example we set additional useful options on the context, to
 enhance performance and utility. It is a modification of the example program
-from the :ref:`doc_libunbound_resolve_name` section.
+from the :doc:`resolve-a-name` section.
 
 .. code-block:: c
 
@@ -66,8 +64,8 @@ Invocation of this program yields the following:
     $ example_2
     The address is 213.154.224.1
 
-As said, the code is a modification of the :ref:`first
-example<doc_libunbound_resolve_name>`. The context is set up, a single name is
+As said, the code is a modification of the :doc:`first
+example<resolve-a-name>`. The context is set up, a single name is
 looked up, and the results and context are freed. The difference is that local
 settings are applied.
 

@@ -1,11 +1,8 @@
-.. _doc_libunbound_dnssec_validate:
-
 DNSSEC Validate
 ===============
 
 This example program performs DNSSEC validation of a lookup. It is a
-modification of the example program from the :ref:`doc_libunbound_setup_context`
-section.
+modification of the example program from the :doc:`setup-context` section.
 
 .. code-block:: c
 

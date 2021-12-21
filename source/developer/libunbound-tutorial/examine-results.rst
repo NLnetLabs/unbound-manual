@@ -1,12 +1,9 @@
-.. _doc_libunbound_examine_results:
-
 Examine the Results
 ===================
 
 In the third example, the results returned are examined in detail. In addition,
 the program is modified to accept an argument, the name to look up. It is a
-modification of the example program from the :ref:`doc_libunbound_setup_context`
-section.
+modification of the example program from the :doc:`setup-context` section.
 
 .. code-block:: c
 

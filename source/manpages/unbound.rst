@@ -1,5 +1,3 @@
-.. _doc_unbound_manpage:
-
 unbound(8)
 ==========
 
