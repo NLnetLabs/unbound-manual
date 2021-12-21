@@ -2,7 +2,7 @@ Docs To-Do List
 ===============
 
 Since the first release in 2007, the documentation of Unbound has been
-maintained with a heavy focus on :ref:`manual pages<doc_unbound_manpage>`. As
+maintained with a heavy focus on :doc:`manual pages</manpages/unbound>`. As
 the resolver has become more versatile and feature-rich over the years, the
 NLnet Labs team decided to add this documention, providing installation guides
 for different platforms, practical use cases, and background information. 

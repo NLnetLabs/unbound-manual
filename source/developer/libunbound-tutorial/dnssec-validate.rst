@@ -121,11 +121,11 @@ signatures. The ``echo`` command is wrapped onto multiple lines on this page for
 presentation, put the text onto one line. Because the key and the signatures on
 the data do not match, verification fails and the result is bogus.
 
-The program starts like in the :ref:`doc_libunbound_setup_context` section of the tutorial, creates the unbound context and
-reads in ``/etc/resolv.conf`` and ``/etc/hosts``. Then it adds the contents of the keys
-file from the current directory as trusted keys. It continues to resolve
-www.nlnetlabs.nl and prints the result. It also prints the security status of
-the result.
+The program starts like in the :doc:`setup-context` section of the tutorial,
+creates the unbound context and reads in ``/etc/resolv.conf`` and
+``/etc/hosts``. Then it adds the contents of the keys file from the current
+directory as trusted keys. It continues to resolve www.nlnetlabs.nl and prints
+the result. It also prints the security status of the result.
 
 The function ``ub_ctx_add_ta_file`` adds trusted keys. The keys file contains text
 in the zone file format (output from ``dig`` or ``drill`` tools, or a copy and paste

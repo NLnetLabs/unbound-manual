@@ -1,5 +1,3 @@
-.. _doc_monitoring:
-
 Monitoring and Reporting
 ========================
 
@@ -16,7 +14,7 @@ enabled, more statistics are collected, for example what types of queries are
 sent to the resolver. Otherwise, only the total number of queries is collected.
 
 Statistics can be printed to the log file using ``statistics-interval``, but
-here we'll focus on using :ref:`doc_unbound_control_manpage` to obtain
+here we'll focus on using :doc:`/manpages/unbound-control` to obtain
 statistics on demand. If you set a ``statistics-interval``, every interval it is
 printed to the logfile.
 
@@ -45,10 +43,10 @@ In the ``contrib`` directory in the source of Unbound is the ``unbound_munin_``
 plugin script. It can be used with `Munin <https://munin-monitoring.org>`_ to
 monitor the health of an Unbound server.
 
-Install ``munin`` and ``munin-node`` with the appropriate package install tool. The
-plugin script for Unbound can be copied somewhere on the system (such as in the
-unbound directory). Then create symbolic links from ``/etc/munin/plugins`` to that
-file.
+Install ``munin`` and ``munin-node`` with the appropriate package install tool.
+The plugin script for Unbound can be copied somewhere on the system (such as in
+the unbound directory). Then create symbolic links from ``/etc/munin/plugins``
+to that file.
 
 .. code-block:: bash
 
@@ -68,10 +66,10 @@ your system. The ``statefile`` is a temporary file.
    and plot it with rrdtool.
 
 Additional graphs are possible, below is a list of them, and examples. Create
-(additional) symbolic links to ``unbound_munin_`` with the names (in bold) of those
-graphs to enable their display. Several require that ``extended-statistics`` is
-enabled in config. Pictures included are samples, your statistics may look
-different :-) .
+(additional) symbolic links to ``unbound_munin_`` with the names (in bold) of
+those graphs to enable their display. Several require that
+``extended-statistics`` is enabled in config. Pictures included are samples,
+your statistics may look different :-) .
 
 .. figure::  /img/monitoring/unbound_munin_hits-day.png
 
