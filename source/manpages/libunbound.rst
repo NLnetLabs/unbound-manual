@@ -151,11 +151,11 @@ Description
 -----------
 
 Unbound is an implementation of a DNS resolver, that does caching and DNSSEC
-validation. This is the library API, for using the -lunbound library. The server
-daemon is described in :manpage:`unbound(8)`. The library works independent from
-a running unbound server, and can be used to convert hostnames to ip addresses,
-and back, and obtain other information from the DNS. The library performs
-public-key validation of results with DNSSEC.
+validation. This is the library API, for using the ``-lunbound`` library. The
+server daemon is described in :manpage:`unbound(8)`. The library works
+independent from a running unbound server, and can be used to convert hostnames
+to ip addresses, and back, and obtain other information from the DNS. The
+library performs public-key validation of results with DNSSEC.
 
 The library uses a variable of type struct **ub_ctx** to keep context between
 calls. The user must maintain it, creating it with **ub_ctx_create** and
@@ -368,22 +368,22 @@ The result of the DNS resolution and validation is returned as struct
 .. code-block:: c
 
         struct ub_result {
-             char* qname; /* text string, original question */
-             int qtype;   /* type code asked for */
-             int qclass;  /* class code asked for */
-             char** data; /* array of rdata items, NULL terminated*/
-             int* len;    /* array with lengths of rdata items */
-             char* canonname; /* canonical name of result */
-             int rcode;   /* additional error code in case of no data */
+             char* qname;         /* text string, original question */
+             int qtype;           /* type code asked for */
+             int qclass;          /* class code asked for */
+             char** data;         /* array of rdata items, NULL terminated*/
+             int* len;            /* array with lengths of rdata items */
+             char* canonname;     /* canonical name of result */
+             int rcode;           /* additional error code in case of no data */
              void* answer_packet; /* full network format answer packet */
-             int answer_len;  /* length of packet in octets */
-             int havedata; /* true if there is data */
-             int nxdomain; /* true if nodata because name does not exist */
-             int secure;   /* true if result is secure */
-             int bogus;    /* true if a security failure happened */
-             char* why_bogus; /* string with error if bogus */
+             int answer_len;      /* length of packet in octets */
+             int havedata;        /* true if there is data */
+             int nxdomain;        /* true if nodata because name does not exist */
+             int secure;          /* true if result is secure */
+             int bogus;           /* true if a security failure happened */
+             char* why_bogus;     /* string with error if bogus */
              int was_ratelimited; /* true if the query was ratelimited (SERVFAIL) by unbound */
-             int ttl;     /* number of seconds the result is valid */
+             int ttl;             /* number of seconds the result is valid */
         };
 
 If both secure and bogus are false, security was not enabled for the domain of

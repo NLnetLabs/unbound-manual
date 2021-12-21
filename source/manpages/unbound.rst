@@ -14,15 +14,15 @@ Description
 
 :command:`Unbound` is a caching DNS resolver.
 
-It uses a built in list of authoritative nameservers for the root zone (.), the
-so called root hints. On receiving a DNS query it will ask the root nameservers
-for an answer and will in almost all cases receive a delegation to a top level
-domain (TLD) authoritative nameserver. It will then ask that nameserver for an
-answer. It will recursively continue until an answer is found or no answer is
-available (NXDOMAIN). For performance and efficiency reasons that answer is
-cached for a certain time (the answer's time-to-live or TTL). A second query
-for the same name will then be answered from the cache. Unbound can also do
-DNSSEC validation.
+It uses a built in list of authoritative nameservers for the root zone (``.``),
+the so called root hints. On receiving a DNS query it will ask the root
+nameservers for an answer and will in almost all cases receive a delegation to a
+top level domain (TLD) authoritative nameserver. It will then ask that
+nameserver for an answer. It will recursively continue until an answer is found
+or no answer is available (NXDOMAIN). For performance and efficiency reasons
+that answer is cached for a certain time (the answer's time-to-live or TTL). A
+second query for the same name will then be answered from the cache. Unbound can
+also do DNSSEC validation.
 
 To use a locally running :command:`Unbound` for resolving put
 

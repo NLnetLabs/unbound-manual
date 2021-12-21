@@ -36,7 +36,9 @@ The available options are:
     
     Quiet, if the option is given it does not print anything if it works ok.
 
-COMMANDS
+Commands
+--------
+
 There are several commands that the server understands.
 
 start
@@ -194,13 +196,13 @@ set_option *opt: val*
 
 get_option *opt*
     Get the value of the option. Give the option name without a trailing
-    ``':'``. The value is printed. If the value is "", nothing is printed and
-    the connection closes. On error 'error ...' is printed (it gives a syntax
-    error on unknown option). For some options a list of values, one on each
-    line, is printed. The options are shown from the config file as modified
-    with set_option. For some options an override may have been taken that does
-    not show up with this command, not results from e.g. the verbosity and
-    forward control commands. Not all options work, see list_stubs,
+    ``':'``. The value is printed. If the value is ``""``, nothing is printed
+    and the connection closes. On error ``'error ...'`` is printed (it gives a
+    syntax error on unknown option). For some options a list of values, one on
+    each line, is printed. The options are shown from the config file as
+    modified with set_option. For some options an override may have been taken
+    that does not show up with this command, not results from e.g. the verbosity
+    and forward control commands. Not all options work, see list_stubs,
     list_forwards, list_local_zones and list_local_data for those.
 
 list_stubs
@@ -222,7 +224,7 @@ list_local_data
 insecure_add *zone*
     Add a domain-insecure for the given zone, like the statement in
     unbound.conf. Adds to the running unbound without affecting the cache
-    contents (which may still be bogus, use flush_zone to re- move it), does not
+    contents (which may still be bogus, use flush_zone to remove it), does not
     affect the config file.
 
 insecure_remove *zone*

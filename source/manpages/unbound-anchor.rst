@@ -96,7 +96,8 @@ The available options are:
 
        The emailAddress for the Subject of the signer's certificate from the p7s
        signature file. Only signatures from this name are allowed. default is
-       dnssec@iana.org. If you pass ``""`` then the emailAddress is not checked.
+       ``dnssec@iana.org``. If you pass ``""`` then the emailAddress is not
+       checked.
 
 .. option:: -4 
        
@@ -146,7 +147,7 @@ The available options are:
 
 .. option:: -C unbound.conf
 
-       Debug option to read :file:`unbound.conf`` into the resolver process
+       Debug option to read :file:`unbound.conf` into the resolver process
        used.
 
 .. option:: -P port
@@ -191,8 +192,8 @@ convenience and under the terms of our license (see the LICENSE file in the
 source distribution or https://github.com/NLnetLabs/unbound/blob/master/LICENSE
 and might be stale or not suitable to your purpose.
 
-By running :command:`unbound-anchor -l` the keys and certificate that are
-configured in the code are printed for your convenience.
+By running ``unbound-anchor -l`` the keys and certificate that are configured in
+the code are printed for your convenience.
 
 The built-in configuration can be overridden by providing a root-cert file and a
 rootkey file.
