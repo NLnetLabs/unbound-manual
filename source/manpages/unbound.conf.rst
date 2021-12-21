@@ -18,7 +18,7 @@ The notation is: ``attribute: value``.
 Comments start with ``#`` and last to the end of line. Empty lines are ignored
 as is whitespace at the beginning of a line.
 
-The utility :manpage:`unbound-checkconf(8)`` can be used to check unbound.conf
+The utility :manpage:`unbound-checkconf(8)` can be used to check unbound.conf
 prior to usage.
 
 Example
