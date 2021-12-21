@@ -43,7 +43,7 @@ Source:
 The above is the link to the whole prototype area, which you probably don't want
 to check out directly.  Instead, either check out the trunk or a single branch:
 
-.. code:: bash
+.. code-block:: bash
 
     svn co http://svn.verisignlabs.com/unbound/proto/trunk unbound-prototype
 

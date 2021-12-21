@@ -203,7 +203,7 @@ in total 44 bits of randomness.
 
 Sample config file items to enable this amount of randomness:
 
-.. code:: bash
+.. code-block:: bash
 
     server:
         # configures 4 static public IP addresses.

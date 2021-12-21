@@ -186,7 +186,7 @@ volunteered to write this implementation.
 - If a client makes a query without RD bit, in the case of a returned
   message from cache which is:
 
-  .. code:: bash
+  .. code-block:: bash
 
     answer section: empty
     auth section: NS record present, no SOA record, no DS record,

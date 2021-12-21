@@ -111,7 +111,7 @@ The steps go as follows:
 
 Once the IP address is added we can test our Unbound instance (assuming it's running)  with :command:`dig`. Note that the Unbound instance cannot be reached before it has been added in the DNS tab in System Preferences.
 
-.. code:: bash
+.. code-block:: bash
 
 	dig example.com @127.0.0.1
 
@@ -124,7 +124,7 @@ Homebrew
 
 If you installed Unbound using Homebrew, the XML file required by :command:`launchctl` is already supplied during installation. The file can be found at ``/Library/LaunchDaemons/homebrew.mxcl.unbound.plist``. To load this file we invoke the following command.
 
-.. code:: bash
+.. code-block:: bash
 
 	sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.unbound.plist
 
@@ -137,7 +137,7 @@ If you installed Unbound by compiling it yourself, we need to create an XML file
 
 .. zet XML in unbound/contrib (contributed code)
 
-.. code:: bash
+.. code-block:: bash
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -168,13 +168,13 @@ The main components that interest us, are the items in the ``<array>`` which exe
 
 Using the text editor of choice, we then create the file ``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and insert the above supplied XML code. To be able to use the file, we need to change the permissions of the file using :command:`chmod`
 
-.. code:: bash
+.. code-block:: bash
 
 	sudo chmod 644 /Library/LaunchDaemons/nl.nlnetlabs.unbound.plist
 
 We can then load the file with the following command.
 
-.. code:: bash
+.. code-block:: bash
 
 	sudo launchctl load /Library/LaunchDaemons/nl.nlnetlabs.unbound.plist
 

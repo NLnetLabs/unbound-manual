@@ -8,13 +8,13 @@ Unbound supports bindings for Python which we call 'pyunbound'. We enable this
 functionility in the :command:`configure` step of the installation using the
 following command.
 
-.. code:: bash
+.. code-block:: bash
 
     ./configure --with-pyunbound
 
 We can then generate the documentation for this using:
 
-.. code:: bash
+.. code-block:: bash
 
     make doc
 
@@ -24,7 +24,7 @@ browsed in a webbrowser by opening ``index.html``.
 Another option of gereating the files is available if you are using
 :command:`sphinx`.
 
-.. code:: bash
+.. code-block:: bash
 
     sphinx-build -b html libunbound/python/doc doc/html/pyunbound/
 
@@ -36,7 +36,7 @@ supplied Python code has to follow module operation semantics. This module is
 enabled in the :command:`configure` step of the installation using the following
 command.
 
-.. code:: bash
+.. code-block:: bash
 
     ./configure --with-pythonmodule
 
@@ -44,7 +44,7 @@ The full documentation for it can be build using:
 
 We can then generate the documentation for this using:
 
-.. code:: bash
+.. code-block:: bash
 
     make doc
 
@@ -54,6 +54,6 @@ browsed in a webbrowser by opening ``index.html``.
 Another option of gereating the files is available if you are using
 :command:`sphinx`.
 
-.. code:: bash
+.. code-block:: bash
 
     sphinx-build -b html pythonmod/doc/ doc/html/pythonmod/

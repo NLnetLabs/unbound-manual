@@ -238,7 +238,7 @@ ping-times of the servers on the internet that unbound has contacted.
 
 The output of a ``lookup`` command can look like this:
 
-.. code:: bash
+.. code-block:: bash
 
     $ unbound-control lookup nlnetlabs.nl
     The following name servers are used for lookup of nlnetlabs.nl.
@@ -295,7 +295,7 @@ is also printed (in msec).  The infra-cache also contains EDNS status
 and lameness information which is also shown.  In the above example,
 the ping time is very low as most servers are on the same subnet.
 
-.. code:: bash
+.. code-block:: bash
 
     192.0.2.1 ttl 316 ping 0 var 94 rtt 376 rto 120000 ednsknown 0 edns 0 delay 0
 

@@ -9,7 +9,7 @@ Unbound has a vast array of configuration options for advanced use cases, which 
 
 The basic configuration which you can use out of the box is shown below. To use it, you need to create a file with this config as its content (or copy the config to the default config file which can be found during the installation process).
 
-.. code:: bash
+.. code-block:: bash
 
     server:
         # can be uncommented if you do not need user privilige protection
@@ -36,7 +36,7 @@ The basic configuration which you can use out of the box is shown below. To use 
 
 By default the Unbound config uses `chroot <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer of defence against remote exploits. If Unbound is not starting because it cannot access files due to permission errors caused by :command:`chroot`, a solution can be to enter file paths as full pathnames starting at the root of the filesystem (``/``). Otherwise, if :command:`chroot` is not required you can disable it in the config.
 
-.. code:: bash
+.. code-block:: bash
 
 	# disable chroot
 	chroot: ""
@@ -51,7 +51,7 @@ Set up Remote Control
 
 A useful functionality to enable is the use of the :command:`unbound-control` command. This allows command makes starting, stopping, and reloading Unbound easier. To enable this functionality we need to add :option:`remote-control` to the config and enable it.
 
-.. code:: bash
+.. code-block:: bash
 
     remote-control:
         # enable remote-control
@@ -67,14 +67,14 @@ To use the :command:`unbound-control` command, we need to invoke the :command:`u
 
 Apart from an extensive config file, with just about all the possible configuration options, :command:`unbound-control-setup` creates the cryptographic keys necessary for the control option. 
 
-.. code:: bash
+.. code-block:: bash
 
     unbound-control-setup
 
 If you use a username like ``unbound`` in the config to run the daemon (which is the default setting), you can use :command:`sudo` to create the files in that user's name, so that the user running Unbound is allowed to read the keys. 
 This is also a solution if the ``/usr/local/etc/unbound/`` (or any other default direcotry) directory is write-protected, which is the case for some distributions.
 
-.. code:: bash
+.. code-block:: bash
 
 	sudo -u unbound unbound-control-setup
 
@@ -89,14 +89,14 @@ To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, whi
 To help, we can use the :command:`unbound-anchor` command. :command:`unbound-anchor` performs the setup by configuring a trust anchor. This trust anchor will only serve as the initial anchor from builtin values. To keep this anchor up to date, Unbound must be able to read and write to this file.
 The default location that :command:`unbound-anchor` creates this in is determined by your installation method. Usually the default directory is ``/usr/local/etc/unbound/``.
 
-.. code::bash
+.. code-block::bash
 
 	unbound-anchor
 
 Note that using a package manager to install Unbound, on some distributions, creates the root key during installation. On Ubuntu 20.04.1 LTS for example, this location is ``/var/lib/unbound/root.key``. On macOS Big Sur this location is ``/opt/homebrew/etc/unbound/root.key`` If you create the root key yourself (by using the :command:`unbound-anchor` command), then the path to the anchor file in the configuration file should be changed to the correct location. To find out the default location you can use the :command:`unbound-anchor` command again with the ``-vvv`` option enabled.
 To enable DNSSEC, we add ``auto-trust-anchor-file`` under the ``server`` options in the config.
 
-.. code:: bash
+.. code-block:: bash
 
 	# enable DNSSEC
 	auto-trust-anchor-file: "/var/lib/unbound/root.key"
@@ -105,7 +105,7 @@ Note that on some systems the ``/usr/local/etc/unbound/`` directory might be wri
 
 If the :command:`unbound-control-setup` command fails due to the insufficient permissions, run the command as the correct user, here we use the user ``unbound`` as this is the default user.
 
-.. code:: bash
+.. code-block:: bash
 
 	sudo -u unbound unbound-anchor
 
