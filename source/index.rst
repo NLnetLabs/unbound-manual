@@ -45,26 +45,26 @@ license, with attribution to NLnet Labs.
    use-cases/local-stub
 
 .. toctree::
-      :maxdepth: 2
-      :caption: Core
-   
-      topics/performance
-      topics/monitoring
-      topics/serve-stale
+   :maxdepth: 2
+   :caption: Core
+
+   topics/performance
+   topics/monitoring
+   topics/serve-stale
 
 .. toctree::
-      :maxdepth: 2
-      :caption: Privacy
+   :maxdepth: 2
+   :caption: Privacy
 
-      topics/privacy/aggressive-nsec
-      topics/privacy/dns-over-https
+   topics/privacy/aggressive-nsec
+   topics/privacy/dns-over-https
 
 .. toctree::
-      :maxdepth: 2
-      :caption: Filtering
+   :maxdepth: 2
+   :caption: Filtering
 
-      topics/filtering/tags-views
-      topics/filtering/rpz
+   topics/filtering/tags-views
+   topics/filtering/rpz
 
 .. toctree::
    :maxdepth: 2
