@@ -133,7 +133,7 @@ To find the IP address of the machine that is running Unbound, we use:
 
 If you just have one IP address as output from the :command:`hostname` command that will be the correct one. If you have multiple IP addresses, the easiest way to determine which IP address to use, is to find out which connection goes to your home router. Keep in mind that using the wrong IP address here can be a source of connectivity errors further on. For the purpose of this tutorial we assume that our home router has the IP address ``192.168.0.1``, as this is typical for home routers, and our resolver machine (the machine that is running our Unbound instance) has IP address ``192.168.0.2``, which we will get into in the next section.
 
-As a prerequisite for the next step, we need to configure our Unbound instance to be reachable from devices other than only the machine on which the Unbound is running. Unbound is a highly capable resolver, and as such has many options which can be set; the full example config is almost 1200 lines long, but we'll need but a fraction of these settings. (If you are interested, all configurables are documented in the extensive manual page of :manpage:`unbound.conf`).
+As a prerequisite for the next step, we need to configure our Unbound instance to be reachable from devices other than only the machine on which the Unbound is running. Unbound is a highly capable resolver, and as such has many options which can be set; the full example config is almost 1200 lines long, but we'll need but a fraction of these settings. (If you are interested, all configurables are documented in the extensive manual page of :manpage:`unbound.conf(5)`).
 
 The default config is found at:
 
