@@ -28,7 +28,7 @@ To use a locally running :command:`Unbound` for resolving put
 
    nameserver 127.0.0.1
 
-into :manpage:`resolv.conf(5)`.
+into *resolv.conf(5)*.
 
 If authoritative DNS is needed as well using *nsd(8)*, careful setup is required
 because authoritative nameservers and resolvers are using the same port number

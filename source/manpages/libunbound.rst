@@ -233,7 +233,7 @@ ub_ctx_resolvconf
     filename given. Usually :file:`"/etc/resolv.conf"`. Uses those nameservers
     as caching proxies. If they do not support DNSSEC, validation may fail. Only
     nameservers are picked up, the searchdomain, ndots and other settings from
-    :manpage:`resolv.conf(5)` are ignored. If fname NULL is passed,
+    *resolv.conf(5)* are ignored. If fname NULL is passed,
     :file:`"/etc/resolv.conf"` is used (if on Windows, the system-wide
     configured nameserver is picked instead). At this time it is only possible
     to set configuration before the first resolve is done.

@@ -95,7 +95,7 @@ The available options are:
        
        Read :file:`/etc/resolv.conf`, and use the forward DNS servers from there
        (those could have been set by DHCP). More info in
-       :manpage:`resolv.conf(5)`. Breaks validation if those servers do not
+       *resolv.conf(5)*. Breaks validation if those servers do not
        support DNSSEC.
 
 .. option:: -4 
