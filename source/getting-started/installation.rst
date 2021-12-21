@@ -214,7 +214,8 @@ of openssl is ``1.1.1k`` and of libexapt is ``2.3.0``).
 
 .. code-block:: bash
 
-    ./configure --with-ssl=/opt/homebrew/Cellar/openssl@1.1/1.1.1k/ --with-libexpat=/opt/homebrew/Cellar/expat/2.3.0
+    ./configure --with-ssl=/opt/homebrew/Cellar/openssl@1.1/1.1.1k/ \
+                --with-libexpat=/opt/homebrew/Cellar/expat/2.3.0
 
 When :command:`configure` gives no errors, we can continue to actually compiling
 Unbound. For this Unbound uses :command:`make`. Be warned that compiling might

@@ -14,6 +14,9 @@ Response Policy Zones (RPZ) is a mechanism that makes it possible to define your
 local policies in a standardised way and load your policies from external
 sources.
 
+.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options` in 
+             the :doc:`/manpages/unbound.conf` manpage.
+
 Introduction
 ------------
 

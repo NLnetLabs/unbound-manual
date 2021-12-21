@@ -44,6 +44,8 @@ extensions = [
     'sphinx.ext.autosectionlabel',
 ]
 
+autosectionlabel_prefix_document = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['../templates']
 
@@ -165,7 +167,7 @@ man_pages = [
     "Unbound developers are mentioned in the CREDITS file in the distribution.", 3)
 ]
 
-manpages_url = '/manpages/{page}.html'
+manpages_url = '{page}.html'
 
 # -- Options for Texinfo output ----------------------------------------------
 

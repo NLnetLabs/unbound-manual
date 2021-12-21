@@ -63,8 +63,8 @@ username is assumed. If this user  needs access to files (such as the 'trust
 anchor' mentioned below) these can be created by executing with ``sudo -u
 unbound`` in front of it.
 
-.. Important:: Unbound comes with the :manpage:`unbound-checkconf(8)` tool. This
-               tool allows you to check the config file for errors before
+.. Important:: Unbound comes with the :doc:`/manpages/unbound-checkconf` tool. 
+               This tool allows you to check the config file for errors before
                starting Unbound. It is very convenient because if any errors are
                found it tells you where they are, which is particularly useful
                when Unbound is already running to avoid failure to restart due
