@@ -6,9 +6,6 @@ Tags and Views
 The tags and views functionality make it possible to send specific DNS answers
 based on the IP address of the client.
 
-.. Seealso:: :ref:`manpages/unbound.conf:View Options` in 
-             the :doc:`/manpages/unbound.conf` manpage.
-
 Tags
 ----
 
@@ -123,3 +120,6 @@ the view. When a client matches a view it will only use the view's local-zone
 tree. This behaviour can be changed by setting *view-first* to yes. If
 view-first is enabled, Unbound will try to use the view's local-zone tree, and
 if there is no match it will search the global tree.
+
+.. Seealso:: :ref:`manpages/unbound.conf:View Options` in 
+             the :doc:`/manpages/unbound.conf` manpage.

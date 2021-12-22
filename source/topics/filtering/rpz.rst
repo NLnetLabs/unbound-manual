@@ -12,9 +12,6 @@ Response Policy Zones (RPZ) is a mechanism that makes it possible to define your
 local policies in a standardised way and load your policies from external
 sources.
 
-.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options` in 
-             the :doc:`/manpages/unbound.conf` manpage.
-
 Introduction
 ------------
 
@@ -388,3 +385,10 @@ only the policies from the social.rpz.example.com zone will be used, for
 127.0.0.30 only the policies from the malware.rpz.example.com zone will be used,
 and queries originated from 127.0.0.20 will be subjected to the policies from
 both zones.
+
+.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options`, 
+             :term:`module-config<module-config: <"module names">>`,
+             :term:`define-tag<define-tag: <"list of tags">>`,
+             :term:`access-control-tag<access-control-tag: <IP netblock> <"list
+             of tags">>`, and :term:`extended-statistics<extended-statistics:
+             <yes or no>>` in the :doc:`/manpages/unbound.conf` manpage.

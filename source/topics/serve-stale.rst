@@ -130,3 +130,10 @@ In all cases make sure to consult the :doc:`/manpages/unbound.conf` manpage of
 your installed Unbound for defaults and suggested values. And always remember
 that serving expired records should be approached with caution; you may be
 directing your clients to places long gone.
+
+.. Seealso:: :term:`serve-expired<serve-expired: <yes or no>>`,
+             :term:`serve-expired-ttl<serve-expired-ttl: <seconds>>`,
+             :term:`serve-expired-ttl-reset<serve-expired-ttl-reset: <yes or no>>`,
+             :term:`serve-expired-reply-ttl<serve-expired-reply-ttl: <seconds>>` and
+             :term:`serve-expired-client-timeout<serve-expired-client-timeout: <msec>>`
+             in the :doc:`/manpages/unbound.conf` manpage.
