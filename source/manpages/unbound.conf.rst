@@ -1386,13 +1386,13 @@ These options are part of the **server:** clause.
             nodefault if you use exactly that zone, if you want to use a subzone,
             use transparent.
 
-The default zones are localhost, reverse ``127.0.0.1`` and ``::1``, the
-home.arpa, the onion, test, invalid and the AS112 zones. The AS112 zones are
-reverse DNS zones for private use and reserved IP addresses for which the
-servers on the internet cannot provide correct answers. They are configured by
-default to give nxdomain (no reverse information) answers. The defaults can be
-turned off by specifying your own local-zone of that name, or using the
-'nodefault' type. Below is a list of the default zone contents.
+        The default zones are localhost, reverse ``127.0.0.1`` and ``::1``, the
+        home.arpa, the onion, test, invalid and the AS112 zones. The AS112 zones are
+        reverse DNS zones for private use and reserved IP addresses for which the
+        servers on the internet cannot provide correct answers. They are configured by
+        default to give nxdomain (no reverse information) answers. The defaults can be
+        turned off by specifying your own local-zone of that name, or using the
+        'nodefault' type. Below is a list of the default zone contents.
 
     localhost
         The IP4 and IP6 localhost information is given. NS and SOA
