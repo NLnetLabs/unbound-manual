@@ -18,17 +18,16 @@ sources.
 Introduction
 ------------
 
-Unbound has support for :term:`local-zone<local-zone: <zone> <type>>` and
-:term:`local-data<local-data: "<resource record string>">`. This
-makes it possible to give a custom answer back for certain domain names. It also
-contains the ``respip`` module which makes it possible to rewrite answers
-containing certain IP addresses. Although these options are heavily used, they
-are Unbound specific. If you operate resolvers from multiple vendors you have to
-maintain your policies for multiple configurations, which all will have their
-own syntax. Using the Unbound specific configuration also makes it challenging
-to consume policies from external sources. You will have to fetch the external
-policies in the offered format, and reformat it in such a way that Unbound will
-understand it. You then have to keep this list up-to-date, for example using
+Unbound has support for local-zone and local-data. This makes it possible to
+give a custom answer back for certain domain names. It also contains the
+``respip`` module which makes it possible to rewrite answers containing certain
+IP addresses. Although these options are heavily used, they are Unbound
+specific. If you operate resolvers from multiple vendors you have to maintain
+your policies for multiple configurations, which all will have their own syntax.
+Using the Unbound specific configuration also makes it challenging to consume
+policies from external sources. You will have to fetch the external policies in
+the offered format, and reformat it in such a way that Unbound will understand
+it. You then have to keep this list up-to-date, for example using
 :doc:`/manpages/unbound-control`.
 
 There is, however, a policy format that will work on different resolver
