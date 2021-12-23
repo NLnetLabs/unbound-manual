@@ -95,8 +95,9 @@ license, with attribution to NLnet Labs.
    reference/todo
    
 
-Indices and tables
-==================
+Index
+=====
 
 * :ref:`genindex`
-* :ref:`search`
+
+.. * :ref:`search`
