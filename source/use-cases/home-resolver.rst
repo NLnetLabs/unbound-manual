@@ -8,13 +8,13 @@ Firstly, Unbound supports DNSSEC which, through an authentication chain,
 verifies that the DNS query responses you receive are unaltered, as opposed to
 query responses which are not DNSSEC-signed and could be changed by anyone who
 has access to the query. Secondly, by using your own resolver you stop sharing
-your DNS traffic with third parties (your ISP, Google, Cloudflare, Quad9, etc.)
-and increase your DNS privacy. While you still send out (parts of) your queries
-unencrypted, you could configure Unbound to take it a step further, which we'll
-talk about in an upcoming guide. Lastly, when you run your own resolver your DNS
-cache will be local to your network. Even though the first time you resolve a
-domain name may be slightly slower than using your ISP’s resolver, all
-subsequent queries for the name will likely be much faster.
+your DNS traffic with third parties and increase your DNS privacy. While you
+still send out (parts of) your queries unencrypted, you could configure Unbound
+to take it a step further, which we'll talk about in an upcoming guide. Lastly,
+when you run your own resolver your DNS cache will be local to your network.
+Even though the first time you resolve a domain name may be slightly slower than
+using your ISP’s resolver, all subsequent queries for the name will likely be
+much faster.
 
 In this tutorial we'll look at setting up Unbound as a DNS resolver; First for
 your own machine, and then for your entire network.
