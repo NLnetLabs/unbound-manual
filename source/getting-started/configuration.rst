@@ -85,10 +85,10 @@ config and enable it.
         control-enable: yes
 
         # location of the files created by unbound-control-setup
-        #server-key-file: "/usr/local/etc/unbound/unbound_server.key"
-        #server-cert-file: "/usr/local/etc/unbound/unbound_server.pem"
-        #control-key-file: "/usr/local/etc/unbound/unbound_control.key"
-        #control-cert-file: "/usr/local/etc/unbound/unbound_control.pem"
+        # server-key-file: "/usr/local/etc/unbound/unbound_server.key"
+        # server-cert-file: "/usr/local/etc/unbound/unbound_server.pem"
+        # control-key-file: "/usr/local/etc/unbound/unbound_control.key"
+        # control-cert-file: "/usr/local/etc/unbound/unbound_control.pem"
 
 To use the :command:`unbound-control` command, we need to invoke the
 :command:`unbound-control-setup` command. This creates a number of files in the
