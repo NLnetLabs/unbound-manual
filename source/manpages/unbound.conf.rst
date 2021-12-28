@@ -1328,7 +1328,7 @@ These options are part of the **server:** clause.
             be no local data beneath the zone name. This answers queries for the
             zone, and all subdomains of the zone with the local data for the zone.
             It can be used to redirect a domain to return a different address record
-            to the end user, with ``local-zone: "example.com."`` redirect and
+            to the end user, with ``local-zone: "example.com." redirect`` and
             ``local-data: "example.com. A 127.0.0.1"`` queries for
             ``www.example.com`` and ``www.foo.example.com`` are redirected, so that
             users with web browsers cannot access sites with suffix example.com.
