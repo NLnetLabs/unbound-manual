@@ -30,7 +30,7 @@ policies from external sources.
 To get these external sources to work manually, you have to fetch the external policies in
 the offered format, reformat it in such a way that Unbound will understand, and keep this list up-to-date, for example using :doc:`/manpages/unbound-control`.
 
-To automate this process resolver vendor-unspecific, Response Policy Zones (RPZ) is a policy format that will work on different resolver implementations, and that has capabilities to be directly transferred and loaded from external sources.
+To automate this process in a generic, standardised way, Response Policy Zones (RPZ) is a policy format that will work on different resolver implementations, and that has capabilities to be directly transferred and loaded from external sources.
 
 We'll first discuss the different policies and RPZ actions with examples, and then show how to implement RPZ in a configuration.
 
@@ -55,9 +55,8 @@ should be taken if the policy needs to be applied. Each trigger and action
 combination is defined as a Resource Record (RR) in the policy zone. The owner
 of the RR states the trigger, the type and RDATA state the action.
 
-The latest `RPZ draft
-<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_ describes five
-different policy triggers of which Unbound supports two: the **QNAME trigger** and
+Unbound supports all the RPZ policies descriped in the  `RPZ internet draft
+<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_: the **QNAME trigger** and
 the **Response IP Address trigger**, which we will go through below.
 
 
@@ -84,7 +83,7 @@ In the implementation step we will go trough all the triggers.
 RPZ Actions
 -----------
 
-Aside from RPZ triggers, RPZ also specifies actions as a result of these triggers. Unbound currently supports the following actions: **NXDOMAIN**, **NODATA**, **PASSTHRU**, **DROP**, **Local** Data, and **TCP-only**.
+Aside from RPZ triggers, RPZ also specifies actions as a result of these triggers. Unbound currently supports the following actions: **NXDOMAIN**, **NODATA**, **PASSTHRU**, **DROP**, **Local Data**, and **TCP-only**.
 
 The **Local Data** action responds with a preconfigured resource record. Queries for types that do not exist in the policy zones will result in a NODATA answer.
 
@@ -180,12 +179,12 @@ the query. The **TCP-Only** action responds to the query over TCP. The **PASSTHR
 ..   ;; ANSWER SECTION:
 ..   www.example.com. 86400 IN TXT "v=spf1 -all"
 
-How to implement RPZ in Unbound
+How to use RPZ with Unbound
 -------------------------------
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
 needs to be loaded using ``module-config``. Each policy zone is configured in
-Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can be found in the :ref:`manpages/unbound.conf:manpage`. A minimal configuration with a
+Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can be found in the :doc:`manpages/unbound.conf:manpage`. A minimal configuration with a
 single policy zone can look like, where additional elements can be uncommented:
 
 .. code-block:: text
