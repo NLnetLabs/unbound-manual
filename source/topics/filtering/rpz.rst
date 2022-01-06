@@ -16,27 +16,33 @@ Introduction
 ------------
 
 Unbound has support for local-zone and local-data. This makes it possible to
-give a custom answer back for certain domain names. It also contains the
-``respip`` module which makes it possible to rewrite answers containing certain
-IP addresses. Although these options are heavily used, they are Unbound
-specific. If you operate resolvers from multiple vendors you have to maintain
+give a custom answer back for specified domain names. It also contains the
+``respip`` module which makes it possible to rewrite answers containing specified
+IP addresses. Although these options are heavily used by users, they are Unbound
+specific. If you operate multiple resolvers from multiple vendors you have to maintain
 your policies for multiple configurations, which all will have their own syntax.
 Using the Unbound specific configuration also makes it challenging to consume
-policies from external sources. You will have to fetch the external policies in
-the offered format, and reformat it in such a way that Unbound will understand
-it. You then have to keep this list up-to-date, for example using
-:doc:`/manpages/unbound-control`.
+policies from external sources.
 
-There is, however, a policy format that will work on different resolver
-implementations, and that has capabilities to be directly transferred and loaded
-from external sources: Response Policy Zones (RPZ).
+.. for example energized.pro, spamhaus, and oisd.nl (do we want to endorse these?)
 
-We'll first discuss the different policies and RPZ actions with examples, and then show the implementation configuration.
+
+To get these external sources to work manually, you have to fetch the external policies in
+the offered format, reformat it in such a way that Unbound will understand, and keep this list up-to-date, for example using :doc:`/manpages/unbound-control`.
+
+To automate this process resolver vendor-unspecific, Response Policy Zones (RPZ) is a policy format that will work on different resolver implementations, and that has capabilities to be directly transferred and loaded from external sources.
+
+We'll first discuss the different policies and RPZ actions with examples, and then show how to implement RPZ in a configuration.
 
 .. index:: RPZ policies
 
 RPZ Policies
 ------------
+
+
+.. All supported RPZ triggers:
+.. QNAME, Response IP Address, nsdname, nsip and clientip triggers
+
 
 RPZ policies are formatted in DNS zone files. This makes it possible to easily
 consume and keep them to up-to-date by using DNS zone transfers. Something that
@@ -51,85 +57,79 @@ of the RR states the trigger, the type and RDATA state the action.
 
 The latest `RPZ draft
 <https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_ describes five
-different policy triggers of which Unbound supports two: the QNAME trigger and
-the Response IP Address trigger.
+different policy triggers of which Unbound supports two: the **QNAME trigger** and
+the **Response IP Address trigger**, which we will go through below.
 
-.. index:: QNAME Trigger
 
-QNAME Trigger
--------------
++-------------------------+---------------------------------------------------------------+
+|    Trigger              |    Description and example                                    |
++=========================+===============================================================+
+| ``QNAME``               |  The query name: ``example.com``                              |
++-------------------------+---------------------------------------------------------------+
+| ``Client IP Address``   |  The IP address of the client: ``24.0.2.0.192.rpz-client-ip`` |
++-------------------------+---------------------------------------------------------------+
+| ``Response IP Address`` |  response IP address in the answer: ``24.0.2.0.192.rpz-ip``   |
++-------------------------+---------------------------------------------------------------+
+| ``NSDNAME``             |  The nameserver name: ``ns.example.com.rpz-nsdname``          |
++-------------------------+---------------------------------------------------------------+
+| ``NSIP``                |  The nameserver IP address: ``24.0.2.0.192.rpz-nsip``         |
++-------------------------+---------------------------------------------------------------+
 
-A policy with the *QNAME* trigger will be applied when the target domain name in
-the query (the query name, or QNAME) matches the trigger name. The trigger name
-is the part of the *owner* of the record before the origin of the zone. For
-example, if there is this record in the ``rpz.nlnetlabs.nl`` zone:
+Note that the IP address encoding for RPZ triggers in the IN-ADDR.ARPA naming convention. So ``192.0.2.14`` will be written as ``24.2.0.192``.
 
-.. code-block:: text
-
-  $ORIGIN rpz.nlnetlabs.nl.
-  example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
-
-then Unbound will add a policy for queries for ``example.com``. Only exact
-matches for ``example.com`` will be triggered. If a policy for ``example.com``
-is desired that includes all of its subdomains, this is possible by adding a
-wildcard record:
-
-.. code-block:: text
-
-  $ORIGIN rpz.nlnetlabs.nl.
-  example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
-  *.example.com.rpz.nlnetlabs.nl.  TXT  "trigger for *.example.com"
+In the implementation step we will go trough all the triggers.
 
 .. index:: RPZ actions
 
 RPZ Actions
 -----------
 
-The action that will be applied for above example is the *Local Data* action.
-This means that queries for ``example.com`` for the *TXT* type will be answered
-with the newly created record. Queries for types that do not exist in the policy
-zones will result in a NODATA answer.
+Aside from RPZ triggers, RPZ also specifies actions as a result of these triggers. Unbound currently supports the following actions: **NXDOMAIN**, **NODATA**, **PASSTHRU**, **DROP**, **Local** Data, and **TCP-only**.
 
-.. code-block:: text
+The **Local Data** action responds with a preconfigured resource record. Queries for types that do not exist in the policy zones will result in a NODATA answer.
 
-  $ drill txt example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 14642
-  ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; example.com. IN TXT
+.. .. code-block:: text
 
-  ;; ANSWER SECTION:
-  example.com. 3600 IN TXT "trigger for example.com"
+..   $ drill txt example.com
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 14642
+..   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; example.com. IN TXT
 
-  $ drill aaaa example.com @127.0.0.54
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 4713
-  ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; example.com. IN AAAA
+..   ;; ANSWER SECTION:
+..   example.com. 3600 IN TXT "trigger for example.com"
 
-  ;; ANSWER SECTION:
+..   $ drill aaaa example.com @127.0.0.54
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 4713
+..   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; example.com. IN AAAA
 
-Other RPZ actions that are supported by Unbound are the *NXDOMAIN*, *NODATA*,
-*PASSTHRU*, and *DROP* actions. All of these actions are defined by having a
-CNAME to a specific name. A policy for the NXDOMAIN action is created by having
-a CNAME to the root:
+..   ;; ANSWER SECTION:
 
-.. code-block:: text
+Other RPZ actions that are supported by Unbound are the **NXDOMAIN**, **NODATA**,
+**PASSTHRU**, **DROP** and **TCP-Only** actions. All of these actions are defined by having a
+CNAME to a specific name. 
 
-  $ORIGIN rpz.nlnetlabs.nl.
-  example.com.rpz.nlnetlabs.nl.    CNAME .
+.. As an example, a policy for the NXDOMAIN action is created by having
+.. a CNAME to the root:
 
-The NXDOMAIN action will, as the name suggest, answer with an NXDOMAIN when
-triggered:
+.. .. code-block:: text
 
-.. code-block:: text
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   example.com.rpz.nlnetlabs.nl.    CNAME .
 
-  $ drill aaaa example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NXDOMAIN, id: 14754
-  ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; example.com. IN AAAA
-  ;; ANSWER SECTION:
+.. The NXDOMAIN action will, as the name suggest, answer with an NXDOMAIN when
+.. triggered:
+
+.. .. code-block:: text
+
+..   $ drill aaaa example.com
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NXDOMAIN, id: 14754
+..   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; example.com. IN AAAA
+..   ;; ANSWER SECTION:
 
 The CNAME targets for the other RPZ actions are:
 
@@ -144,111 +144,107 @@ The CNAME targets for the other RPZ actions are:
 +--------------+-------------------------+
 | ``DROP``     | ``CNAME rpz-drop.``     |
 +--------------+-------------------------+
+| ``TCP-Only`` | ``CNAME rpz-tcp-only.`` |
++--------------+-------------------------+
 
-The NODATA action is self-explanatory. The DROP action will simply ignore (drop)
-the query. The PASSTHRU action makes it possible to exclude a domain, or IP
-address, from your policies. If the PASSTHRU action is triggered no other policy
-from any of the available policy zones will be applied:
+The **NODATA** action returns a response with no attached data. The **DROP** action ignores (drops)
+the query. The **TCP-Only** action responds to the query over TCP. The **PASSTHRU** action makes it possible to exclude a domain, or IP address, from your policies so that if the **PASSTHRU** action is triggered no other policy from any of the available policy zones will be applied.
 
-.. code-block:: text
+.. .. code-block:: text
 
-  $ORIGIN rpz.nlnetlabs.nl.
-  *.example.com.rpz.nlnetlabs.nl.   TXT "local data policy"
-  www.example.com.rpz.nlnetlabs.nl. CNAME rpz-passthru.
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   *.example.com.rpz.nlnetlabs.nl.   TXT "local data policy"
+..   www.example.com.rpz.nlnetlabs.nl. CNAME rpz-passthru.
 
-Queries for all subdomains of ``example.com`` will now be answered with an
-NXDOMAIN, except for queries for ``www.example.com``, these will be resolved
-normally.
+.. Queries for all subdomains of ``example.com`` will now be answered with an
+.. NXDOMAIN, except for queries for ``www.example.com``, these will be resolved
+.. normally.
 
-.. code-block:: text
+.. .. code-block:: text
 
-  $ drill txt withpolicy.example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 62993
-  ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; withpolicy.example.com. IN TXT
+..   $ drill txt withpolicy.example.com
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 62993
+..   ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; withpolicy.example.com. IN TXT
 
-  ;; ANSWER SECTION:
-  withpolicy.example.com. 3600 IN TXT "local data policy"
+..   ;; ANSWER SECTION:
+..   withpolicy.example.com. 3600 IN TXT "local data policy"
 
-  $ drill txt www.example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 42053
-  ;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; www.example.com. IN TXT
+..   $ drill txt www.example.com
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 42053
+..   ;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; www.example.com. IN TXT
 
-  ;; ANSWER SECTION:
-  www.example.com. 86400 IN TXT "v=spf1 -all"
+..   ;; ANSWER SECTION:
+..   www.example.com. 86400 IN TXT "v=spf1 -all"
 
-.. index:: Response IP trigger
-
-Response IP Address Trigger
----------------------------
-
-The other RPZ trigger supported by Unbound is the *Response IP Address* trigger.
-This trigger makes it possible to apply the same RPZ actions as mentioned above,
-but triggered based on the IPv4 or IPv6 address in the answer section of the
-answer. The IP address to trigger on is again part of the owner of the policy
-records. The IP address is encoded in reverse form and prepended with the prefix
-length to use. This all is prepended to the ``rpz-ip`` label, which will be
-placed right under the apex of the zone. So, a trigger for addresses in the
-192.0.2.0/24 block will be encoded as:
-
-.. code-block:: text
-
-  $ORIGIN rpz.nlnetlabs.nl.
-  24.0.2.0.192.rpz-ip.rpz.nlnetlabs.nl. [...]
-
-IPv6 addresses can also be used in RPZ policies. In that case the ``zz`` label
-can be used to replace the longest set of zeros. A trigger for addresses in the
-2001:DB8::/32 block will be encoded as:
-
-.. code-block:: text
-
-  $ORIGIN rpz.nlnetlabs.nl.
-  32.zz.db8.2001.rpz-ip.rpz.nlnetlabs.nl. [...]
-
-It is possible to replace an address by applying one specified in a policy
-containing a Local Data action. For example, the IPv4 address for
-``example.com`` is currently ``93.184.216.34``, and can be changed to
-``192.0.2.1`` like this:
-
-.. code-block:: text
-
-  $ORIGIN rpz.nlnetlabs.nl.
-  32.34.216.184.93.rpz-ip.rpz.nlnetlabs.nl. A 192.0.2.1
-
-And we can verify that it works:
-
-.. code-block:: text
-
-  $ drill example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 13670
-  ;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; example.com. IN A
-  ;; ANSWER SECTION:
-
-  example.com. 3600 IN A 192.0.2.1
-
-Implementation
---------------
+How to implement RPZ in Unbound
+-------------------------------
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
 needs to be loaded using ``module-config``. Each policy zone is configured in
-Unbound using the ``rpz`` clause. A minimal configuration with a single policy
-zone can look like:
+Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can be found in the :ref:`manpages/unbound.conf:manpage`. A minimal configuration with a
+single policy zone can look like, where additional elements can be uncommented:
 
 .. code-block:: text
 
   server:
       module-config: "respip validator iterator"
   rpz:
+      # The name of the RPZ authority zone
       name: rpz.nlnetlabs.nl
-      zonefile: rpz.nlnetlabs.nl
 
-In above example the policy zone will be loaded from file. It is also possible
-to load the zone using DNS zone transfers. Both AXFR and IXFR is supported, all
+      # The filename where the zone is stored. If left empty
+      zonefile: rpz.nlnetlabs.nl
+      
+      # The location of the remote RPZ zonefile.
+      # url: http://www.example.com/example.org.zone (not a real RPZ file)
+      
+      # Always use this RPZ action for matching triggers from this zone. 
+      # Possible action are: nxdomain, nodata, passthru, drop, disabled,
+      # and cname.
+      # rpz-action-override: nxdomain
+      
+      # Log all applied RPZ actions for this RPZ zone. Default is no.
+      # rpz-log: yes
+      
+      # Specify a string to be part of the log line.
+      # rpz-log-name: nlnetlabs
+
+In above example the policy zone will be loaded from the file ``rpz.nlnetlabs.nl``. 
+An example RPZ file with all the triggers and actions looks like this:
+
+.. code-block:: text
+  
+  $ORIGIN rpz.nlnetlabs.nl.
+
+  # QNAME trigger with local data action
+  example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
+  *.example.com               CNAME   .
+
+  # IPv4 subnet (192.0.2.0/28) which drops clients and IPv6 subnet 
+  (2001:db8::3/128) which is not subject to policy
+  28.0.2.0.192.rpz-client-ip      CNAME rpz-drop.
+  128.3.zz.db8.2001.rpz-client-ip CNAME rpz-passthru.
+  # Clients at 192.2.0.64 only get responses over TCP.
+  64.2.0.192.rpz-client-ip        CNAME rpz-tcp-only.
+
+  # Fills the responses for these queries with NXDOMAIN and the correct 
+  # answers respectively
+  24.0.2.0.192.rpz-ip         CNAME   .
+  32.2.2.0.192.rpz-ip         CNAME   rpz-passthru.
+
+  # Answers queries for the nlnetlabs.nl nameserver with NXDOMAIN
+  ns.nlnetlabs.nl.rpz-nsdname CNAME   .
+
+  # Drops queries for the nameserver at 192.0.2.0/24 subnet
+  24.0.2.0.192.rpz-nsip       CNAME   rpz-drop.
+
+
+
+It is also possible to load the zone using DNS zone transfers. Both AXFR and IXFR is supported, all
 additions and deletion in the zone will be picked up by Unbound and reflected in
 the local policies. Transferring the policy using a DNS zone transfer is as easy
 as specifying the server to get the zone from:
@@ -318,30 +314,6 @@ This also requires a change in the Unbound config:
       rpz-action-override: cname
       rpz-cname-override: "example.nl."
 
-Then we can verify that it works:
-
-.. code-block:: text
-
-  $ drill drop.example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 14547
-  ;; flags: qr aa rd ra ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; drop.example.com. IN A
-
-  ;; ANSWER SECTION:
-  drop.example.com. 3600 IN CNAME example.nl.
-  example.nl. 3600 IN A 94.198.159.35
-
-  $ drill example.com
-  ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 31187
-  ;; flags: qr rd ra ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0
-  ;; QUESTION SECTION:
-  ;; example.com. IN A
-
-  ;; ANSWER SECTION:
-  example.com. 3600 IN CNAME example.nl.
-  example.nl. 3568 IN A 94.198.159.35
-
 The ``disabled`` option will stop Unbound from applying any of the actions in
 the zone. This, combined with the ``rpz-log`` option, is a nice way to test what
 would happen to your traffic when a policy will be enabled, without directly
@@ -392,3 +364,86 @@ both zones.
              :term:`access-control-tag<access-control-tag: <IP netblock> <"list
              of tags">>`, and :term:`extended-statistics<extended-statistics:
              <yes or no>>` in the :doc:`/manpages/unbound.conf` manpage.
+
+
+
+
+
+
+.. .. index:: QNAME Trigger
+
+.. QNAME Trigger
+.. *************
+
+.. A policy with the **QNAME trigger** will be applied when the target domain name in
+.. the query (the query name, or QNAME) matches the trigger name. The trigger name
+.. is the part of the *owner* of the record before the origin of the zone. For
+.. example, if there is this record in the ``rpz.nlnetlabs.nl`` zone:
+
+.. .. code-block:: text
+
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
+
+.. then Unbound will add a policy for queries for ``example.com``. Only exact
+.. matches for ``example.com`` will be triggered. If a policy for ``example.com``
+.. is desired that includes all of its subdomains, this is possible by adding a
+.. wildcard record:
+
+.. .. code-block:: text
+
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   example.com.rpz.nlnetlabs.nl.    TXT  "trigger for example.com"
+..   *.example.com.rpz.nlnetlabs.nl.  TXT  "trigger for *.example.com"
+
+.. .. index:: Response IP trigger
+
+.. Response IP Address Trigger
+.. ***************************
+
+.. The other RPZ trigger supported by Unbound is the *Response IP Address* trigger.
+.. This trigger makes it possible to apply the same RPZ actions as mentioned below,
+.. but triggered based on the IPv4 or IPv6 address in the answer section of the
+.. answer. The IP address to trigger on is again part of the owner of the policy
+.. records. The IP address is encoded in reverse form and prepended with the prefix
+.. length to use. This all is prepended to the ``rpz-ip`` label, which will be
+.. placed right under the apex of the zone. So, a trigger for addresses in the
+.. 192.0.2.0/24 block will be encoded as:
+
+.. .. code-block:: text
+
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   24.0.2.0.192.rpz-ip.rpz.nlnetlabs.nl. [...]
+
+.. IPv6 addresses can also be used in RPZ policies. In that case the ``zz`` label
+.. can be used to replace the longest set of zeros. A trigger for addresses in the
+.. 2001:DB8::/32 block will be encoded as:
+
+.. .. code-block:: text
+
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   32.zz.db8.2001.rpz-ip.rpz.nlnetlabs.nl. [...]
+
+.. It is possible to replace an address by applying one specified in a policy
+.. containing a Local Data action. For example, the IPv4 address for
+.. ``example.com`` is currently ``93.184.216.34``, and can be changed to
+.. ``192.0.2.1`` like this:
+
+.. .. code-block:: text
+
+..   $ORIGIN rpz.nlnetlabs.nl.
+..   32.34.216.184.93.rpz-ip.rpz.nlnetlabs.nl. A 192.0.2.1
+
+.. And we can verify that it works:
+
+.. .. code-block:: text
+
+..   $ drill example.com
+..   ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 13670
+..   ;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+..   ;; QUESTION SECTION:
+..   ;; example.com. IN A
+..   ;; ANSWER SECTION:
+
+..   example.com. 3600 IN A 192.0.2.1
+
