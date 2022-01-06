@@ -27,12 +27,18 @@ policies from external sources.
 .. for example energized.pro, spamhaus, and oisd.nl (do we want to endorse these?)
 
 
-To get these external sources to work manually, you have to fetch the external policies in
-the offered format, reformat it in such a way that Unbound will understand, and keep this list up-to-date, for example using :doc:`/manpages/unbound-control`.
+To get these external sources to work manually, you have to fetch the external
+policies in the offered format, reformat it in such a way that Unbound will
+understand, and keep this list up-to-date, for example using
+:doc:`/manpages/unbound-control`.
 
-To automate this process in a generic, standardised way, Response Policy Zones (RPZ) is a policy format that will work on different resolver implementations, and that has capabilities to be directly transferred and loaded from external sources.
+To automate this process in a generic, standardised way, Response Policy Zones
+(RPZ) is a policy format that will work on different resolver implementations,
+and that has capabilities to be directly transferred and loaded from external
+sources.
 
-We'll first discuss the different policies and RPZ actions with examples, and then show how to implement RPZ in a configuration.
+We'll first discuss the different policies and RPZ actions with examples, and
+then show how to implement RPZ in a configuration.
 
 .. index:: RPZ policies
 
@@ -56,8 +62,9 @@ combination is defined as a Resource Record (RR) in the policy zone. The owner
 of the RR states the trigger, the type and RDATA state the action.
 
 Unbound supports all the RPZ policies descriped in the  `RPZ internet draft
-<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_: the **QNAME trigger** and
-the **Response IP Address trigger**, which we will go through below.
+<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_: the **QNAME
+trigger** and the **Response IP Address trigger**, which we will go through
+below.
 
 
 +-------------------------+---------------------------------------------------------------+
@@ -74,7 +81,8 @@ the **Response IP Address trigger**, which we will go through below.
 | ``NSIP``                |  The nameserver IP address: ``24.0.2.0.192.rpz-nsip``         |
 +-------------------------+---------------------------------------------------------------+
 
-Note that the IP address encoding for RPZ triggers in the IN-ADDR.ARPA naming convention. So ``192.0.2.14`` will be written as ``24.2.0.192``.
+Note that the IP address encoding for RPZ triggers in the IN-ADDR.ARPA naming
+convention. So ``192.0.2.14`` will be written as ``24.2.0.192``.
 
 In the implementation step we will go trough all the triggers.
 
@@ -83,9 +91,12 @@ In the implementation step we will go trough all the triggers.
 RPZ Actions
 -----------
 
-Aside from RPZ triggers, RPZ also specifies actions as a result of these triggers. Unbound currently supports the following actions: **NXDOMAIN**, **NODATA**, **PASSTHRU**, **DROP**, **Local Data**, and **TCP-only**.
+Aside from RPZ triggers, RPZ also specifies actions as a result of these
+triggers. Unbound currently supports the following actions: **NXDOMAIN**,
+**NODATA**, **PASSTHRU**, **DROP**, **Local Data**, and **TCP-only**.
 
-The **Local Data** action responds with a preconfigured resource record. Queries for types that do not exist in the policy zones will result in a NODATA answer.
+The **Local Data** action responds with a preconfigured resource record. Queries
+for types that do not exist in the policy zones will result in a NODATA answer.
 
 .. .. code-block:: text
 
@@ -106,9 +117,9 @@ The **Local Data** action responds with a preconfigured resource record. Queries
 
 ..   ;; ANSWER SECTION:
 
-Other RPZ actions that are supported by Unbound are the **NXDOMAIN**, **NODATA**,
-**PASSTHRU**, **DROP** and **TCP-Only** actions. All of these actions are defined by having a
-CNAME to a specific name. 
+Other RPZ actions that are supported by Unbound are the **NXDOMAIN**,
+**NODATA**, **PASSTHRU**, **DROP** and **TCP-Only** actions. All of these
+actions are defined by having a CNAME to a specific name. 
 
 .. As an example, a policy for the NXDOMAIN action is created by having
 .. a CNAME to the root:
@@ -146,8 +157,11 @@ The CNAME targets for the other RPZ actions are:
 | ``TCP-Only`` | ``CNAME rpz-tcp-only.`` |
 +--------------+-------------------------+
 
-The **NODATA** action returns a response with no attached data. The **DROP** action ignores (drops)
-the query. The **TCP-Only** action responds to the query over TCP. The **PASSTHRU** action makes it possible to exclude a domain, or IP address, from your policies so that if the **PASSTHRU** action is triggered no other policy from any of the available policy zones will be applied.
+The **NODATA** action returns a response with no attached data. The **DROP**
+action ignores (drops) the query. The **TCP-Only** action responds to the query
+over TCP. The **PASSTHRU** action makes it possible to exclude a domain, or IP
+address, from your policies so that if the **PASSTHRU** action is triggered no
+other policy from any of the available policy zones will be applied.
 
 .. .. code-block:: text
 
@@ -184,8 +198,10 @@ How to use RPZ with Unbound
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
 needs to be loaded using ``module-config``. Each policy zone is configured in
-Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can be found in the :doc:`manpages/unbound.conf:manpage`. A minimal configuration with a
-single policy zone can look like, where additional elements can be uncommented:
+Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can
+be found in the :doc:`manpages/unbound.conf`. A minimal configuration
+with a single policy zone can look like, where additional elements can be
+uncommented:
 
 .. code-block:: text
 
@@ -212,8 +228,9 @@ single policy zone can look like, where additional elements can be uncommented:
       # Specify a string to be part of the log line.
       # rpz-log-name: nlnetlabs
 
-In above example the policy zone will be loaded from the file ``rpz.nlnetlabs.nl``. 
-An example RPZ file with all the triggers and actions looks like this:
+In above example the policy zone will be loaded from the file
+``rpz.nlnetlabs.nl``. An example RPZ file with all the triggers and actions
+looks like this:
 
 .. code-block:: text
   
@@ -243,10 +260,10 @@ An example RPZ file with all the triggers and actions looks like this:
 
 
 
-It is also possible to load the zone using DNS zone transfers. Both AXFR and IXFR is supported, all
-additions and deletion in the zone will be picked up by Unbound and reflected in
-the local policies. Transferring the policy using a DNS zone transfer is as easy
-as specifying the server to get the zone from:
+It is also possible to load the zone using DNS zone transfers. Both AXFR and
+IXFR is supported, all additions and deletion in the zone will be picked up by
+Unbound and reflected in the local policies. Transferring the policy using a DNS
+zone transfer is as easy as specifying the server to get the zone from:
 
 .. code-block:: text
 
