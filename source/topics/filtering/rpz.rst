@@ -82,7 +82,7 @@ below.
 +-------------------------+---------------------------------------------------------------+
 
 Note that the IP address encoding for RPZ triggers in the IN-ADDR.ARPA naming
-convention. So ``192.0.2.14`` will be written as ``24.2.0.192``.
+convention. So ``192.0.2.24`` will be written as ``24.2.0.192``.
 
 In the implementation step we will go trough all the triggers.
 
