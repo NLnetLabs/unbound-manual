@@ -8,7 +8,7 @@ Serving Stale Data
 Unbound supports serving stale data from its cache, as descibed in :RFC:`8767`.
 Serving stale data would normally break the contract between an authoritative
 name server and a caching resolver on the amount of time a record is permitted
-to be cached. Hoewver, the TTL definition of :RFC:`8767#section-4` states that:
+to be cached. However, the TTL definition of :RFC:`8767#section-4` states that:
 
     If the data is unable to be authoritatively refreshed when the TTL expires,
     the record MAY be used as though it is unexpired. 
