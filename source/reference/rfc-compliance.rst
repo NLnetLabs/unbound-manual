@@ -95,7 +95,6 @@ Internet drafts that have been implemented in Unbound.
 :RFC:`7646`    Definition and Use of DNSSEC Negative Trust Anchors
 :RFC:`7686`    The ".onion" Special-Use Domain Name
 :RFC:`7706`    Decreasing Access Time to Root Servers by Running One on Loopback
-:RFC:`7816`    DNS Query Name Minimisation to Improve Privacy
 :RFC:`7830`    The EDNS(0) Padding Option
 :RFC:`7858`    Specification for DNS over Transport Layer Security (TLS)
 :RFC:`7871`    Client Subnet in DNS Queries
@@ -116,4 +115,5 @@ Internet drafts that have been implemented in Unbound.
 :RFC:`8767`    Serving Stale Data to Improve DNS Resiliency
 :RFC:`8806`    Running a Root Server Local to a Resolver
 :RFC:`8976`    Message Digest for DNS Zones
+:RFC:`9156`    DNS Query Name Minimisation to Improve Privacy
 ============== ====
