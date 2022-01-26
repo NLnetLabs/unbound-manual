@@ -1,5 +1,5 @@
-Unbound Timeout Information
-===========================
+Unbound Timeout and Server Selection Information
+================================================
 
 Introduction
 ------------

@@ -23,7 +23,7 @@ guide <files/unbound-windows-manual-02.pdf>` is also available as a PDF.
    dns-cache-poisoning-vulnerability
    patch-announce102
    book-news
-   info-timeout
+   info-timeout-server-selection
    info-algo
    root-11sep-11oct
    
