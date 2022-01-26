@@ -23,7 +23,7 @@ Configuring the Local Stub resolver
 For configuring Unbound we need to make sure we have Unbound installed. An easy
 test is by asking the verison number.
 
-.. code-block:: bash
+.. code-block:: text
 
 	unbound -V
 
@@ -56,14 +56,14 @@ We also want to enable the ``DNSSEC`` option so that we can verify the integrity
 the responses we get to our DNS queries. With your favourite text editor (e.g.
 :command:`nano`) we can modify the file:
 
-.. code-block:: bash
+.. code-block:: text
 
 	nano /etc/systemd/resolved.conf
 
 Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
 "#") the options:
 
-.. code-block:: bash
+.. code-block:: text
 
 	[Resolve]
 	DNS=127.0.0.1
@@ -79,7 +79,7 @@ Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
 
 With this file modified, we can restart using this configuration with: 
 
-.. code-block:: bash
+.. code-block:: text
 
 	systemctl restart systemd-resolved
 
@@ -88,7 +88,7 @@ A quick test a :command:`dig` without specifying the address of the Unbound
 server should give the same result as specifying it did above (with
 ``@127.0.0.1``).
 
-.. code-block:: bash
+.. code-block:: text
 
 	dig example.com
 
@@ -100,14 +100,14 @@ command. There we can see a server IP address under the ``SERVER`` entry. If the
 default is correctly set to be Unbound, the entry will be the IP address of the
 Unbound instance you configured (in this case ``127.0.0.1``):
 
-.. code-block:: bash
+.. code-block:: text
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
 
 Note that the "SERVER" section in the output from :command:`dig` should also
 contain the local IP address of our server.
 
-.. code-block:: bash
+.. code-block:: text
 
 	;; SERVER: 127.0.0.1#53(127.0.0.1)
 
@@ -123,7 +123,7 @@ used to manage and give information about the system configuration parameters.
 When used for DNS, it will show you all the configured resolvers though we are
 only interested in the first.
 
-.. code-block:: bash
+.. code-block:: text
 
 	scutil --dns
 
@@ -150,7 +150,7 @@ also exists if you want to script this step). The steps go as follows:
 
 Once the IP address is added we can test our Unbound instance (assuming it's running)  with :command:`dig`. Note that the Unbound instance cannot be reached before it has been added in the DNS tab in System Preferences.
 
-.. code-block:: bash
+.. code-block:: text
 
 	dig example.com @127.0.0.1
 
@@ -169,7 +169,7 @@ If you installed Unbound using Homebrew, the XML file required by
 found at ``/Library/LaunchDaemons/homebrew.mxcl.unbound.plist``. To load this
 file we invoke the following command.
 
-.. code-block:: bash
+.. code-block:: text
 
 	sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.unbound.plist
 
@@ -183,7 +183,7 @@ for :command:`launchctl`. Conveniently we've created one for you:
 
 .. zet XML in unbound/contrib (contributed code)
 
-.. code-block:: bash
+.. code-block:: xml
 
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -222,13 +222,13 @@ Using the text editor of choice, we then create the file
 supplied XML code. To be able to use the file, we need to change the permissions
 of the file using :command:`chmod`
 
-.. code-block:: bash
+.. code-block:: text
 
 	sudo chmod 644 /Library/LaunchDaemons/nl.nlnetlabs.unbound.plist
 
 We can then load the file with the following command.
 
-.. code-block:: bash
+.. code-block:: text
 
 	sudo launchctl load /Library/LaunchDaemons/nl.nlnetlabs.unbound.plist
 

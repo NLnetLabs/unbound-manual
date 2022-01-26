@@ -1,5 +1,3 @@
-.. _doc_privacy_doh:
-
 .. versionadded:: 1.12.0
 
 DNS-over-HTTPS
@@ -90,7 +88,7 @@ an RST_STREAM frame. The HTTP status codes that can be returned by Unbound are:
 Using DoH
 ---------
 
-As mentioned above, the nghttp2 library is required to use Unbound’s DoH
+As mentioned above, the `nghttp2 <https://nghttp2.org/>`_library is required to use Unbound’s DoH
 functionality. Compiling and installing Unbound with libnghttp2 can be done
 using:
 

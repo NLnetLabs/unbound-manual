@@ -19,7 +19,7 @@ Installing with a Package Manager
 Most package managers maintain a version of Unbound, although this version can
 be outdated if this package has not been updated recently. If you like to
 upgrade to the latest version, we recommend :ref:`compiling Unbound
-yourself<Building from source/Compiling>`.
+yourself<getting-started/installation:Building from source/Compiling>`.
 
 Ubuntu 20.04.1 LTS
 ^^^^^^^^^^^^^^^^^^
@@ -99,11 +99,10 @@ download as well.
     sudo apt-get install -y bison
     sudo apt-get install -y flex
 
-
 With all the requirements met, we can now start the compilation process in the
-Unbound directory. The first step here is configuring. With :option:`./configure
--h` you can look at the extensive list of configurables for Unbound. A nice
-feature is that :command:`configure` will tell you what it's missing during
+Unbound directory. The first step here is configuring. With ``./configure
+-h`` you can look at the extensive list of configurables for Unbound. A nice
+feature is that ``configure`` will tell you what it's missing during
 configuration. A common error is for the paths to the two libraries we just
 installed, which can be manually specified with ``--with-ssl=`` and
 ``--with-libexpat=``.
@@ -128,7 +127,7 @@ for the machine.
     sudo make install
 
 We now have fully compiled and installed version of Unbound, and :ref:`continue
-to testing it<Testing>`.
+to testing it<getting-started/installation:Testing>`.
 
 Please note that the default configuration file is located at
 :file:`/usr/local/etc/unbound/unbound.conf` and created during the
@@ -197,8 +196,8 @@ which can become important in the :command:`configure` step.
     brew install expat
 
 With all the requirements met, we can now start the compilation process in the
-Unbound directory. The first step here is configuring. With :option:`./configure
--h` you can look at the extensive list of configurables for Unbound. A nice
+Unbound directory. The first step here is configuring. With ``./configure
+-h`` you can look at the extensive list of configurables for Unbound. A nice
 feature is that :command:`configure` will tell you what it's missing during
 configuration. A common error is for the paths to the two libraries we just
 installed, which can be manually specified with ``--with-ssl=`` and
@@ -215,7 +214,8 @@ of openssl is ``1.1.1k`` and of libexapt is ``2.3.0``).
 
 .. code-block:: bash
 
-    ./configure --with-ssl=/opt/homebrew/Cellar/openssl@1.1/1.1.1k/ --with-libexpat=/opt/homebrew/Cellar/expat/2.3.0
+    ./configure --with-ssl=/opt/homebrew/Cellar/openssl@1.1/1.1.1k/ \
+                --with-libexpat=/opt/homebrew/Cellar/expat/2.3.0
 
 When :command:`configure` gives no errors, we can continue to actually compiling
 Unbound. For this Unbound uses :command:`make`. Be warned that compiling might
@@ -233,7 +233,7 @@ for the machine.
     sudo make install
 
 We now have fully compiled and installed version of Unbound, and can
-:ref:`continue to testing it<Testing>`.
+:ref:`continue to testing it<getting-started/installation:Testing>`.
 
 Testing
 -------
@@ -252,8 +252,8 @@ Unbound instance.
 
 Another handy trick you can use during testing is to run Unbound in the
 foreground using the :option:`-d` option and increase the verbosity level using
-the :option:`-vvv` option. This allows you to see steps Unbound takes and also
-where it fails.
+the :option:`-v` option multiple times. This allows you to see steps Unbound
+takes and also where it fails.
 
 Now that Unbound is installed we can :doc:`continue to configuring
 it<configuration>`.
