@@ -124,7 +124,7 @@ the command using the :option:`-c` flag.
 Set up Trust Anchor (Enable DNSSEC)
 -----------------------------------
 
-To enable `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_,
+To enable `DNSSEC <https://www.sidn.nl/en/modern-internet-standards/dnssec>`_,
 which we strongly recommend, we need to set up a trust anchor as it allows the
 verification of the integrity of the responses to the queries you send.
 
