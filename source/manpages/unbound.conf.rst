@@ -1294,7 +1294,7 @@ These options are part of the **server:** clause.
         setup a stub-zone for it as detailed in the stub zone section
         below.
 
-        deny 
+        deny
             Do not send an answer, drop the query. If there is a match from local
             data, the query is answered.
 
@@ -1339,8 +1339,8 @@ These options are part of the **server:** clause.
 
             .. code-block:: text
 
-                timestamp, unbound-pid, info: zonename inform IP@port queryname type class. 
-                
+                timestamp, unbound-pid, info: zonename inform IP@port queryname type class.
+
             This option can be used for normal resolution, but machines looking up
             infected names are logged, eg. to run antivirus on them.
 
@@ -1394,116 +1394,116 @@ These options are part of the **server:** clause.
         turned off by specifying your own local-zone of that name, or using the
         'nodefault' type. Below is a list of the default zone contents.
 
-    localhost
-        The IP4 and IP6 localhost information is given. NS and SOA
-        records are provided for completeness and to satisfy some DNS
-        update tools. Default content:
-        local-zone: "localhost." redirect
-        local-data: "localhost. 10800 IN NS localhost."
-        local-data: "localhost. 10800 IN
-        SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
-        local-data: "localhost. 10800 IN A 127.0.0.1"
-        local-data: "localhost. 10800 IN AAAA ::1"
-
-    reverse IPv4 loopback
-        Default content:
-
-        .. code-block:: text
-
-            local-zone: "127.in-addr.arpa." static
-            local-data: "127.in-addr.arpa. 10800 IN NS localhost."
-            local-data: "127.in-addr.arpa. 10800 IN
+        localhost
+            The IP4 and IP6 localhost information is given. NS and SOA
+            records are provided for completeness and to satisfy some DNS
+            update tools. Default content:
+            local-zone: "localhost." redirect
+            local-data: "localhost. 10800 IN NS localhost."
+            local-data: "localhost. 10800 IN
             SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
-            local-data: "1.0.0.127.in-addr.arpa. 10800 IN
-            PTR localhost."
+            local-data: "localhost. 10800 IN A 127.0.0.1"
+            local-data: "localhost. 10800 IN AAAA ::1"
 
-    reverse IPv6 loopback
-        Default content:
+        reverse IPv4 loopback
+            Default content:
 
-        .. code-block:: text
+            .. code-block:: text
 
-            local-zone: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
-            0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa." static
-            local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
-            0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
-            NS localhost."
-            local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
-            0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
-            SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
-            local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
-            0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
-            PTR localhost."
+                local-zone: "127.in-addr.arpa." static
+                local-data: "127.in-addr.arpa. 10800 IN NS localhost."
+                local-data: "127.in-addr.arpa. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-data: "1.0.0.127.in-addr.arpa. 10800 IN
+                PTR localhost."
 
-    home.arpa (:RFC:`8375`)
-        Default content:
+        reverse IPv6 loopback
+            Default content:
 
-        .. code-block:: text
+            .. code-block:: text
 
-            local-zone: "home.arpa." static
-            local-data: "home.arpa. 10800 IN NS localhost."
-            local-data: "home.arpa. 10800 IN
-            SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-zone: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+                0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa." static
+                local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+                0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
+                NS localhost."
+                local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+                0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+                0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN
+                PTR localhost."
 
-    onion (:RFC:`7686`)
-        Default content:
+        home.arpa (:RFC:`8375`)
+            Default content:
 
-        .. code-block:: text
+            .. code-block:: text
 
-            local-zone: "onion." static
-            local-data: "onion. 10800 IN NS localhost."
-            local-data: "onion. 10800 IN
-            SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-zone: "home.arpa." static
+                local-data: "home.arpa. 10800 IN NS localhost."
+                local-data: "home.arpa. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    test (:RFC:`6761`)
-        Default content:
+        onion (:RFC:`7686`)
+            Default content:
 
-        .. code-block:: text
+            .. code-block:: text
 
-            local-zone: "test." static
-            local-data: "test. 10800 IN NS localhost."
-            local-data: "test. 10800 IN
-            SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-zone: "onion." static
+                local-data: "onion. 10800 IN NS localhost."
+                local-data: "onion. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    invalid (:RFC:`6761`)
-        Default content:
+        test (:RFC:`6761`)
+            Default content:
 
-        .. code-block:: text
+            .. code-block:: text
 
-            local-zone: "invalid." static
-            local-data: "invalid. 10800 IN NS localhost."
-            local-data: "invalid. 10800 IN
-            SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+                local-zone: "test." static
+                local-data: "test. 10800 IN NS localhost."
+                local-data: "test. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    reverse :RFC:`1918` local use zones
-        Reverse data for zones ``10.in-addr.arpa``, ``16.172.in-addr.arpa`` to
-        ``31.172.in-addr.arpa``, ``168.192.in-addr.arpa``. The **local-zone:**
-        is set static and as **local-data:** SOA and NS records are provided.
+        invalid (:RFC:`6761`)
+            Default content:
 
-    reverse :RFC:`3330` IP4 this, link-local, testnet and broadcast
-        Reverse data for zones ``0.in-addr.arpa``, ``254.169.in-addr.arpa``,
-        ``2.0.192.in-addr.arpa`` (TEST NET 1), ``100.51.198.in-addr.arpa`` (TEST
-        NET 2), ``113.0.203.in-addr.arpa`` (TEST NET 3),
-        ``255.255.255.255.in-addr.arpa``. And from ``64.100.in-addr.arpa`` to
-        ``127.100.in-addr.arpa`` (Shared Address Space).
+            .. code-block:: text
 
-    reverse :RFC:`4291` IP6 unspecified
-        Reverse data for zone
-        ``0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
-        0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa.``
+                local-zone: "invalid." static
+                local-data: "invalid. 10800 IN NS localhost."
+                local-data: "invalid. 10800 IN
+                SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    reverse :RFC:`4193` IPv6 Locally Assigned Local Addresses
-        Reverse data for zone ``D.F.ip6.arpa``.
+        reverse :RFC:`1918` local use zones
+            Reverse data for zones ``10.in-addr.arpa``, ``16.172.in-addr.arpa`` to
+            ``31.172.in-addr.arpa``, ``168.192.in-addr.arpa``. The **local-zone:**
+            is set static and as **local-data:** SOA and NS records are provided.
 
-    reverse :RFC:`4291` IPv6 Link Local Addresses
-        Reverse data for zones ``8.E.F.ip6.arpa`` to ``B.E.F.ip6.arpa``.
+        reverse :RFC:`3330` IP4 this, link-local, testnet and broadcast
+            Reverse data for zones ``0.in-addr.arpa``, ``254.169.in-addr.arpa``,
+            ``2.0.192.in-addr.arpa`` (TEST NET 1), ``100.51.198.in-addr.arpa`` (TEST
+            NET 2), ``113.0.203.in-addr.arpa`` (TEST NET 3),
+            ``255.255.255.255.in-addr.arpa``. And from ``64.100.in-addr.arpa`` to
+            ``127.100.in-addr.arpa`` (Shared Address Space).
 
-    reverse IPv6 Example Prefix
-        Reverse data for zone ``8.B.D.0.1.0.0.2.ip6.arpa``. This zone is used
-        for tutorials and examples. You can remove the block on this zone with:
+        reverse :RFC:`4291` IP6 unspecified
+            Reverse data for zone
+            ``0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.
+            0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa.``
 
-        .. code-block:: text
+        reverse :RFC:`4193` IPv6 Locally Assigned Local Addresses
+            Reverse data for zone ``D.F.ip6.arpa``.
 
-            local-zone: 8.B.D.0.1.0.0.2.ip6.arpa. nodefault
+        reverse :RFC:`4291` IPv6 Link Local Addresses
+            Reverse data for zones ``8.E.F.ip6.arpa`` to ``B.E.F.ip6.arpa``.
+
+        reverse IPv6 Example Prefix
+            Reverse data for zone ``8.B.D.0.1.0.0.2.ip6.arpa``. This zone is used
+            for tutorials and examples. You can remove the block on this zone with:
+
+            .. code-block:: text
+
+                local-zone: 8.B.D.0.1.0.0.2.ip6.arpa. nodefault
 
         You can also selectively unblock a part of the zone by making that part
         transparent with a local-zone statement. This also works with the other
