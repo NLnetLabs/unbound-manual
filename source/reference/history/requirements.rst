@@ -53,14 +53,17 @@ volunteered to write this implementation.
 - High performance
 
   - Even with validation
+
 - Used as
 
   - Stub resolver
   - Full caching name server
   - Resolver library
+
 - Elegant design of validator, resolver, cache modules
 
   - Provide the ability to pick and choose modules
+
 -  Robust
 -  In C, open source: The BSD license
 -  Highly portable, targets include modern Unix systems, such as \*BSD, Solaris, linux, and maybe also the windows platform
@@ -81,7 +84,7 @@ volunteered to write this implementation.
   authoritative servers, does not perform duplicate removal.
   It does do some rrsig duplicate removal, in the msgparser, for dnssec qtype
   rrsig and any, because of special rrsig processing in the msgparser.
-  
+
 - The harden-glue feature, when yes all out of zone glue is deleted, when
   no out of zone glue is used for further resolving, is more complicated 
   than that, see below.
@@ -121,7 +124,7 @@ volunteered to write this implementation.
   as more glue is present for the recursive service to use. The feature
   is implemented so as to minimise the security risk, while trying to 
   keep this performance gain.
-  
+
 - The method by which dnssec-lameness is detected is not secure. DNSSEC lame
   is when a server has the zone in question, but lacks dnssec data, such as
   signatures. The method to detect dnssec lameness looks at nonvalidated
@@ -161,7 +164,7 @@ volunteered to write this implementation.
   So possibly, for complicated setups, with multiple (parent-child) zones
   on a server, dnssec-lameness detection does not work - no dnssec-lameness
   is detected. Instead the zone that is dnssec-lame becomes bogus.
-  
+
 - authority features
 
   This is a recursive server, and authority features are out of scope.
