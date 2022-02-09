@@ -85,6 +85,7 @@ volunteered to write this implementation.
   It does do some rrsig duplicate removal, in the msgparser, for dnssec qtype
   rrsig and any, because of special rrsig processing in the msgparser.
 
+
 - The harden-glue feature, when yes all out of zone glue is deleted, when
   no out of zone glue is used for further resolving, is more complicated 
   than that, see below.
@@ -124,6 +125,7 @@ volunteered to write this implementation.
   as more glue is present for the recursive service to use. The feature
   is implemented so as to minimise the security risk, while trying to 
   keep this performance gain.
+
 
 - The method by which dnssec-lameness is detected is not secure. DNSSEC lame
   is when a server has the zone in question, but lacks dnssec data, such as
@@ -165,6 +167,7 @@ volunteered to write this implementation.
   on a server, dnssec-lameness detection does not work - no dnssec-lameness
   is detected. Instead the zone that is dnssec-lame becomes bogus.
 
+
 - authority features
 
   This is a recursive server, and authority features are out of scope.
@@ -183,11 +186,13 @@ volunteered to write this implementation.
   unbound.conf as stub for those zones, this allows clients to access data
   from the server without making unbound authoritative for the zones.
 
+
 - The access control denies queries before any other processing.
 
   This denies queries that are not authoritative, or version.bind, or any.
   And thus prevents cache-snooping (denied hosts cannot make non-recursive
   queries and get answers from the cache).
+
 
 - If a client makes a query without RD bit, in the case of a returned
   message from cache which is:
@@ -212,6 +217,7 @@ volunteered to write this implementation.
   ascertains that RRSIGs are OK (and not omitted), but does not
   check NSEC/NSEC3.
 
+
 - Case preservation
 
   Unbound preserves the casing received from authority servers as best 
@@ -219,6 +225,7 @@ volunteered to write this implementation.
   The casing from the query name is used in preference to the casing
   of the authority server. This is the same as BIND. RFC4343 allows either
   behaviour.
+
 
 - Denial of service protection
 
@@ -233,6 +240,7 @@ volunteered to write this implementation.
   Thus, even long queries get a 50% chance to be resolved.  And many 'short'
   one or two round-trip resolves can be done in the last 50% of the list.
   The timeout can be configured.
+
 
 - EDNS fallback
 
@@ -255,6 +263,7 @@ volunteered to write this implementation.
   reassurance that the DNS server does EDNS does not mean that path can
   take large DNS answers.
 
+
 - 0x20 backoff
 
   The draft describes to back off to the next server, and go through all
@@ -263,6 +272,7 @@ volunteered to write this implementation.
   They are sent to a random server, but no one address more than 4 times.
   It succeeds if one has 0x20 intact, or else all are equal.
   Otherwise, servfail is returned to the client.
+
 
 - NXDOMAIN and SOA serial numbers
 
@@ -279,6 +289,7 @@ volunteered to write this implementation.
   updated from another query, the NXDOMAIN is dropped from the cache,
   and queried for again, so that its proof can be checked again.
 
+
 - SOA records in negative cached answers for DS queries
 
   The current unbound code uses a negative cache for queries for type DS.
@@ -290,6 +301,7 @@ volunteered to write this implementation.
   (and may not actually match the serial number of the SOA for which the
   NSEC and NSEC3 records were obtained) if available otherwise network
   queries are performed to get the data.
+
 
 - Parent and child with different nameserver information
 
