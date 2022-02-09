@@ -53,17 +53,14 @@ volunteered to write this implementation.
 - High performance
 
   - Even with validation
-
 - Used as
 
   - Stub resolver
   - Full caching name server
   - Resolver library
-
 - Elegant design of validator, resolver, cache modules
 
   - Provide the ability to pick and choose modules
-
 -  Robust
 -  In C, open source: The BSD license
 -  Highly portable, targets include modern Unix systems, such as \*BSD, Solaris, linux, and maybe also the windows platform
@@ -84,6 +81,7 @@ volunteered to write this implementation.
   authoritative servers, does not perform duplicate removal.
   It does do some rrsig duplicate removal, in the msgparser, for dnssec qtype
   rrsig and any, because of special rrsig processing in the msgparser.
+  
 - The harden-glue feature, when yes all out of zone glue is deleted, when
   no out of zone glue is used for further resolving, is more complicated 
   than that, see below.
@@ -123,6 +121,7 @@ volunteered to write this implementation.
   as more glue is present for the recursive service to use. The feature
   is implemented so as to minimise the security risk, while trying to 
   keep this performance gain.
+  
 - The method by which dnssec-lameness is detected is not secure. DNSSEC lame
   is when a server has the zone in question, but lacks dnssec data, such as
   signatures. The method to detect dnssec lameness looks at nonvalidated
@@ -162,7 +161,8 @@ volunteered to write this implementation.
   So possibly, for complicated setups, with multiple (parent-child) zones
   on a server, dnssec-lameness detection does not work - no dnssec-lameness
   is detected. Instead the zone that is dnssec-lame becomes bogus.
-- authority features.
+  
+- authority features
 
   This is a recursive server, and authority features are out of scope.
   However, some authority features are expected in a recursor. Things like
@@ -179,10 +179,13 @@ volunteered to write this implementation.
   You can put authority data on a separate server, and set the server in
   unbound.conf as stub for those zones, this allows clients to access data
   from the server without making unbound authoritative for the zones.
+
 - The access control denies queries before any other processing.
+
   This denies queries that are not authoritative, or version.bind, or any.
   And thus prevents cache-snooping (denied hosts cannot make non-recursive
   queries and get answers from the cache).
+
 - If a client makes a query without RD bit, in the case of a returned
   message from cache which is:
 
@@ -205,13 +208,15 @@ volunteered to write this implementation.
   doubt. This case is validated by unbound as a 'referral' which
   ascertains that RRSIGs are OK (and not omitted), but does not
   check NSEC/NSEC3.
-- Case preservation.
+
+- Case preservation
 
   Unbound preserves the casing received from authority servers as best 
   as possible. It compresses without case, so case can get lost there.
   The casing from the query name is used in preference to the casing
   of the authority server. This is the same as BIND. RFC4343 allows either
   behaviour.
+
 - Denial of service protection
 
   If many queries are made, and they are made to names for which the
@@ -225,7 +230,8 @@ volunteered to write this implementation.
   Thus, even long queries get a 50% chance to be resolved.  And many 'short'
   one or two round-trip resolves can be done in the last 50% of the list.
   The timeout can be configured.
-- EDNS fallback.
+
+- EDNS fallback
 
   Is done according to the EDNS RFC (and update draft-00).
   Unbound assumes EDNS 0 support for the first query.  Then it can detect
@@ -245,7 +251,8 @@ volunteered to write this implementation.
   For some boxes it is necessary to probe for every failing query, a
   reassurance that the DNS server does EDNS does not mean that path can
   take large DNS answers.
-- 0x20 backoff.
+
+- 0x20 backoff
 
   The draft describes to back off to the next server, and go through all
   servers several times.  Unbound goes on get the full list of nameserver
@@ -253,7 +260,8 @@ volunteered to write this implementation.
   They are sent to a random server, but no one address more than 4 times.
   It succeeds if one has 0x20 intact, or else all are equal.
   Otherwise, servfail is returned to the client.
-- NXDOMAIN and SOA serial numbers.
+
+- NXDOMAIN and SOA serial numbers
 
   Unbound keeps TTL values for message formats, and thus rcodes, such
   as NXDOMAIN.  Also it keeps the latest rrsets in the rrset cache.
@@ -267,7 +275,8 @@ volunteered to write this implementation.
   updated more carefully.  If one of the NSEC records in an NXDOMAIN is
   updated from another query, the NXDOMAIN is dropped from the cache,
   and queried for again, so that its proof can be checked again.
-- SOA records in negative cached answers for DS queries.
+
+- SOA records in negative cached answers for DS queries
 
   The current unbound code uses a negative cache for queries for type DS.
   This speeds up building chains of trust, and uses NSEC and NSEC3
@@ -278,7 +287,8 @@ volunteered to write this implementation.
   (and may not actually match the serial number of the SOA for which the
   NSEC and NSEC3 records were obtained) if available otherwise network
   queries are performed to get the data.
-- Parent and child with different nameserver information.
+
+- Parent and child with different nameserver information
 
   A misconfiguration that sometimes happens is where the parent and child
   have different NS, glue information.  The child is authoritative, and
@@ -287,4 +297,3 @@ volunteered to write this implementation.
   version of the glue as a last resort lookup.  This resolves lookups for
   those misconfigured domains where the servers reported by the parent
   are the only ones working, and servers reported by the child do not.
-
