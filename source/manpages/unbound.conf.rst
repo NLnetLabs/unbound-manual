@@ -957,7 +957,7 @@ These options are part of the **server:** clause.
 
     aggressive-nsec: *<yes or no>*
         Aggressive NSEC uses the DNSSEC NSEC chain to synthesize NXDOMAIN and other
-        denials, using information from previous NXDOMAINs answers. Default is no.
+        denials, using information from previous NXDOMAINs answers. Default is yes.
         It helps to reduce the query rate towards targets that get a very high
         nonexistent name lookup rate.
 
