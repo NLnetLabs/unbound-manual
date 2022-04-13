@@ -185,7 +185,7 @@ To find the IP address of the machine that is running Unbound, we use:
 
 .. code-block:: text
 
-	hostname ==all-ip-addresses
+	hostname --all-ip-addresses
 
 If you just have one IP address as output from the :command:`hostname` command
 that will be the correct one. If you have multiple IP addresses, the easiest way
