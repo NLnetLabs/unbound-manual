@@ -143,6 +143,12 @@ Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
 	DNSStubListener=no
 	#DNSStubListenerExtra=
 
+To actually have the system start using Unbound, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified.
+
+.. code-block:: text
+
+	ln -fs /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
 With this file modified, we can restart using this configuration with: 
 
 .. code-block:: text
