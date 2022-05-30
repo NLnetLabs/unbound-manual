@@ -77,6 +77,12 @@ Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
 	DNSStubListener=no
 	#DNSStubListenerExtra=
 
+To actually have the system start using Unbound, we then need to create a symlink to overwrite :file:` systemd-resolved ` to the one we modified.
+
+.. code-block:: text
+
+	ls -l /run/systemd/resolve/resolv.conf  systemd-resolved 
+
 With this file modified, we can restart using this configuration with: 
 
 .. code-block:: text
