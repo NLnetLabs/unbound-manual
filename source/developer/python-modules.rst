@@ -49,9 +49,9 @@ documentation with:
 
     make doc
 
-This command will generate the documentation in ``doc/html/pythonmod``, which
-can be browsed in a web browser by opening the ``index.html`` file in that
-directory.
+This command will generate the relevant pythonmod documentation in
+``doc/html/pythonmod``, which can be browsed in a web browser by opening the
+``index.html`` file in that directory.
 
 The pythonmod documentation can also be solely generated without the need to
 configure/compile Unbound by invoking :command:`sphinx-build` directly with:
