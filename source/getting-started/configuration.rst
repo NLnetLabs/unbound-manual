@@ -8,7 +8,7 @@ changing any options. Below we will go through a basic, recommended config, but
 feel free to add and experiment with options as you need them.
 
 .. @TODO in the future we can put a forward link to the configuration options +
-         explanations for advanced users.
+		 explanations for advanced users.
 
 .. Note:: The instructions in this page assume that Unbound is already installed.
 
@@ -19,28 +19,28 @@ process).
 
 .. code-block:: bash
 
-    server:
-        # can be uncommented if you do not need user privilige protection
-        # username: ""
-        
-        # can be uncommented if you do not need file access protection
-        # chroot: ""
-    
-        # location of the trust anchor file that enables DNSSEC. note that
-        # the location of this file can elsewhere
-        auto-trust-anchor-file: "/usr/local/etc/unbound/root.key"
-        # auto-trust-anchor-file: "/var/lib/unbound/root.key"
-    
-        # send minimal amount of information to upstream servers to enhance privacy
-        qname-minimisation: yes
-    
-        # specify the interfaces to answer queries from by ip-address.
-        interface: 0.0.0.0
-        # interface: ::0
-    
-        # addresses from the IP range that are allowed to connect to the resolver
-        access-control: 192.168.0.0/16 allow
-        # access-control: 2001:DB8/64 allow
+	server:
+		# can be uncommented if you do not need user privilige protection
+		# username: ""
+		
+		# can be uncommented if you do not need file access protection
+		# chroot: ""
+	
+		# location of the trust anchor file that enables DNSSEC. note that
+		# the location of this file can elsewhere
+		auto-trust-anchor-file: "/usr/local/etc/unbound/root.key"
+		# auto-trust-anchor-file: "/var/lib/unbound/root.key"
+	
+		# send minimal amount of information to upstream servers to enhance privacy
+		qname-minimisation: yes
+	
+		# specify the interface to answer queries from by ip-address.
+		interface: 0.0.0.0
+		# interface: ::0
+	
+		# addresses from the IP range that are allowed to connect to the resolver
+		access-control: 192.168.0.0/16 allow
+		# access-control: 2001:DB8/64 allow
 
 By default the Unbound config uses `chroot
 <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer of defence
@@ -56,19 +56,46 @@ the config.
 	chroot: ""
 
 By default Unbound assumes that a user named "unbound" exists, which you can add
-this user with an account management tool available on your system. You can also
-disable this feature by adding ``username: ""`` in the config. If it is enabled,
+this user with an account management tool available on your system (On Linux this
+is usually :command:`useradd`). You can also disable this feature by adding
+``username: ""`` in the config. If it is enabled,
 after the setup, any other user privileges are dropped and the configured
 username is assumed. If this user  needs access to files (such as the 'trust
 anchor' mentioned below) these can be created by executing with ``sudo -u
 unbound`` in front of it.
 
+.. code-block:: bash
+
+	# disable user privilige protection
+	username: ""
+
 .. Important:: Unbound comes with the :doc:`/manpages/unbound-checkconf` tool. 
-               This tool allows you to check the config file for errors before
-               starting Unbound. It is very convenient because if any errors are
-               found it tells you where they are, which is particularly useful
-               when Unbound is already running to avoid failure to restart due
-               to a configuration error.
+			   This tool allows you to check the config file for errors before
+			   starting Unbound. It is very convenient because if any errors are
+			   found it tells you where they are, which is particularly useful
+			   when Unbound is already running to avoid failure to restart due
+			   to a configuration error.
+
+Testing the setup
+-----------------
+
+After running the :command:`unbound-checkconf` command to see if your config
+file is correct, you can test your setup by running Unbound in "debug" mode.
+This allows you to see what is happening during startup and catch any errors.
+The :doc:`/manpages/unbound` manpage shows that the :option:`-d` flag will start
+Unbound in this mode. The manpage also shows that we can use the :option:`-c` 
+flag to specify the path to the config file, so we can use the one we created.
+We also recommend increasing the verbosity of the logging to 1 or 2, to see
+what's actually happening (:option:`-v` or :option:`-vv`).
+
+.. code-block:: bash
+
+	unbound -d -vv -c unbound.conf
+
+After Unbound starts without (and you've even send some queries to it) you can
+remove the :option:`-v` and :option:`-d` and run the command again. Then Unbound
+will fork to the background and run until you either kill it or reboot the
+machine.
 
 Set up Remote Control
 ---------------------
@@ -80,15 +107,15 @@ config and enable it.
 
 .. code-block:: bash
 
-    remote-control:
-        # enable remote-control
-        control-enable: yes
+	remote-control:
+		# enable remote-control
+		control-enable: yes
 
-        # location of the files created by unbound-control-setup
-        # server-key-file: "/usr/local/etc/unbound/unbound_server.key"
-        # server-cert-file: "/usr/local/etc/unbound/unbound_server.pem"
-        # control-key-file: "/usr/local/etc/unbound/unbound_control.key"
-        # control-cert-file: "/usr/local/etc/unbound/unbound_control.pem"
+		# location of the files created by unbound-control-setup
+		# server-key-file: "/usr/local/etc/unbound/unbound_server.key"
+		# server-cert-file: "/usr/local/etc/unbound/unbound_server.pem"
+		# control-key-file: "/usr/local/etc/unbound/unbound_control.key"
+		# control-cert-file: "/usr/local/etc/unbound/unbound_control.pem"
 
 To use the :command:`unbound-control` command, we need to invoke the
 :command:`unbound-control-setup` command. This creates a number of files in the
@@ -102,7 +129,7 @@ cryptographic keys necessary for the control option.
 
 .. code-block:: bash
 
-    unbound-control-setup
+	unbound-control-setup
 
 If you use a username like ``unbound`` in the config to run the daemon (which is
 the default setting), you can use :command:`sudo` to create the files in that
@@ -129,6 +156,8 @@ which we strongly recommend, we need to set up a trust anchor as it allows the
 verification of the integrity of the responses to the queries you send.
 
 To help, we can use the :command:`unbound-anchor` command.
+
+
 :command:`unbound-anchor` performs the setup by configuring a trust anchor. This
 trust anchor will only serve as the initial anchor from builtin values. To keep
 this anchor up to date, Unbound must be able to read and write to this file. The
@@ -136,7 +165,7 @@ default location that :command:`unbound-anchor` creates this in is determined by
 your installation method. Usually the default directory is
 ``/usr/local/etc/unbound/``.
 
-.. code-block::bash
+.. code-block:: bash
 
 	unbound-anchor
 
@@ -148,12 +177,13 @@ is ``/opt/homebrew/etc/unbound/root.key`` If you create the root key yourself
 file in the configuration file should be changed to the correct location. To
 find out the default location you can use the :command:`unbound-anchor` command
 again with the ``-vvv`` option enabled. To enable DNSSEC, we add
-``auto-trust-anchor-file`` under the ``server`` options in the config.
+``auto-trust-anchor-file`` under the ``server`` clause in the config.
 
 .. code-block:: bash
 
-	# enable DNSSEC
-	auto-trust-anchor-file: "/var/lib/unbound/root.key"
+	server:
+		# enable DNSSEC
+		auto-trust-anchor-file: "/var/lib/unbound/root.key"
 
 Note that on some systems the ``/usr/local/etc/unbound/`` directory might be
 write-protected. 

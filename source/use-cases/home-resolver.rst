@@ -37,7 +37,7 @@ online and has Internet connectivity via your router.
 
 Because of the variety of machines that Unbound can run on we cannot create a
 comprehensive tutorial for all possible options. For this tutorial we will use
-Ubuntu 20.04.1 LTS as a stepping stone you can adapt and apply to
+**Ubuntu 20.04.1 LTS** as a stepping stone you can adapt and apply to
 other systems.
 
 While you could download the code from GitHub and build it yourself, getting a
@@ -191,7 +191,7 @@ To find the IP address of the machine that is running Unbound, we use:
 
 .. code-block:: text
 
-	hostname ==all-ip-addresses
+	hostname --all-ip-addresses
 
 If you just have one IP address as output from the :command:`hostname` command
 that will be the correct one. If you have multiple IP addresses, the easiest way
