@@ -254,6 +254,14 @@ Another handy trick you can use during testing is to run Unbound in the
 foreground using the :option:`-d` option and increase the verbosity level using
 the :option:`-v` option multiple times. This allows you to see steps Unbound
 takes and also where it fails.
+Another useful, more detailed trick in combination with the foreground is to
+make Unbound log on the foreground. To do this, the following line needs to
+be added to the config file.
+
+.. code-block:: bash
+
+    server:
+        use_syslog: no
 
 Now that Unbound is installed we can :doc:`continue to configuring
 it<configuration>`.
