@@ -245,7 +245,7 @@ the install was successful.
 
 .. code-block:: bash
 
-    unbound -V
+   # unbound -V
 
 If all the previous steps were successful we can continue to configuring our
 Unbound instance. 
