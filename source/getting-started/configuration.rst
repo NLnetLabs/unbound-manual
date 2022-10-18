@@ -92,7 +92,7 @@ what's actually happening (:option:`-v` or :option:`-vv`).
 
 	unbound -d -vv -c unbound.conf
 
-After Unbound starts without (and you've even send some queries to it) you can
+After Unbound starts normally (and you've sent it some queries) you can
 remove the :option:`-v` and :option:`-d` and run the command again. Then Unbound
 will fork to the background and run until you either kill it or reboot the
 machine.
