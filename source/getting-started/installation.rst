@@ -241,7 +241,8 @@ Testing
 A simple test to determine if the installation was successful is to invoke the
 :command:`unbound` command with the :option:`-V` option, which is the "version"
 option. This shows the version and build options used, as well as proving that
-the install was successful.
+the install was successful. You may have to use ``sudo`` to run this, depending
+on the instalation.
 
 .. code-block:: bash
 
