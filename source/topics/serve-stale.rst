@@ -54,10 +54,12 @@ meaningful time. The option serve-expired-ttl limits the amount of time an
 expired record is supposed to be served. :RFC:`8767#section-5-11` suggests a 
 value between one and three days.
 
-    A note on the expired reply’s TTL value: prior to the RFC, Unbound was using
-    TTL 0 in order to signal that the expired record is only meant to be used
-    for this DNS transaction and not to be cached by the client. The RFC now
-    RECOMMENDS a value of 30 to be returned to the client.
+.. note::
+
+    A note on the expired reply’s TTL value: prior to the RFC, Unbound was
+    using TTL 0 in order to signal that the expired record is only meant to be
+    used for this DNS transaction and not to be cached by the client. The RFC
+    now RECOMMENDS a value of 30 to be returned to the client.
 
 A simple configuration for the primal serve-expired behavior could then be:
 
@@ -71,19 +73,20 @@ A simple configuration for the primal serve-expired behavior could then be:
 This will allow Unbound to:
 
 - prioritize (expired) cached replies,
-- keep the cache fairly up-to-date,
-- in the likelihood that an expired record needs to be served (e.g., rare query,
-  issue with upstream resolving), make sure that the record is not older than 
-  the specified limit. 
+- keep the cache fairly up-to-date, and
+- in the likelihood that an expired record needs to be served (e.g., rare
+  query, issue with upstream resolving), make sure that the record is not older
+  than the specified limit.
 
 RFC 8767
 --------
 
-Starting with version 1.11.0, Unbound supports serving expired records following
-the RFC guidelines. The RFC behavior is mainly focused on returning expired
-answers as fallback for normal resolution. The option to control that is
-``serve-expired-client-timeout`` and setting it to a value greater than 0
-enables the RFC behavior.
+Starting with version 1.11.0, Unbound supports serving expired records
+following the RFC guidelines.
+The RFC behavior is mainly focused on returning expired answers as fallback for
+normal resolution.
+The option to control that is ``serve-expired-client-timeout`` and setting it
+to a value greater than 0 enables the RFC behavior.
 
 With the value set, Unbound has a limit on how much time it can spend resolving
 a client query. When that limit is passed, Unbound pauses resolution and checks
@@ -109,11 +112,11 @@ This will allow Unbound to use expired answers only as fallback from normal
 resolving:
 
 - when 1.8 seconds have passed since the client made the query,
-- instead of returning SERVFAIL;
+- instead of returning SERVFAIL, or
 - in the likelihood that an expired record needs to be served (e.g., issue with
-  upstream resolving), make sure that the record is not older than the specified
-  limit. 
-  
+  upstream resolving), make sure that the record is not older than the
+  specified limit.
+
 Conclusion
 ----------
 
