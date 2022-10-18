@@ -14,7 +14,7 @@ categories (tags), and use local-zone and local-data information for these
 specific tags.
 
 Before these tags can be used, you need to define them in the Unbound
-configuration using **define-tags**. In this example, a tag for domains
+configuration using ``define-tags``. In this example, a tag for domains
 containing malware is set, along with one for domains of gambling sites:
 
 .. code-block:: text
@@ -23,9 +23,9 @@ containing malware is set, along with one for domains of gambling sites:
 
 Now that Unbound is aware of the existing tags, it is possible to start using
 them.
-The **access-control-tag** element is used to specify the tag to use for client
+The ``access-control-tag`` element is used to specify the tag to use for client
 source address.
-Alternatively, the **interface-tag** element is used to specify the tag to use
+Alternatively, the ``interface-tag`` element is used to specify the tag to use
 for clients on a specific listening interface.
 You can add multiple tags to these elements:
 
@@ -46,8 +46,8 @@ You can add multiple tags to these elements:
   Any 'access-control\*:' setting overrides all 'interface-\*:' settings for
   targeted clients.
 
-Unbound will create a **\*-tag** element with the “allow” type if the IP
-address block / listening interface in the **\*-tag** element does not match an
+Unbound will create a ``\*-tag`` element with the “allow” type if the IP
+address block / listening interface in the ``\*-tag`` element does not match an
 existing access control rule.
 
 When a query comes in that is marked with a tag, Unbound starts searching its
@@ -57,7 +57,7 @@ any tag.
 That means that local-zones without any tag will be used for all queries and
 tagged local-zones only for queries with matching tags.
 
-Adding tags to local-zones can be done using the **local-zone-tag** element:
+Adding tags to local-zones can be done using the ``local-zone-tag`` element:
 
 .. code-block:: text
 
@@ -77,7 +77,7 @@ least the malware or gambling tag.
 The used local-zone type will be the type specified in the matching local-zone.
 It is possible to depend the local-zone type on the client and tag combination.
 Setting tag specific local-zone types can be done using
-**access-control-tag-action** and/or **interface-tag-action**:
+``access-control-tag-action`` and/or ``interface-tag-action``:
 
 .. code-block:: text
 
@@ -91,8 +91,8 @@ Setting tag specific local-zone types can be done using
 
 In addition to configuring a local-zone type for specific clients/tag match, it
 is also possible to set the used local-data RRs.
-This can be done using the **access-control-tag-data** and/or
-**interface-tag-data** elements:
+This can be done using the ``access-control-tag-data`` and/or
+``interface-tag-data`` elements:
 
 .. code-block:: text
 
@@ -106,7 +106,7 @@ Sometimes you might want to override a local-zone type for a specific IP prefix
 or interface, regardless the type configured for tagged and untagged local
 zones, and regardless the type configured using access-control-tag-action
 and/or interface-tag-action.
-This override can be done using **local-zone-override**.
+This override can be done using ``local-zone-override``.
 
 Views
 -----
@@ -139,7 +139,7 @@ There may be multiple view clauses, each with a unique name. For example:
       local-data: 'example.com TXT "this is an example"'
       local-zone: refused.example.nl refuse
 
-Mapping a view to a client can be done using the **access-control-view**
+Mapping a view to a client can be done using the ``access-control-view``
 element:
 
 .. code-block:: text
@@ -147,7 +147,7 @@ element:
   access-control-view: 10.0.5.0/24 firstview
 
 Alternatively, mapping a view to clients in a specific interface can be done
-using the **interface-view** element:
+using the ``interface-view`` element:
 
 .. code-block:: text
 
@@ -156,7 +156,7 @@ using the **interface-view** element:
 By default, view configuration options override the global configuration
 outside the view.
 When a client matches a view it will only use the view's local-zone tree.
-This behaviour can be changed by setting **view-first** to yes.
+This behaviour can be changed by setting ``view-first`` to yes.
 If view-first is enabled, Unbound will try to use the view's local-zone tree,
 and if there is no match it will search the global tree.
 
