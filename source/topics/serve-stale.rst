@@ -37,9 +37,10 @@ possible answers. If such a record is found it is immediately returned to the
 client (cache response speed!). But contrary to normal cache replies, Unbound
 continues resolving and hopefully updating the cached record.
 
-The immediate downside is obvious: the expired answers rely heavily on the cache
-state. Unbound already has the tools to try and tip the scales in its favor with
-the prefetch and serve-expired-ttl options.
+The immediate downside is obvious: the expired answers rely heavily on the
+cache state.
+Unbound already has the tools to try and tip the scales in its favor with the
+prefetch and ``serve-expired-ttl`` options.
 
 With prefetch, Unbound tries to update a cached record (after first replying to
 the client) when the current TTL is within 10% of the original TTL value. The
@@ -50,7 +51,7 @@ penalty of ~10% in traffic and load from the extra upstream queries, the cache
 is kept up-to-date, at least for popular queries.
 
 Rare queries have the inescapable fate of having their records expired past any
-meaningful time. The option serve-expired-ttl limits the amount of time an
+meaningful time. The option ``serve-expired-ttl`` limits the amount of time an
 expired record is supposed to be served. :RFC:`8767#section-5-11` suggests a 
 value between one and three days.
 
