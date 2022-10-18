@@ -160,24 +160,31 @@ latex_documents = [
 
 # -- Options for manual page output ------------------------------------------
 
+unbound_authors = ("Unbound developers are mentioned in the CREDITS file in "
+                   "the distribution.")
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-
 man_pages = [
-    ('manpages/unbound', 'unbound', 'Unbound DNS validating resolver',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
-    ('manpages/unbound-checkconf', 'unbound-checkconf', 'Check unbound configuration file for errors.',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
-    ('manpages/unbound-anchor', 'unbound-anchor', 'Unbound anchor utility.',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
-    ('manpages/unbound.conf', 'unbound.conf', 'Unbound configuration file.',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 5),
-    ('manpages/unbound-control', 'unbound-control', 'Unbound remote server control utility.',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 8),
-    ('manpages/unbound-host', 'unbound-host', 'Unbound DNS lookup utility',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 1),
-    ('manpages/libunbound', 'libunbound', 'Unbound DNS validating resolver functions.',
-    "Unbound developers are mentioned in the CREDITS file in the distribution.", 3)
+    ('manpages/unbound', 'unbound',
+     'Unbound DNS validating resolver', unbound_authors, 8),
+
+    ('manpages/unbound-checkconf', 'unbound-checkconf',
+     'Check unbound configuration file for errors.', unbound_authors, 8),
+
+    ('manpages/unbound-anchor', 'unbound-anchor',
+     'Unbound anchor utility.', unbound_authors, 8),
+
+    ('manpages/unbound.conf', 'unbound.conf',
+     'Unbound configuration file.', unbound_authors, 5),
+
+    ('manpages/unbound-control', 'unbound-control',
+     'Unbound remote server control utility.', unbound_authors, 8),
+
+    ('manpages/unbound-host', 'unbound-host',
+     'Unbound DNS lookup utility', unbound_authors, 1),
+
+    ('manpages/libunbound', 'libunbound',
+     'Unbound DNS validating resolver functions.', unbound_authors, 3)
 ]
 
 manpages_url = '{page}.html'
@@ -189,8 +196,8 @@ manpages_url = '{page}.html'
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'UnboundUserManual', 'Unbound User Manual',
-     author, 'UnboundUserManual', 'One line description of project.',
-     'Miscellaneous'),
+     author, 'UnboundUserManual', 'User manual of your favorite validating, '
+     'recursive caching DNS resolver', 'Miscellaneous'),
 ]
 
 
@@ -224,6 +231,8 @@ todo_include_todos = True
 
 # -- Extension interface --------------------------------------------------
 from sphinx import addnodes
+
+
 def parse_cmd_args_node(env, sig, signode):
     try:
         cmd, args = sig.strip().split(' ', 1)
@@ -235,6 +244,8 @@ def parse_cmd_args_node(env, sig, signode):
         args = ' ' + args
         signode += addnodes.desc_addname(args, args)
     return cmd
+
+
 # define new directive/role that can be used as .. subcmd::/:subcmd:
 def setup(app):
     app.add_object_type('subcmd', 'subcmd',
@@ -243,4 +254,3 @@ def setup(app):
                         parse_node=parse_cmd_args_node)
     app.add_css_file('css/dark.css')
     app.add_css_file('css/light.css')
-    
