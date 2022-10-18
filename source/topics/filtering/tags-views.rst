@@ -9,38 +9,53 @@ based on the IP address of the client.
 Tags
 ----
 
-The tags functionality makes it possible to divide client source addresses
-in categories (tags), and use local-zone and local-data information for these 
+The tags functionality makes it possible to divide incoming client queries in
+categories (tags), and use local-zone and local-data information for these
 specific tags.
 
 Before these tags can be used, you need to define them in the Unbound
-configuration using *define-tags*. In this example, a tag for domains containing
-malware is set, along with one for domains of gambling sites:
+configuration using *define-tags*. In this example, a tag for domains
+containing malware is set, along with one for domains of gambling sites:
 
 .. code-block:: text
 
   define-tags: "malware gambling"
 
 Now that Unbound is aware of the existing tags, it is possible to start using
-them. The *access-control-tag* element is used to specify the tag to use for a
-client addresses. You can add multiple tags to an access-control element:
+them.
+The *access-control-tag* element is used to specify the tag to use for client
+source address.
+Alternatively, the *interface-tag* element is used to specify the tag to use
+for clients on a specific listening interface.
+You can add multiple tags to these elements:
 
 .. code-block:: text
 
+  # Per client IP ...
   access-control-tag: 10.0.1.0/24 "malware"
   access-control-tag: 10.0.2.0/24 "malware"
   access-control-tag: 10.0.3.0/24 "gambling"
   access-control-tag: 10.0.4.0/24 "malware gambling"
 
-Unbound will create an *access-control-tag* element with the “allow” type if the
-IP address block in the *access-control-tag* element does not match an existing
-*access-control*.
+  # ... and/or per listening interface
+  interface-tag: eth0 "malware"
+  interface-tag: 10.0.0.1 "malware gambling"
 
-When a query comes in from an address with a tag, Unbound starts searching its
-local-zone tree for the best match. The best match is the most specific
-local-zone with a matching tag, or without any tag. That means that local-zones
-without any tag will be used for all clients and tagged local-zones only for
-clients with matching tags.
+.. note::
+
+  Any 'access-control\*:' setting overrides all 'interface-\*:' settings for
+  targeted clients.
+
+Unbound will create a *\*-tag* element with the “allow” type if the IP address
+block / listening interface in the *\*-tag* element does not match an existing
+access control rule.
+
+When a query comes in that is marked with a tag, Unbound starts searching its
+local-zone tree for the best match.
+The best match is the most specific local-zone with a matching tag, or without
+any tag.
+That means that local-zones without any tag will be used for all queries and
+tagged local-zones only for queries with matching tags.
 
 Adding tags to local-zones can be done using the *local-zone-tag* element:
 
@@ -55,51 +70,66 @@ Adding tags to local-zones can be done using the *local-zone-tag* element:
   local-zone-tag: somegamblingsite.example malware
   local-zone-tag: matchestwotags.example "malware gambling"
 
-A local-zone can have multiple tags, as illustrated in the example above. The
-tagged local-zones will be used if one or more tags match the client. So, the
-matchestwotags.example local-zone will be used for all clients with at least the
-malware or gambling tag. The used local-zone type will be the type specified in
-the matching local-zone. It is possible to depend the local-zone type on the
-client address and tag combination. Setting tag specific local-zone types can be
-done using *access-control-tag-action*:
+A local-zone can have multiple tags, as illustrated in the example above.
+The tagged local-zones will be used if one or more tags match the query.
+So, the matchestwotags.example local-zone will be used for all queries with at
+least the malware or gambling tag.
+The used local-zone type will be the type specified in the matching local-zone.
+It is possible to depend the local-zone type on the client and tag combination.
+Setting tag specific local-zone types can be done using
+*access-control-tag-action* and/or *interface-tag-action*:
 
 .. code-block:: text
 
+  # Per client IP ...
   access-control-tag-action: 10.0.1.0/24 "malware" refuse
   access-control-tag-action: 10.0.2.0/24 "malware" deny
 
-In addition to configuring a local-zone type for some specific client
-address/tag match, it is also possible to set the used local-data RRs. This can
-be done using the *access-control-tag-data* element:
+  # ... and/or per listening interface
+  interface-tag-action: eth0 "malware" refuse
+  interface-tag-action: 10.0.0.1 "malware" deny
+
+In addition to configuring a local-zone type for specific clients/tag match, it
+is also possible to set the used local-data RRs.
+This can be done using the *access-control-tag-data* and/or
+*interface-tag-data* elements:
 
 .. code-block:: text
 
+  # Per client IP ...
   access-control-tag-data: 10.0.4.0/24 "gambling" "A 127.0.0.1"
 
-Sometimes you might want to override a local-zone type for a specific IP address
-block, regardless the type configured for tagged and untagged local zones, and
-regardless the type configured using access-control-tag action. This override
-can be done using *local-zone-override*.
+  # ... and/or per listening interface
+  interface-tag-data: 10.0.0.1 "gambling" "A 127.0.0.1"
+
+Sometimes you might want to override a local-zone type for a specific IP prefix
+or interface, regardless the type configured for tagged and untagged local
+zones, and regardless the type configured using access-control-tag-action
+and/or interface-tag-action.
+This override can be done using *local-zone-override*.
 
 Views
 -----
 
-Tags make is possible to divide a large number of local-zones in
-categories, and assign these categories to a large number of IP address blocks. As tags
-on the IP address blocks and local-zones are stored in bitmaps, it is advised
-to keep the number of tags low. If a lot of clients have their own local-zones,
-without sharing these to other IP address blocks, it can result a large amount tags. In
-this situation is is more convenient to give the client's IP address block its own tree
-containing local-zones. Another benefit of having a separate local zone tree is
-that it makes it possible to apply a local-zone action to a part of the domain
-space, without having other local-zone elements of subdomains overriding this.
+Tags make is possible to divide a large number of local-zones in categories,
+and assign these categories to a large number of IP address blocks.
+As tags on the clients and local-zones are stored in bitmaps, it is advised to
+keep the number of tags low.
+Specifically for client prefixes (i.e., access-control-tag*), if a lot of
+clients have their own local-zones, without sharing these to other IP prefixes,
+it can result in a large amount tags.
+In this situation it is more convenient to give the clients' IP prefix its own
+tree containing local-zones.
+Another benefit of having a separate local zone tree is that it makes it
+possible to apply a local-zone action to a part of the domain space, without
+having other local-zone elements of subdomains overriding this.
 Configuring a client specific local-zone tree can be done using views.
 
-A view is a named list of configuration options. The supported view
-configuration options are local-zone and local-data.
+A view is a named list of configuration options.
+The supported view configuration options are local-zone and local-data.
 
-A view is configured using a view clause. There may be multiple view clauses,
-each with a unique name. For example:
+A view is configured using a view clause.
+There may be multiple view clauses, each with a unique name. For example:
 
 .. code-block:: text
 
@@ -115,11 +145,19 @@ Mapping a view to a client can be done using the *access-control-view* element:
 
   access-control-view: 10.0.5.0/24 firstview
 
-By default, view configuration options override the global configuration outside
-the view. When a client matches a view it will only use the view's local-zone
-tree. This behaviour can be changed by setting *view-first* to yes. If
-view-first is enabled, Unbound will try to use the view's local-zone tree, and
-if there is no match it will search the global tree.
+Alternatively, mapping a view to clients in a specific interface can be done using the
+*interface-view* element:
 
-.. Seealso:: :ref:`manpages/unbound.conf:View Options` in 
+.. code-block:: text
+
+  interface-view: eth0 firstview
+
+By default, view configuration options override the global configuration
+outside the view.
+When a client matches a view it will only use the view's local-zone tree.
+This behaviour can be changed by setting *view-first* to yes.
+If view-first is enabled, Unbound will try to use the view's local-zone tree,
+and if there is no match it will search the global tree.
+
+.. Seealso:: :ref:`manpages/unbound.conf:View Options` in
              the :doc:`/manpages/unbound.conf` manpage.

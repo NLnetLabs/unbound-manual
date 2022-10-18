@@ -213,18 +213,18 @@ uncommented:
 
       # The filename where the zone is stored. If left empty
       zonefile: rpz.nlnetlabs.nl
-      
+
       # The location of the remote RPZ zonefile.
       # url: http://www.example.com/example.org.zone (not a real RPZ file)
-      
+
       # Always use this RPZ action for matching triggers from this zone. 
       # Possible action are: nxdomain, nodata, passthru, drop, disabled,
       # and cname.
       # rpz-action-override: nxdomain
-      
+
       # Log all applied RPZ actions for this RPZ zone. Default is no.
       # rpz-log: yes
-      
+
       # Specify a string to be part of the log line.
       # rpz-log-name: nlnetlabs
 
@@ -233,7 +233,7 @@ In above example the policy zone will be loaded from the file
 looks like this:
 
 .. code-block:: text
-  
+
   $ORIGIN rpz.nlnetlabs.nl.
 
   # QNAME trigger with local data action
@@ -344,37 +344,48 @@ It is also possible to get statistics per applied RPZ action using
 ``unbound-control stats``. This requires the ``extended-statistics`` to be
 enabled.
 
-Unbound’s RPZ implementation works together with the tags functionality. This
-makes is possible to enable (some of) the policy zones only for a set of the
-users. To do this the tags need to be defined using ``define-tag``, the correct
-tags need to be matched with the client IP addresses using
-``access-control-tag``, and the tags need to be specified for the policy zones
-for which they apply.
+Unbound’s RPZ implementation works together with the tags functionality.
+This makes it possible to enable (some of) the policy zones only for a subset
+of users.
+To do this, the tags need to be defined using ``define-tag``, the correct tags
+need to be matched either with the client IP prefix using
+``access-control-tag`` or the clients on a listening interface using
+``interface-tag``, and the tags need to be specified for the policy zones for
+which they apply.
 
 .. code-block:: text
 
   server:
       module-config: "respip validator iterator"
+      interface: eth0
       define-tag: "malware social"
-      access-control-tag 127.0.0.10/32 "social"
-      access-control-tag 127.0.0.20/32 "social malware"
-      access-control-tag 127.0.0.30/32 "malware"
+
+      # Per client IP ...
+      access-control-tag: 127.0.0.10/32 "social"
+      access-control-tag: 127.0.0.20/32 "social malware"
+      access-control-tag: 127.0.0.30/32 "malware"
+      # ... and/or per listening interface
+      interface-tag: eth0 "social"
+
   rpz:
       name: malware.rpz.example.com
       zonefile: malware.rpz.example.com
       tags: "malware"
+
   rpz:
       name: social.rpz.example.com
       zonefile: social.rpz.example.com
       tags: "social"
 
-Queries from 127.0.0.1 will not be filtered. For queries coming from 127.0.0.10
-only the policies from the social.rpz.example.com zone will be used, for
-127.0.0.30 only the policies from the malware.rpz.example.com zone will be used,
-and queries originated from 127.0.0.20 will be subjected to the policies from
-both zones.
+Queries from 127.0.0.1 will not be filtered.
+For queries coming from 127.0.0.10 or the eth0 interface,
+only the policies from the social.rpz.example.com zone will be used.
+For queries coming from 127.0.0.30 only the policies from the
+malware.rpz.example.com zone will be used.
+Queries coming from 127.0.0.20 will be subjected to the policies from both
+zones.
 
-.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options`, 
+.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options`,
              :term:`module-config<module-config: <"module names">>`,
              :term:`define-tag<define-tag: <"list of tags">>`,
              :term:`access-control-tag<access-control-tag: <IP netblock> <"list
