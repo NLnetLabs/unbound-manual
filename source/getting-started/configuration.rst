@@ -100,10 +100,10 @@ machine.
 Set up Remote Control
 ---------------------
 
-A useful functionality to enable is the use of the :command:`unbound-control`
-command. This allows command makes starting, stopping, and reloading Unbound
+A useful functionality to enable is the :command:`unbound-control`
+command. This makes starting, stopping, and reloading Unbound
 easier. To enable this functionality we need to add ``remote-control`` to the
-config and enable it.
+config;
 
 .. code-block:: bash
 
