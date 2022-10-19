@@ -130,7 +130,7 @@ These options are part of the **server:** clause.
         and port number), if not specified the default port (from **port**) is used.
 
     ip-address: *<ip address[@port]>*
-        Same as interface: (for ease of compatibility with :external+nsd:ref:`nsd.conf`).
+        Same as interface: (for ease of compatibility with :doc:`manpages/nsd.conf`).
 
     interface-automatic: *<yes or no>*
         Listen on all addresses on all (current and future) interfaces, detect the
