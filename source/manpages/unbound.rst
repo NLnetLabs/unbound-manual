@@ -30,7 +30,7 @@ To use a locally running :command:`Unbound` for resolving put
 
 into *resolv.conf(5)*.
 
-If authoritative DNS is needed as well using :ref:`nsd:manpage:nsd(8)`, careful setup is required
+If authoritative DNS is needed as well using :ref:`nsd:nsd(8)`, careful setup is required
 because authoritative nameservers and resolvers are using the same port number
 (53).
 
@@ -72,4 +72,4 @@ See Also
 --------
 
 :manpage:`unbound.conf(5)`, :manpage:`unbound-checkconf(8)`,
-:ref:`nsd:manpage:nsd(8)`.
+:ref:`nsd:nsd(8)`.
