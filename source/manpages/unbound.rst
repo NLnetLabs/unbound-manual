@@ -30,13 +30,13 @@ To use a locally running :command:`Unbound` for resolving put
 
 into *resolv.conf(5)*.
 
-If authoritative DNS is needed as well using *nsd(8)*, careful setup is required
+If authoritative DNS is needed as well using :external+nsd:doc:`manpages/nsd`, careful setup is required
 because authoritative nameservers and resolvers are using the same port number
 (53).
 
 The available options are:
 
-.. option:: -h 
+.. option:: -h
 
  Show the version number and commandline option help, and exit.
 
@@ -54,21 +54,22 @@ The available options are:
    given twice or more, logging does not switch to the log file or to syslog,
    but the log messages are printed to stderr all the time.
 
-.. option:: -p  
-   
+.. option:: -p
+
    Don't use a pidfile. This argument should only be used by supervision systems
    which can ensure that only one instance of unbound will run concurrently.
 
-.. option:: -v  
-   
+.. option:: -v
+
    Increase verbosity. If given multiple times, more information is logged. This
    is in addition to the verbosity (if any) from the config file.
 
-.. option:: -V  
-   
+.. option:: -V
+
    Show the version number and build options, and exit.
 
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound-checkconf(8)`, *nsd(8)*.
+:manpage:`unbound.conf(5)`, :manpage:`unbound-checkconf(8)`,
+:external+nsd:doc:`manpages/nsd`.
