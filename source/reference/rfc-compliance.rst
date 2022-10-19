@@ -114,6 +114,7 @@ Internet drafts that have been implemented in Unbound.
 :RFC:`8624`    Algorithm Implementation Requirements and Usage Guidance for DNSSEC
 :RFC:`8767`    Serving Stale Data to Improve DNS Resiliency
 :RFC:`8806`    Running a Root Server Local to a Resolver
+:RFC:`8914`    Extended DNS Errors
 :RFC:`8976`    Message Digest for DNS Zones
 :RFC:`9156`    DNS Query Name Minimisation to Improve Privacy
 ============== ====
