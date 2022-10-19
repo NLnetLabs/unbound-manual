@@ -3,9 +3,9 @@ Unbound Resolver Prototype
 
 *The following is information regarding the Java based prototype for Unbound.
 The Java prototype was superseded by a C version, available* `here
-<https://www.nlnetlabs.nl/projects/unbound/about/>`_. *Older prototype versions
+<https://www.nlnetlabs.nl/projects/unbound/about/>`__. *Older prototype versions
 can be downloaded* `here
-<https://www.nlnetlabs.nl/downloads/unbound/proto-java>`_.
+<https://www.nlnetlabs.nl/downloads/unbound/proto-java>`__.
 
 Unbound is a project to develop independent open-source DNS software and
 documentation. It is jointly funded by `VeriSign, Inc.

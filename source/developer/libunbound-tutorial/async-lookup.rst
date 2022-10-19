@@ -57,7 +57,7 @@ program from the :doc:`resolve-a-name` section.
             while(!done) {
                     usleep(100000); /* wait 1/10 of a second */
                     printf("time passed (%d) ..\n", i++);
-                    retval = ``ub_process``(ctx);
+                    retval = ub_process(ctx);
                     if(retval != 0) {
                             printf("resolve error: %s\n", ub_strerror(retval));
                             return 1;

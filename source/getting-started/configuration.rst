@@ -86,7 +86,7 @@ The :doc:`/manpages/unbound` manpage shows that the :option:`-d` flag will start
 Unbound in this mode. The manpage also shows that we can use the :option:`-c` 
 flag to specify the path to the config file, so we can use the one we created.
 We also recommend increasing the verbosity of the logging to 1 or 2, to see
-what's actually happening (:option:`-v` or :option:`-vv`).
+what's actually happening (``-v`` or ``-vv``).
 
 .. code-block:: bash
 

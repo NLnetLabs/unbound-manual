@@ -7,14 +7,14 @@ DNS-over-TLS (DoT) makes it possible to encrypt DNS messages and gives a DNS
 client the possibility to authenticate a resolver. As implied by the name, this
 is done by sending DNS messages over TLS. Unbound can handle TLS encrypted DNS
 messages since `2011
-<https://github.com/NLnetLabs/unbound/commit/aa0536dcb5846206d016a03d8d66ad4279247d9e>`_,
+<https://github.com/NLnetLabs/unbound/commit/aa0536dcb5846206d016a03d8d66ad4279247d9e>`__,
 long before the IETF DPRIVE working group started its work on the `DoT
-specification <https://tools.ietf.org/html/rfc7858>`_. 
+specification <https://tools.ietf.org/html/rfc7858>`__.
 
 There are, however, DNS clients that do not support DoT but are able to use
 DNS-over-HTTPS (DoH) instead. Where DoT sends a DNS message directly over TLS,
 DoH has an HTTP layer in between. Where DoT uses its own TCP port (853), DoH
-uses the standard HTTPS port (443). 
+uses the standard HTTPS port (443).
 
 By adding downstream DoH support to Unbound we hope to increase the ratio of
 encrypted DNS traffic and increase the number of resolvers that offer encrypted
@@ -30,7 +30,7 @@ DoT. The HTTP/2 capability is negotiated using Application-Layer Protocol
 Negotiation (ALPN) TLS extension, which is supported in OpenSSL from version
 1.0.2 onward.
 
-Unbound uses the `nghttp2 <https://nghttp2.org/>`_ library to handle the HTTP/2
+Unbound uses the `nghttp2 <https://nghttp2.org/>`__ library to handle the HTTP/2
 framing layer. This library does not take care of any I/O handling, which makes
 it possible to easily integrate it in the existing Unbound event loop and TCP
 handling. Adding HTTP/2 on top of the existing TCP code makes it possible to
@@ -56,46 +56,46 @@ an RST_STREAM frame. The HTTP status codes that can be returned by Unbound are:
 
 404 Not Found
     The request is directed to a path other than the configured endpoint in
-    http-endpoint (default /dns-query). 
-    
+    http-endpoint (default /dns-query).
+
 413 Payload Too Large
     The payload received in the POST request is too large. Payloads cannot be
-    larger than the content-length communicated in the request header. The 
-    payload length is limited to 512 bytes if harden-large-queries is enabled, 
-    and otherwise limited to the value configured in msg-buffer-size (default 
+    larger than the content-length communicated in the request header. The
+    payload length is limited to 512 bytes if harden-large-queries is enabled,
+    and otherwise limited to the value configured in msg-buffer-size (default
     65552 bytes). To prevent the allocation of overly large buffers, the maximum
     size is limited to the size of the first DATA frame if no content-length is
-    received in the request. 
+    received in the request.
 
 414 URI Too Long
-    The base64url encoded DNS query in the GET request is too large. The DNS 
+    The base64url encoded DNS query in the GET request is too large. The DNS
     query length is limited to 512 bytes if harden-large-queries is enabled, and
-    limited to msg-buffer-size otherwise. 
-    
+    limited to msg-buffer-size otherwise.
+
 415 Unsupported Media Type
     The media type of the request is not supported. This happens if the request
-    contains a content-type header that is set to anything but 
+    contains a content-type header that is set to anything but
     application/dns-message. Requests without content-type will be treated as
-    application/dns-message. 
-    
+    application/dns-message.
+
 400 Bad Request
     No valid query received, not matched by any of the above 4xx status
-    codes. 
-    
+    codes.
+
 501 Not Implemented
-    The method used in the request is not GET or POST. 
+    The method used in the request is not GET or POST.
 
 Using DoH
 ---------
 
-As mentioned above, the `nghttp2 <https://nghttp2.org/>`_library is required to use Unbound’s DoH
+As mentioned above, the `nghttp2 <https://nghttp2.org/>`__ library is required to use Unbound’s DoH
 functionality. Compiling and installing Unbound with libnghttp2 can be done
 using:
 
 .. code-block:: bash
 
     ./configure --with-libnghttp2
-    make && make install 
+    make && make install
 
 Enabling DoH in Unbound is as simple as configuring the TLS certificate and the
 corresponding private key that will be used for the connection, and configuring
@@ -116,7 +116,7 @@ is */dns-query*:
 
 .. code-block:: text
 
-    $ ./dohclient -s 127.0.0.1 nlnetlabs.nl AAAA IN 
+    $ ./dohclient -s 127.0.0.1 nlnetlabs.nl AAAA IN
     Request headers
     :method: GET
     :path: /dns-query?dns=AAABAAABAAAAAAABCW5sbmV0bGFicwJubAAAHAABAAApEAAAAIAAAAA
@@ -126,7 +126,7 @@ is */dns-query*:
     :status 200
     content-type application/dns-message
     ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 0
-    ;; flags: qr rd ra ad ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1 
+    ;; flags: qr rd ra ad ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
     ;; QUESTION SECTION:
     nlnetlabs.nl. IN AAAA
 

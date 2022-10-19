@@ -30,7 +30,7 @@ policies from external sources.
 To get these external sources to work manually, you have to fetch the external
 policies in the offered format, reformat it in such a way that Unbound will
 understand, and keep this list up-to-date, for example using
-:doc:`/manpages/unbound-control`.
+:manpage:`unbound-control(8)`.
 
 To automate this process in a generic, standardised way, Response Policy Zones
 (RPZ) is a policy format that will work on different resolver implementations,
@@ -199,7 +199,7 @@ How to use RPZ with Unbound
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
 needs to be loaded using ``module-config``. Each policy zone is configured in
 Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can
-be found in the :doc:`manpages/unbound.conf`. A minimal configuration
+be found in the :manpage:`unbound.conf(5)`. A minimal configuration
 with a single policy zone can look like, where additional elements can be
 uncommented:
 
@@ -390,7 +390,7 @@ zones.
              :term:`define-tag<define-tag: <"list of tags">>`,
              :term:`access-control-tag<access-control-tag: <IP netblock> <"list
              of tags">>`, and :term:`extended-statistics<extended-statistics:
-             <yes or no>>` in the :doc:`/manpages/unbound.conf` manpage.
+             <yes or no>>` in the :manpage:`unbound.conf(5)` manpage.
 
 
 
