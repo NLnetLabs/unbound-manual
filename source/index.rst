@@ -34,66 +34,50 @@ license, with attribution to NLnet Labs.
    :maxdepth: 2
    :caption: Getting Started
 
-   getting-started/installation
-   getting-started/configuration
+   getting-started/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Use Cases
 
-   use-cases/home-resolver
-   use-cases/local-stub
+   use-cases/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Core
 
-   topics/core/serve-stale
-   topics/core/performance
-   topics/core/monitoring
+   topics/core/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Privacy
 
-   topics/privacy/aggressive-nsec
-   topics/privacy/dns-over-https
+   topics/privacy/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Filtering
 
-   topics/filtering/tags-views
-   topics/filtering/rpz
+   topics/filtering/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Developer
 
-   developer/libunbound-tutorial/index
-   developer/python-modules
-   developer/doxygen-docs
+   developer/index
 
 .. toctree::
    :maxdepth: 2
    :caption: Manual Pages
 
-   manpages/unbound
-   manpages/unbound-checkconf
-   manpages/unbound.conf
-   manpages/unbound-host
-   manpages/libunbound
-   manpages/unbound-control
-   manpages/unbound-anchor
+   manpages/index
 
 .. toctree::
    :maxdepth: 1
    :caption: Reference
 
-   reference/rfc-compliance
-   reference/history/index
-   reference/todo
-   
+   reference/index
+
 
 Index
 =====
