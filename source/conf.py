@@ -46,7 +46,8 @@ extensions = [
     'sphinx_tabs.tabs',
     'sphinx_copybutton',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.autosectionlabel'
+    'sphinx.ext.autosectionlabel',
+    'notfound.extension',
 ]
 
 intersphinx_mapping = {
