@@ -160,5 +160,5 @@ This behaviour can be changed by setting ``view-first`` to yes.
 If view-first is enabled, Unbound will try to use the view's local-zone tree,
 and if there is no match it will search the global tree.
 
-.. Seealso:: :ref:`manpages/unbound.conf:View Options` in
-             the :doc:`/manpages/unbound.conf` manpage.
+.. seealso:: :ref:`manpages/unbound.conf:View Options` in
+             the :manpage:`unbound.conf(5)` manpage.

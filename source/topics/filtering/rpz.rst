@@ -385,7 +385,7 @@ malware.rpz.example.com zone will be used.
 Queries coming from 127.0.0.20 will be subjected to the policies from both
 zones.
 
-.. Seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options`,
+.. seealso:: :ref:`manpages/unbound.conf:Response Policy Zone Options`,
              :term:`module-config<module-config: <"module names">>`,
              :term:`define-tag<define-tag: <"list of tags">>`,
              :term:`access-control-tag<access-control-tag: <IP netblock> <"list

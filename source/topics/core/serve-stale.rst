@@ -1,5 +1,3 @@
-.. _doc_serve_stale:
-
 .. versionadded:: 1.11.0
 
 Serving Stale Data
@@ -10,8 +8,8 @@ Serving stale data would normally break the contract between an authoritative
 name server and a caching resolver on the amount of time a record is permitted
 to be cached. However, the TTL definition of :RFC:`8767#section-4` states that:
 
-    If the data is unable to be authoritatively refreshed when the TTL expires,
-    the record MAY be used as though it is unexpired. 
+    "If the data is unable to be authoritatively refreshed when the TTL
+    expires, the record MAY be used as though it is unexpired."
 
 Serving expired records is not a novel idea and it was already present in
 various forms (e.g., increased cache-hit ratio, fallback when upstream is not
@@ -135,9 +133,9 @@ your installed Unbound for defaults and suggested values. And always remember
 that serving expired records should be approached with caution; you may be
 directing your clients to places long gone.
 
-.. Seealso:: :term:`serve-expired<serve-expired: <yes or no>>`,
+.. seealso:: :term:`serve-expired<serve-expired: <yes or no>>`,
              :term:`serve-expired-ttl<serve-expired-ttl: <seconds>>`,
              :term:`serve-expired-ttl-reset<serve-expired-ttl-reset: <yes or no>>`,
              :term:`serve-expired-reply-ttl<serve-expired-reply-ttl: <seconds>>` and
              :term:`serve-expired-client-timeout<serve-expired-client-timeout: <msec>>`
-             in the :doc:`/manpages/unbound.conf` manpage.
+             in the :manpage:`unbound.conf(5)` manpage.
