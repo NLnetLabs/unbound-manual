@@ -11,7 +11,7 @@ Description
 -----------
 
 :command:`Unbound-control` performs remote administration on the
-:manpage:`unbound(8)` DNS server. It reads the configuration file, contacts the
+:doc:`/manpages/unbound` DNS server. It reads the configuration file, contacts the
 unbound server over TLS sends the command and displays the result.
 
 The available options are:
@@ -40,7 +40,7 @@ Commands
 There are several commands that the server understands.
 
 start
-    Start the server. Simply execs :manpage:`unbound(8)`. The unbound executable
+    Start the server. Simply execs :doc:`/manpages/unbound`. The unbound executable
     is searched for in the **PATH** set in the environment. It is started with
     the config file specified using :option:`-c` or the default config file.
 
@@ -52,7 +52,7 @@ reload
 
 verbosity *number*
     Change verbosity value for logging. Same values as **verbosity** keyword in
-    :manpage:`unbound.conf(5)`. This new setting lasts until the server is
+    :doc:`/manpages/unbound.conf`. This new setting lasts until the server is
     issued a reload (taken from config file again), or the next verbosity
     control command.
 
@@ -721,4 +721,4 @@ Files
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound`.

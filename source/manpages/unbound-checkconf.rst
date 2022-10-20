@@ -11,8 +11,8 @@ Description
 -----------
 
 :command:`Unbound-checkconf` checks the configuration file for the
-:manpage:`unbound(8)` DNS resolver for syntax and other errors. The config file
-syntax is described in :manpage:`unbound.conf(5)`.
+:doc:`/manpages/unbound` DNS resolver for syntax and other errors. The config file
+syntax is described in :doc:`/manpages/unbound.conf`.
 
 The available options are:
 
@@ -50,4 +50,4 @@ Files
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound`.

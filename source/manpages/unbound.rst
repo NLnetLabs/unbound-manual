@@ -44,7 +44,7 @@ The available options are:
 
    Set the config file with settings for unbound to read instead of reading the
    file at the default location, :file:`/usr/local/etc/unbound/unbound.conf`.
-   The syntax is described in :manpage:`unbound.conf(5)`.
+   The syntax is described in :doc:`/manpages/unbound.conf`.
 
 .. option:: -d
 
@@ -71,5 +71,5 @@ The available options are:
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound-checkconf(8)`,
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound-checkconf`,
 :external+nsd:doc:`manpages/nsd`.

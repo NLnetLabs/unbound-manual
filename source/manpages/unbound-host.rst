@@ -87,7 +87,7 @@ The available options are:
 
 .. option:: -C configfile
 
-       Uses the specified unbound.conf to prime :manpage:`libunbound(3)`. Pass
+       Uses the specified unbound.conf to prime :doc:`/manpages/libunbound`. Pass
        it as first argument if you want to override some options from the config
        file with further arguments on the commandline.
 
@@ -132,4 +132,4 @@ lookup encountered a fatal error.
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound`.

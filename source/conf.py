@@ -188,8 +188,6 @@ man_pages = [
      'Unbound DNS validating resolver functions.', unbound_authors, 3)
 ]
 
-manpages_url = '{page}.html'
-
 # -- Options for Texinfo output ----------------------------------------------
 
 # Grouping the document tree into Texinfo files. List of tuples

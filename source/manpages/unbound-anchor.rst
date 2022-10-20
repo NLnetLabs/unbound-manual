@@ -13,7 +13,7 @@ Description
 DNSSEC validation. The program fetches the trust anchor with the method from
 :RFC:`7958` when regular :RFC:`5011` update fails to bring it up to date. It can
 be run (as root) from the commandline, or run as part of startup scripts. Before
-you start the :manpage:`unbound(8)` DNS server.
+you start the :doc:`/manpages/unbound` DNS server.
 
 Suggested usage:
 
@@ -219,4 +219,4 @@ https://data.iana.org/root-anchors/root-anchors.p7s
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound`.

@@ -9,14 +9,14 @@ Synopsis
 Description
 -----------
 
-:command:`unbound.conf` is used to configure :manpage:`unbound(8)`. The file
+:command:`unbound.conf` is used to configure :doc:`/manpages/unbound`. The file
 format has attributes and values. Some attributes have attributes inside them.
 The notation is: ``attribute: value``.
 
 Comments start with ``#`` and last to the end of line. Empty lines are ignored
 as is whitespace at the beginning of a line.
 
-The utility :manpage:`unbound-checkconf(8)` can be used to check unbound.conf
+The utility :doc:`/manpages/unbound-checkconf` can be used to check unbound.conf
 prior to usage.
 
 Example
@@ -93,7 +93,7 @@ These options are part of the **server:** clause.
         information, output per query. Level 4 gives algorithm level information.
         Level 5 logs client identification for cache misses. Default is level 1. The
         verbosity can also be increased from the commandline, see
-        :manpage:`unbound(8)`.
+        :doc:`/manpages/unbound`.
 
     statistics-interval: *<seconds>*
         The number of seconds between printing statistics to the log for every
@@ -109,9 +109,9 @@ These options are part of the **server:** clause.
 
     extended-statistics: *<yes or no>*
         If enabled, extended statistics are printed from
-        :manpage:`unbound-control(8)`. Default is off, because keeping track of more
+        :doc:`/manpages/unbound-control`. Default is off, because keeping track of more
         statistics takes time. The counters are listed in
-        :manpage:`unbound-control(8)`.
+        :doc:`/manpages/unbound-control`.
 
     num-threads: *<number>*
         The number of threads to create to serve clients. Use 1 for no threading.
@@ -1712,12 +1712,12 @@ Remote Control Options
 ^^^^^^^^^^^^^^^^^^^^^^
 
 In the **remote-control:** clause are the declarations for the remote control
-facility. If this is enabled, the  :manpage:`unbound-control(8)` utility can be
+facility. If this is enabled, the  :doc:`/manpages/unbound-control` utility can be
 used to send commands to the running unbound server. The server uses these
 clauses to setup TLSv1 security for the connection. The
-:manpage:`unbound-control(8)` utility also reads the **remote-control** section
+:doc:`/manpages/unbound-control` utility also reads the **remote-control** section
 for options. To setup the correct self-signed certificates use the
-:manpage:`unbound-control-setup(8)` utility.
+**unbound-control-setup** utility.
 
 .. glossary::
 
@@ -2676,4 +2676,4 @@ unbound.log
 See Also
 --------
 
-:manpage:`unbound(8)`, :manpage:`unbound-checkconf(8)`.
+:doc:`/manpages/unbound`, :doc:`/manpages/unbound-checkconf`.

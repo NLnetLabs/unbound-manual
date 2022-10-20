@@ -150,7 +150,7 @@ Description
 
 Unbound is an implementation of a DNS resolver, that does caching and DNSSEC
 validation. This is the library API, for using the ``-lunbound`` library. The
-server daemon is described in :manpage:`unbound(8)`. The library works
+server daemon is described in :doc:`/manpages/unbound`. The library works
 independent from a running unbound server, and can be used to convert hostnames
 to ip addresses, and back, and obtain other information from the DNS. The
 library performs public-key validation of results with DNSSEC.
@@ -189,7 +189,7 @@ Functions
 
     ub_ctx_set_option
         A power-user interface that lets you specify one of the options from the
-        config file format, see :manpage:`unbound.conf(5)`. Not all options are
+        config file format, see :doc:`/manpages/unbound.conf`. Not all options are
         relevant. For some specific options, such as adding trust anchors, special
         routines exist. Pass the option name with the trailing ``':'``.
 
@@ -200,7 +200,7 @@ Functions
 
     ub_ctx_config
         A power-user interface that lets you specify an unbound config file, see
-        :manpage:`unbound.conf(5)`, which is read for configuration. Not all options
+        :doc:`/manpages/unbound.conf`, which is read for configuration. Not all options
         are relevant. For some specific options, such as adding trust anchors,
         special routines exist. This function is thread-safe only if a single
         instance of **ub_ctx** exists in the application. If several instances
@@ -256,7 +256,7 @@ Functions
     ub_ctx_add_ta_autr
         Add filename with automatically tracked trust anchor to the given context.
         Pass name of a file with the managed trust anchor. You can create this file
-        with :manpage:`unbound-anchor(8)` for the root anchor. You can also create
+        with :doc:`/manpages/unbound-anchor` for the root anchor. You can also create
         it with an initial file with one line with a DNSKEY or DS record. If the
         file is writable, it is updated when the trust anchor changes. At this time
         it is only possible to add trusted keys before the first resolve is done.
@@ -347,14 +347,14 @@ Functions
 
     ub_ctx_zone_add
         Add new zone to local authority info, like local-zone
-        :manpage:`unbound.conf(5)` statement.
+        :doc:`/manpages/unbound.conf` statement.
 
     ub_ctx_zone_remove
         Delete zone from local authority info.
 
     ub_ctx_data_add
         Add resource record data to local authority info, like local-data
-        :manpage:`unbound.conf(5)` statement.
+        :doc:`/manpages/unbound.conf` statement.
 
     ub_ctx_data_remove
         Delete local authority data from the name given.
@@ -404,4 +404,4 @@ with file read failure.
 See Also
 --------
 
-:manpage:`unbound.conf(5)`, :manpage:`unbound(8)`.
+:doc:`/manpages/unbound.conf`, :doc:`/manpages/unbound`.

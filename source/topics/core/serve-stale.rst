@@ -138,4 +138,4 @@ directing your clients to places long gone.
              :term:`serve-expired-ttl-reset<serve-expired-ttl-reset: <yes or no>>`,
              :term:`serve-expired-reply-ttl<serve-expired-reply-ttl: <seconds>>` and
              :term:`serve-expired-client-timeout<serve-expired-client-timeout: <msec>>`
-             in the :manpage:`unbound.conf(5)` manpage.
+             in the :doc:`/manpages/unbound.conf` manpage.
