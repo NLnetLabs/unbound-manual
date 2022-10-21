@@ -13,19 +13,25 @@ Unbound has an option to enable extended statistics collection. If
 enabled, more statistics are collected, for example what types of queries are
 sent to the resolver. Otherwise, only the total number of queries is collected.
 
-Statistics can be printed to the log file using ``statistics-interval``, but
+Statistics can be printed to the log file using
+:ref:`statistics-interval:<unbound.conf.statistics-interval>`, but
 here we'll focus on using :doc:`/manpages/unbound-control` to obtain
 statistics on demand. If you set a ``statistics-interval``, every interval it is
 printed to the logfile.
 
-To use ``unbound-control``, first set it up using the ``unbound-control-setup``
-script. See howto setup unbound. Then you can use the ``unbound-control stats``
-command to print out the statistics on demand.
+To use ``unbound-control``, first set it up using the
+:ref:`unbound-control-setup<manpages/unbound-control:Set Up>` script.
+See howto setup unbound.
+Then you can use the :ref:`unbound-control
+stats<unbound-control.commands.stats>` command to print out the statistics on
+demand.
 
 Various graphing tools expect the counters to go up over time. Some may expect
 counters to be reset to 0 since the previous statistics printout. The
-``statistics-cumulative`` option controls the behaviour of Unbound. By default
-it is set to ``no``, which resets values to zero after stat printout.
+:ref:`statistics-cumulative:<unbound.conf.statistics-cumulative>` option
+controls the behaviour of Unbound.
+By default it is set to ``no``, which resets values to zero after stat
+printout.
 
 .. code-block:: text
 
@@ -62,14 +68,16 @@ your system. The ``statefile`` is a temporary file.
    /usr/local/var/munin/plugin-state/unbound-state env.unbound_conf
    /usr/local/etc/unbound/unbound.conf env.unbound_control
    /usr/local/sbin/unbound-control env.spoof_warn 1000 env.spoof_crit 100000
-   Restart the munin-node daemon. Munin will automatically pick up the new graph
-   and plot it with rrdtool.
+
+Restart the munin-node daemon. Munin will automatically pick up the new graph
+and plot it with ``rrdtool``.
 
 Additional graphs are possible, below is a list of them, and examples. Create
 (additional) symbolic links to ``unbound_munin_`` with the names (in bold) of
 those graphs to enable their display. Several require that
-``extended-statistics`` is enabled in config. Pictures included are samples,
-your statistics may look different :-) .
+:ref:`extended-statistics:<unbound.conf.extended-statistics>` is enabled in
+the configuration.
+Pictures included are samples, your statistics may look different :-) .
 
 .. figure::  /img/monitoring/unbound_munin_hits-day.png
 
@@ -121,7 +129,7 @@ Statistics with Cacti
 ---------------------
 
 The setup is described in the README in the tarball in the Unbound source
-contrib directory: :download:`contrib/unbound_cacti.tar.gz
+``contrib`` directory: :download:`contrib/unbound_cacti.tar.gz
 <https://github.com/NLnetLabs/unbound/blob/master/contrib/unbound_cacti.tar.gz?raw=true>`
 (contributed by Dmitriy Demidov). 
 

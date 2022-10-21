@@ -43,10 +43,10 @@ other systems.
 While you could download the code from GitHub and build it yourself, getting a
 copy can be as simple as running:
 
-.. code-block:: text
+.. code-block:: bash
 
-	sudo apt update
-	sudo apt install unbound -y
+    sudo apt update
+    sudo apt install unbound -y
 
 This gives you a complete and running version of Unbound which behaves as a
 caching recursive DNS resolver out of the box for the system on which you
@@ -57,8 +57,9 @@ isn't) or you'd simply like to run the latest and greatest version you can
 download the latest release tarball from our `website
 <https://nlnetlabs.nl/projects/unbound/about/>`_ and build it yourself.
 
-Do note that by default the DNS server will be queryable only from the local
-host, i.e. the system on which you installed Unbound. We will change that later.
+Do note that by default Unbound will be queriable only from the local host,
+i.e. the system on which you installed Unbound.
+We will change that later.
 
 Testing the resolver locally
 ----------------------------
@@ -70,9 +71,9 @@ that will be using the resolver after we expose Unbound to the network.
 
 The command for testing locally on the Unbound machine is:
 
-.. code-block:: text
+.. code-block:: bash
 
-	dig example.com @127.0.0.1
+    dig example.com @127.0.0.1
 
 Here we tell the :command:`dig` tool to look up the IP address for example.com,
 and to ask for this information from the resolver running at the IP address
@@ -85,7 +86,7 @@ the query under the ``SERVER`` entry. The entry will look like:
 
 .. code-block:: text
 
-	;; SERVER: 127.0.0.1#53(127.0.0.1)
+    ;; SERVER: 127.0.0.1#53(127.0.0.1)
 
 In the next section we will be disabling the default Ubuntu resolver. To verify
 that we do it correctly it is useful to know the address of the default resolver
@@ -93,16 +94,16 @@ as a baseline. For this baseline we also use a :command:`dig` query, but this
 time without specifying an IP address (which causes dig to use the machine's
 default DNS resolver).
 
-.. code-block:: text
+.. code-block:: bash
 
-	dig example.com
+    dig example.com
 
 While the response should be the same, the ``SERVER`` entry in the response
 should look like:
 
 .. code-block:: text
 
-	;; SERVER: 127.0.0.53#53(127.0.0.53)
+    ;; SERVER: 127.0.0.53#53(127.0.0.53)
 
 Note that the final IPv4 digit is 53 and not 1, as with our Unbound instance.
 
@@ -122,54 +123,54 @@ option so that we can verify the integrity the responses we get to our DNS
 queries. With your favourite text editor (e.g. :command:`nano`) we can modify
 the file:
 
-.. code-block:: text
+.. code-block:: bash
 
-	nano /etc/systemd/resolved.conf
+    nano /etc/systemd/resolved.conf
 
-Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
+Here, under the ``[Resolve]`` section we add (or rather, enable by removing the
 "#") the options:
 
 .. code-block:: text
 
-	[Resolve]
-	DNS=127.0.0.1
-	#FallbackDNS=
-	#Domains=
-	DNSSEC=yes
-	#DNSOverTLS=no
-	#MulticastDNS=no
-	#LLMNR=no
-	#Cache=no-negative
-	DNSStubListener=no
-	#DNSStubListenerExtra=
+    [Resolve]
+    DNS=127.0.0.1
+    #FallbackDNS=
+    #Domains=
+    DNSSEC=yes
+    #DNSOverTLS=no
+    #MulticastDNS=no
+    #LLMNR=no
+    #Cache=no-negative
+    DNSStubListener=no
+    #DNSStubListenerExtra=
 
 To actually have the system start using Unbound, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified.
 
-.. code-block:: text
+.. code-block:: bash
 
-	ln -fs /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    ln -fs /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
 With this file modified, we can restart using this configuration with: 
 
-.. code-block:: text
+.. code-block:: bash
 
-	systemctl restart systemd-resolved
+    systemctl restart systemd-resolved
 
 If successful, the operating system should use our Unbound instance as default.
 A quick test a :command:`dig` without specifying the address of the Unbound
 server should give the same result as specifying it did above (with
 ``@127.0.0.1``).
 
-.. code-block:: text
+.. code-block:: bash
 
-	dig example.com
+    dig example.com
 
 Note that the "SERVER" section in the output from :command:`dig` should also
 contain the local IP address of our server.
 
 .. code-block:: text
 
-	;; SERVER: 127.0.0.1#53(127.0.0.1)
+    ;; SERVER: 127.0.0.1#53(127.0.0.1)
 
 
 Setting up for the rest of the network
@@ -178,20 +179,20 @@ Setting up for the rest of the network
 While we currently have a working instance of Unbound, we need it to be
 reachable from within our entire network. With that comes the headache of
 dealing with (local) IP addresses. It’s likely that your home router distributed
-local IP addresses to your devices. If this is the case (i.e. you didn’t change
+local IP addresses to your devices. If this is the case (i.e. you didn't change
 it by hand), they should be :rfc:`1918` ranges:
 
 .. code-block:: text
 
-	10.0.0.0 - 10.255.255.255 (10/8)
-	172.16.0.0 - 172.31.255.255 (172.16/12)
-	192.168.0.0 - 192.168.255.255 (192.168/16)
+    10.0.0.0 - 10.255.255.255 (10/8)
+    172.16.0.0 - 172.31.255.255 (172.16/12)
+    192.168.0.0 - 192.168.255.255 (192.168/16)
 
 To find the IP address of the machine that is running Unbound, we use:
 
-.. code-block:: text
+.. code-block:: bash
 
-	hostname --all-ip-addresses
+    hostname --all-ip-addresses
 
 If you just have one IP address as output from the :command:`hostname` command
 that will be the correct one. If you have multiple IP addresses, the easiest way
@@ -205,43 +206,46 @@ the next section.
 
 As a prerequisite for the next step, we need to configure our Unbound instance
 to be reachable from devices other than only the machine on which the Unbound is
-running. Unbound is a highly capable resolver, and as such has many options
-which can be set; the full example config is almost 1200 lines long, but we'll
-need but a fraction of these settings. (If you are interested, all configurables
-are documented in the extensive manual page of :doc:`/manpages/unbound.conf`).
+running.
+Unbound is a highly capable resolver, and as such has many options which can be
+set; the full example configuration file is almost 1200 lines long, but we'll
+need but a fraction of these settings.
+(If you are interested, all configuration options are documented in the
+extensive manual page of :doc:`/manpages/unbound.conf`).
 
-The default config is found at:
+The default configuration file is found at:
 
 .. code-block:: text
 
-	/etc/unbound/unbound.conf
+    /etc/unbound/unbound.conf
 
 If you open this for the first time it looks very empty. It is still usable as a
 resolver for one machine, as this is how the Unbound defaults are configured.
 It's not, however, enough for our purposes, so we will add the minimal
 configuration options needed.
 
-The options that we add to the current config file to make it a "minimal usable
-config" are as follows. Note that the IPv6 options are commented out, but we
-recommend to uncomment them if your router and network supports it.
+The options that we add to the current configuration file to make it a "minimal
+usable configuration" are as follows.
+Note that the IPv6 options are commented out, but we recommend to uncomment
+them if your router and network supports it.
 
 .. code-block:: text
 
-	server:
-		# location of the trust anchor file that enables DNSSEC
-		auto-trust-anchor-file: "/var/lib/unbound/root.key"
-		# send minimal amount of information to upstream servers to enhance privacy
-		qname-minimisation: yes
-		# the interface that is used to connect to the network (this will listen to all interfaces)
-		interface: 0.0.0.0
-		# interface: ::0
-		# addresses from the IP range that are allowed to connect to the resolver
-		access-control: 192.168.0.0/16 allow
-		# access-control: 2001:DB8/64 allow
+    server:
+        # location of the trust anchor file that enables DNSSEC
+        auto-trust-anchor-file: "/var/lib/unbound/root.key"
+        # send minimal amount of information to upstream servers to enhance privacy
+        qname-minimisation: yes
+        # the interface that is used to connect to the network (this will listen to all interfaces)
+        interface: 0.0.0.0
+        # interface: ::0
+        # addresses from the IP range that are allowed to connect to the resolver
+        access-control: 192.168.0.0/16 allow
+        # access-control: 2001:DB8/64 allow
 
-	remote-control:
-		# allows controling unbound using "unbound-control"
-		control-enable: yes
+    remote-control:
+        # allows controling unbound using "unbound-control"
+        control-enable: yes
 
 The interface is currently configured to listen to any address on the machine,
 and the access-control only allows queries from the ``192.168.0.0/16`` `IP
@@ -250,58 +254,60 @@ subnet
 range. Note that the IP address we chose above (``192.168.0.1`` and
 ``192.168.0.2``) fall within the ``192.168.0.0/16`` range.
 
-To prepare our config we are going to modify the existing config in
+To prepare our configuration we are going to modify the existing configuration in
 :file:`/etc/unbound/unbound.conf`. If you open the file for the first time, you
 see that there is already an “include” in there. The "include" enables us to do
 `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which allows
 Unbound to verify the source of the answers that it receives, as well as QNAME
-minimisation. For convienience these configuration options have already been
-added in the minimal config. The config also includes the
-:command:`remote-control` in the config to enable controlling Unbound using
-:command:`unbound-control` command which is useful if you want to modify the
-config later on.
+minimisation. For convenience these configuration options have already been
+added in the minimal configuration.
+The configuration also includes the :ref:`remote-control:<unbound.conf.remote>`
+section in the configuration to enable controlling Unbound using the
+:doc:`/manpages/unbound-control` command, which is useful if you want to
+modify the configuration on the fly later on.
 
-Using the text editor again, we can then add the minimal config shown above,
-making any changes to the access control where needed.When we've modified the
-configuration we check it for mistakes with the :command:`unbound-checkconf`
-command:
+Using the text editor again, we can then add the minimal configuration shown
+above, making any changes to the access control where needed.
+When we've modified the configuration we check it for mistakes with the
+:doc:`/manpages/unbound-checkconf` command:
 
-.. code-block:: text
+.. code-block:: bash
 
-	unbound-checkconf unbound.conf
+    unbound-checkconf unbound.conf
 
 If this command reports no errors, we need to stop the currently running Unbound
 instance and restart it with our new configuration. You can stop Unbound with:
 
-.. code-block:: text
+.. code-block:: bash
 
-	sudo pkill -f unbound
+    sudo pkill -f unbound
 
 And you can restart Unbound with:
 
-.. code-block:: text
+.. code-block:: bash
 
-	unbound-control start
+    unbound-control start
 
-From this point on, we can :command:`stop`, :command:`start`, and
-:command:`reload` Unbound with :command:`unbound-control` if you want to make
-changes to the configuration.
+From this point on, we can :ref:`stop<unbound-control.commands.stop>`,
+:ref:`start<unbound-control.commands.start>`, and
+:ref:`reload<unbound-control.commands.reload>` Unbound with
+:command:`unbound-control` if you want to make changes to the configuration.
 
 Testing the resolver from a remote machine
 ------------------------------------------
 
 So now we have a DNS resolver which should be reachable from within the network.
 To be able to verify that our resolver is working correctly, we want to test it
-from anoither machine in the network. As mentioned above, this tutorial uses the
+from another machine in the network. As mentioned above, this tutorial uses the
 address ``192.168.0.2`` (not ``127.0.0.1`` as we saw earlier) as an example for
 the machine running Unbound. Armed with the IP address we can send a query to
 our DNS resolver from another machine which is within our home network. To do
 this we use the same dig command, only we change the IP address where the query
 is asked.
 
-.. code-block:: text
+.. code-block:: bash
 
-	dig example.com @192.168.0.2
+    dig example.com @192.168.0.2
 
 This should give the same result as above. The ``SERVER`` entry in the footer
 reflects from which server the response was received.
@@ -322,15 +328,15 @@ examples which you can implement and expand on.
 Most machines when they first connect to a network get a “recommended resolver”
 from your router using :abbr:`DHCP (Dynamic Host Configuration Protocol)`. To
 change this, we need to log into the router. Earlier in this tutorial we assume
-the home router was using ``192.168.0.1``, though in reality this can differ. if
-this does differ, the unbound config needs to be changed as well.
+the home router was using ``192.168.0.1``, though in reality this can differ.
+If this does differ, the unbound configuration needs to be changed as well.
 
 To find the IP address of our home router, which is likely be under the
 ``default gateway`` entry from:
 
-.. code-block:: text
+.. code-block:: bash
 
-	ip route
+    ip route
 
 When you've found the IP address of your home router, you can copy the address
 to a web browser, which should give you access to the router configuration

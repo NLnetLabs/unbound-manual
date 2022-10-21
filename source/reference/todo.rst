@@ -47,5 +47,5 @@ Internals
 - Architecture
 - Code structure
 - Server selection
-- DNSSEC Trust Anchor Management (unbound-anchor and :RFC:`5011`)
+- DNSSEC Trust Anchor Management (unbound-anchor and :rfc:`5011`)
 - Python modules

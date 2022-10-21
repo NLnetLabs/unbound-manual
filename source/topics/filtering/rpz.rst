@@ -24,7 +24,9 @@ your policies for multiple configurations, which all will have their own syntax.
 Using the Unbound specific configuration also makes it challenging to consume
 policies from external sources.
 
-.. for example energized.pro, spamhaus, and oisd.nl (do we want to endorse these?)
+..
+    for example energized.pro, spamhaus, and oisd.nl (do we want to endorse
+    these?)
 
 
 To get these external sources to work manually, you have to fetch the external
@@ -46,8 +48,9 @@ RPZ Policies
 ------------
 
 
-.. All supported RPZ triggers:
-.. QNAME, Response IP Address, nsdname, nsip and clientip triggers
+..
+    All supported RPZ triggers:
+    QNAME, Response IP Address, nsdname, nsip and clientip triggers
 
 
 RPZ policies are formatted in DNS zone files. This makes it possible to easily
@@ -61,11 +64,8 @@ should be taken if the policy needs to be applied. Each trigger and action
 combination is defined as a Resource Record (RR) in the policy zone. The owner
 of the RR states the trigger, the type and RDATA state the action.
 
-Unbound supports all the RPZ policies descriped in the  `RPZ internet draft
-<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_: the **QNAME
-trigger** and the **Response IP Address trigger**, which we will go through
-below.
-
+Unbound supports all the RPZ policies described in the  `RPZ internet draft
+<https://tools.ietf.org/html/draft-vixie-dnsop-dns-rpz-00>`_:
 
 +-------------------------+---------------------------------------------------------------+
 |    Trigger              |    Description and example                                    |
@@ -197,11 +197,13 @@ How to use RPZ with Unbound
 -------------------------------
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
-needs to be loaded using ``module-config``. Each policy zone is configured in
-Unbound using the ``rpz`` clause. The full documentation for RPZ in Unbound can
-be found in the :doc:`/manpages/unbound.conf`. A minimal configuration
-with a single policy zone can look like, where additional elements can be
-uncommented:
+needs to be loaded using :ref:`module-config:<unbound.conf.module-config>`.
+Each policy zone is configured in
+Unbound using the **rpz:** clause.
+The full documentation for RPZ in Unbound can be found in the
+:doc:`/manpages/unbound.conf`.
+A minimal configuration with a single policy zone can look like, where
+additional elements can be uncommented:
 
 .. code-block:: text
 
@@ -276,7 +278,7 @@ zone transfer is as easy as specifying the server to get the zone from:
 
 The zone will now be transferred from the configured address and saved to a
 zonefile on disk. It is possible to have more than one policy zone in Unbound.
-Having multiple policy zones is as simple as having multiple ``rpz`` clauses:
+Having multiple policy zones is as simple as having multiple **rpz:** clauses:
 
 .. code-block:: text
 
@@ -299,16 +301,20 @@ policy zones.
 
 Unbound has the possibility to override the actions that will be used for
 policies in a zone that matches the zone’s triggers. This can be done using the
-``rpz-action-override`` configuration option. The possible values for the option
-are: ``nxdomain``, ``nodata``, ``passthru``, ``drop``, ``disabled``, and
-``cname``. The first four options of this list will do the same as the RPZ
-actions with the same name.
+:ref:`rpz-action-override:<unbound.conf.rpz.rpz-action-override>` configuration
+option.
+The possible values for the option are: ``nxdomain``, ``nodata``, ``passthru``,
+``drop``, ``disabled``, and ``cname``.
+The first four options of this list will do the same as the RPZ actions with
+the same name.
 
 The ``cname`` override option will make it possible to apply a local data action
-using a CNAME for all matching triggers in the policy zone. The CNAME to use in
-the answer can be configured using the ``rpz-cname-override`` configuration
-option. Using these overrides is nice if you use an external feed to get a list
-of triggers, but would like to redirect all your users to your own domain:
+using a CNAME for all matching triggers in the policy zone.
+The CNAME to use in the answer can be configured using the
+:ref:`rpz-cname-override:<unbound.conf.rpz.rpz-cname-override>` configuration
+option.
+Using these overrides is nice if you use an external feed to get a list of
+triggers, but would like to redirect all your users to your own domain:
 
 .. code-block:: text
 
@@ -317,7 +323,7 @@ of triggers, but would like to redirect all your users to your own domain:
   drop.example.com.rpz.nlnetlabs.nl. CNAME rpz-drop.
   32.34.216.184.93.rpz-ip.rpz.nlnetlabs.nl. A 192.0.2.1
 
-This also requires a change in the Unbound config:
+This also requires a change in the Unbound configuration:
 
 .. code-block:: text
 
@@ -337,21 +343,26 @@ impacting your users. The difference between ``disabled`` and ``passthru`` is
 that disabled is not considered to be a valid match and will therefore not stop
 Unbound from looking at the next configured policy zone.
 
-When ``rpz-log`` is set to yes, Unbound will log all applied actions for a
-policy zone. With ``rpz-log`` enabled you can specify a name for the log using
-``rpz-log-name``, this way you can easily find all matches for a specific zone.
+When :ref:`rpz-log:<unbound.conf.rpz.rpz-log>` is set to yes, Unbound will log
+all applied actions for a policy zone.
+With ``rpz-log`` enabled you can specify a name for the log using
+:ref:`rpz-log-name:<unbound.conf.rpz.rpz-log-name>`, this way you can easily
+find all matches for a specific zone.
 It is also possible to get statistics per applied RPZ action using
-``unbound-control stats``. This requires the ``extended-statistics`` to be
-enabled.
+:ref:`unbound-control stats<unbound-control.commands.stats>` or
+:ref:`unbound-control stats_noreset<unbound-control.commands.stats_noreset>`.
+This requires the :ref:`extended-statistics:<unbound.conf.extended-statistics>`
+to be enabled.
 
 Unbound’s RPZ implementation works together with the tags functionality.
 This makes it possible to enable (some of) the policy zones only for a subset
 of users.
-To do this, the tags need to be defined using ``define-tag``, the correct tags
-need to be matched either with the client IP prefix using
-``access-control-tag`` or the clients on a listening interface using
-``interface-tag``, and the tags need to be specified for the policy zones for
-which they apply.
+To do this, the tags need to be defined using
+:ref:`define-tag:<unbound.conf.define-tag>`, the correct tags need to be matched
+either with the client IP prefix using
+:ref:`access-control-tag:<unbound.conf.access-control-tag>` or the clients on
+a listening interface using :ref:`interface-tag:<unbound.conf.interface-tag>`,
+and the tags need to be specified for the policy zones for which they apply.
 
 .. code-block:: text
 
@@ -392,10 +403,6 @@ zones.
     :ref:`access-control-tag<unbound.conf.access-control-tag>`, and
     :ref:`extended-statistics<unbound.conf.extended-statistics>` in the
     :doc:`unbound.conf(5)</manpages/unbound.conf>` manpage.
-
-
-
-
 
 
 .. .. index:: QNAME Trigger

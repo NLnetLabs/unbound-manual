@@ -49,8 +49,8 @@ Description
 
 ``unbound-anchor`` performs setup or update of the root trust anchor for DNSSEC
 validation.
-The program fetches the trust anchor with the method from :RFC:`7958` when
-regular :RFC:`5011` update fails to bring it up to date.
+The program fetches the trust anchor with the method from :rfc:`7958` when
+regular :rfc:`5011` update fails to bring it up to date.
 It can be run (as root) from the commandline, or run as part of startup
 scripts.
 Before you start the :doc:`unbound(8)</manpages/unbound>` DNS server.
@@ -77,10 +77,10 @@ It tests if the root anchor file works, and if not, and an update is possible,
 attempts to update the root anchor using the root update certificate.
 It performs a https fetch of
 `root-anchors.xml <http://data.iana.org/root-anchors/root-anchors.xml>`__
-and checks the results (:RFC:`7958`); if all checks are successful, it updates
+and checks the results (:rfc:`7958`); if all checks are successful, it updates
 the root anchor file.
 Otherwise the root anchor file is unchanged.
-It performs :RFC:`5011` tracking if the DNSSEC information available via the
+It performs :rfc:`5011` tracking if the DNSSEC information available via the
 DNS makes that possible.
 
 It does not perform an update if the certificate is expired, if the network is
@@ -229,7 +229,7 @@ Exit Code
 This tool exits with value 1 if the root anchor was updated using the
 certificate or if the builtin root-anchor was used.
 It exits with code 0 if no update was necessary, if the update was possible
-with :RFC:`5011` tracking, or if an error occurred.
+with :rfc:`5011` tracking, or if an error occurred.
 
 You can check the exit value in this manner:
 

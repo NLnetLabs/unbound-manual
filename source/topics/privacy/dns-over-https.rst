@@ -8,8 +8,8 @@ client the possibility to authenticate a resolver. As implied by the name, this
 is done by sending DNS messages over TLS. Unbound can handle TLS encrypted DNS
 messages since `2011
 <https://github.com/NLnetLabs/unbound/commit/aa0536dcb5846206d016a03d8d66ad4279247d9e>`__,
-long before the IETF DPRIVE working group started its work on the `DoT
-specification <https://tools.ietf.org/html/rfc7858>`__.
+long before the IETF DPRIVE working group started its work on the
+`DoT specification <https://tools.ietf.org/html/rfc7858>`__.
 
 There are, however, DNS clients that do not support DoT but are able to use
 DNS-over-HTTPS (DoH) instead. Where DoT sends a DNS message directly over TLS,
@@ -40,10 +40,12 @@ timeout settings, and the limits on TCP connections per client IP address or
 netblock.
 
 The use of HTTP makes it possible to change the DNS message format by using new
-media types. Unbound currently only supports the application/dns-message media
-type, as this is the only format standardised in the IETF standards track, and
-the only supported format by popular DNS clients. We are keeping an eye on the
-new possibilities here, such as using the oblivious-dns-message media type.
+media types.
+Unbound currently only supports the ``application/dns-message`` media type, as
+this is the only format standardised in the IETF standards track, and the only
+supported format by popular DNS clients.
+We are keeping an eye on the new possibilities here, such as using the
+``application/oblivious-dns-message`` media type.
 
 The use of the HTTP layer also makes it possible to return more detailed
 information to a client in case of malformed requests. This can be done by using
@@ -56,27 +58,31 @@ an RST_STREAM frame. The HTTP status codes that can be returned by Unbound are:
 
 404 Not Found
     The request is directed to a path other than the configured endpoint in
-    http-endpoint (default /dns-query).
+    http-endpoint (default ``/dns-query``).
 
 413 Payload Too Large
     The payload received in the POST request is too large. Payloads cannot be
     larger than the content-length communicated in the request header. The
-    payload length is limited to 512 bytes if harden-large-queries is enabled,
-    and otherwise limited to the value configured in msg-buffer-size (default
+    payload length is limited to 512 bytes if
+    :ref:`harden-large-queries:<unbound.conf.harden-large-queries>` is enabled,
+    and otherwise limited to the value configured in
+    :ref:`msg-buffer-size:<unbound.conf.msg-buffer-size>` (default
     65552 bytes). To prevent the allocation of overly large buffers, the maximum
     size is limited to the size of the first DATA frame if no content-length is
     received in the request.
 
 414 URI Too Long
     The base64url encoded DNS query in the GET request is too large. The DNS
-    query length is limited to 512 bytes if harden-large-queries is enabled, and
-    limited to msg-buffer-size otherwise.
+    query length is limited to 512 bytes if
+    :ref:`harden-large-queries:<unbound.conf.harden-large-queries>` is enabled,
+    and limited to :ref:`msg-buffer-size:<unbound.conf.msg-buffer-size>`
+    otherwise.
 
 415 Unsupported Media Type
     The media type of the request is not supported. This happens if the request
     contains a content-type header that is set to anything but
-    application/dns-message. Requests without content-type will be treated as
-    application/dns-message.
+    ``application/dns-message``.
+    Requests without content-type will be treated as ``application/dns-message``.
 
 400 Bad Request
     No valid query received, not matched by any of the above 4xx status
@@ -109,10 +115,11 @@ Unbound to listen on the HTTPS port:
         tls-service-pem: "cert.pem"
 
 The port that Unbound will use for incoming DoH traffic is by default set to 443
-and can be changed using the ``https-port`` configuration option.
+and can be changed using the :ref:`https-port:<unbound.conf.https-port>`
+configuration option.
 
-Unbound is now ready to handle DoH queriess on the default HTTP endpoint, which
-is */dns-query*:
+Unbound is now ready to handle DoH queries on the default HTTP endpoint, which
+is ``/dns-query``:
 
 .. code-block:: text
 
@@ -140,31 +147,37 @@ is */dns-query*:
     ; EDNS: version: 0; flags: do ; udp: 4096
     ;; MSG SIZE  rcvd: 241
 
-Queries to other paths will be answered with a 404 status code. The
+Queries to other paths will be answered with a ``404`` status code. The
 endpoint can be changed using the http-endpoint configuration option.
 
 The maximum number of concurrent HTTP/2 streams can be configured using the
-http-max-streams configuration option. The default for this option is 100, as
-per HTTP/2 RFC recommended minimum. This value will be in the SETTINGS frame
-sent to the client, and enforced by Unbound.
+:ref:`http-max-streams:<unbound.conf.http-max-streams>` configuration option.
+The default for this option is 100, as per HTTP/2 RFC recommended minimum.
+This value will be in the ``SETTINGS`` frame sent to the client, and enforced by
+Unbound.
 
 Because requests can be spread out over multiple HTTP/2 frames, which can be
 interleaved between frames of different streams, we have to create buffers
 containing partial queries. A new counter is added to Unbound to limit the total
 memory consumed by all query buffers. The limit can be configured using the
-http-query-buffer-size option. New streams will be closed by sending an
-RST_STREAM frame when this limit is exceeded.
+:ref:`http-query-buffer-size:<unbound.conf.http-query-buffer-size>` option.
+New streams will be closed by sending an ``RST_STREAM`` frame when this limit is
+exceeded.
 
 After Unbound is done resolving a request the DNS response will be stored in a
 buffer, waiting until Unbound is ready to sent them back to the client using
 HTTP. These buffers also have a maximum amount of memory they are allowed to
-consume. This maximum is configurable using the http-response-buffer-size
+consume. This maximum is configurable using the
+:ref:`http-response-buffer-size:<unbound.conf.http-response-buffer-size>`
 configuration option.
 
 Metrics
 -------
 
-Three DoH related metrics are available in Unbound; ``num.query.https`` counts
-the number of queries that have been serviced using DoH. The
-``mem.http.query_buffer``, and ``mem.http.response_buffer`` counters keep track
-of the memory used for the DoH query- and response buffers.
+Three DoH related metrics are available in Unbound;
+:ref:`num.query.https<unbound-control.stats.num.query.https>` counts
+the number of queries that have been serviced using DoH.
+The :ref:`mem.http.query_buffer<unbound-control.stats.mem.http.query_buffer>`,
+and
+:ref:`mem.http.response_buffer<unbound-control.stats.mem.http.response_buffer>`
+counters keep track of the memory used for the DoH query and response buffers.

@@ -4,7 +4,7 @@ Aggressive NSEC
 ===============
 
 Unbound has implemented the aggressive use of the DNSSEC-Validated cache, also
-known as *Aggressive NSEC*, based on :RFC:`8198`. This section first describes
+known as *Aggressive NSEC*, based on :rfc:`8198`. This section first describes
 how NSEC works, and then covers how synthesised answers can be generated
 based on the DNSSEC-Validated cache.
 
@@ -20,8 +20,8 @@ In addition to caching the positive answer to queries, negative answers are also
 cached. These negative answers are an acknowledgement from the name server that
 a name does not exist (an answer with the response code set to NXDOMAIN) or that
 the type in the query does not exist for the name in the query. The latter is
-known as an answer with the NODATA pseudo response code, as specified in section
-1 of :RFC:`2308`.
+known as an answer with the NODATA pseudo response code, as specified in
+:rfc:`2308#section-1`.
 
 .. index:: NSEC records
 
@@ -33,8 +33,7 @@ verifying the DNSSEC signatures of the records, it is also used to prove the
 absence of records. DNSSEC uses NSEC (next secure), as well as NSEC3 records for
 these proof of non-existence answers. An NSEC record indicates that there are no
 records that are sorted between the two domain names it contains. The canonical
-DNS name order is used for the sorting, as described in section 6.1 of
-:RFC:`4034`. An NSEC record also has a type bitmap which specifies the record
+DNS name order is used for the sorting, as described in :rfc:`4034#section-6.1`. An NSEC record also has a type bitmap which specifies the record
 types that exist for the owner name of the NSEC record. Like any other DNS
 record, the authenticity of NSEC records can be validated using its DNSSEC
 signature which is located in the RRSIG record.
@@ -55,7 +54,7 @@ there is no record for juliett.example.net.
 DNSSEC Signatures on Wildcard Records
 -------------------------------------
 
-Wildcard expansion on NSEC record is specifically allowed by :RFC:`4592`. In
+Wildcard expansion on NSEC record is specifically allowed by :rfc:`4592`. In
 order to answer a DNS query using a wildcard record, an authoritative nameserver
 replaces the owner name of the wildcard record with the name in the query.
 DNSSEC is designed in such way that it can sign a complete zone before it starts
@@ -126,12 +125,14 @@ lookup for the TLSA record we could have used that already obtained NSEC record
 to generate a DNSSEC secure answer, without the need to send another query to
 the authoritative name server.
 
-.. Important:: To use previously cached NSEC records to generate responses in
-              Unbound, use the *aggressive-nsec* option in unbound.conf:
+.. important::
+   To use previously cached NSEC records to generate responses in
+   Unbound, use the :ref:`aggressive-nsec<unbound.conf.aggressive-nsec>`
+   option in the configuration file:
 
-              .. code-block:: text
+    .. code-block:: text
 
-                aggressive-nsec: yes
+        aggressive-nsec: yes
 
 
 Generating NXDOMAIN Answers
@@ -168,9 +169,9 @@ If the user now queries for for ``delta.example.net``, resolvers would normally
 ask the authoritative server again because there is no message cached for that
 name. But because the NSEC records for ``alfa.example.net`` —
 ``sierra.example.net`` and ``example.net`` — ``alfa.example.net`` are already
-cached, the implementation of :RFC:`8198` will allow Unbound to deduce that it
-doesn’t need to send a new query. It is already able to prove that the name
-doesn’t exist and immediately, or *aggressively* if you will, returns an
+cached, the implementation of :rfc:`8198` will allow Unbound to deduce that it
+doesn't need to send a new query. It is already able to prove that the name
+doesn't exist and immediately, or *aggressively* if you will, returns an
 NXDOMAIN answer.
 
 Generating Wildcard Answers
@@ -210,16 +211,17 @@ record.
 
 Unbound uses this knowledge to store the wildcard RRset also under the original
 owner name, containing the wildcard record, when aggressive use of NSEC is
-enabled. After receiving a query for ``echo.example.net`` Unbound finds the
+enabled. After receiving a query for ``echo.example.net``, Unbound finds the
 NSEC record proving the absence in its cache. Unbound will then look in the
 cache for a ``*.example.net`` *TXT* record, which also exists. These records
 are then used to generate an answer without sending a query to the name server.
 
-.. Note:: Aggressive NSEC can result in a reduction of traffic on all levels of
-          the DNS hierarchy but it will be most noticeable at the root, as
-          typically more than half of all responses are NXDOMAIN.
+.. Note::
+    Aggressive NSEC can result in a reduction of traffic on all levels of the
+    DNS hierarchy but it will be most noticeable at the root, as typically more
+    than half of all responses are NXDOMAIN.
 
-          Another benefit of a wide deployment of aggressive NSEC is the
-          incentive to DNSSEC sign your zone. If you don’t want to have a large
-          amount of queries for non-existing records at your name server,
-          signing your zone will prevent this.
+    Another benefit of a wide deployment of aggressive NSEC is the incentive to
+    DNSSEC sign your zone. If you don’t want to have a large amount of queries
+    for non-existing records at your name server, signing your zone will
+    prevent this.

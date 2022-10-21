@@ -82,8 +82,8 @@ the number of random bits used.
 Unbound Security
 ----------------
 
-Unbound implements the DNSSEC standard as specified in :RFC:`4034` and
-:RFC:`4035`. This means that it can act as a validator and can thus check the
+Unbound implements the DNSSEC standard as specified in :rfc:`4034` and
+:rfc:`4035`. This means that it can act as a validator and can thus check the
 digital signatures attached in replies.  Of course, the domain name owner must
 have inserted these digital signatures in the first place. 
 

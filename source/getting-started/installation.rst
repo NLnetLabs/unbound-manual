@@ -81,7 +81,7 @@ We'll need some tools, such as a compiler and the :command:`make` program.
     sudo apt update
     sudo apt install -y build-essential
 
-The library components Unbounds needs are: ``libssl`` ``libexpat``, of which we
+The library components Unbound needs are: ``libssl`` ``libexpat``, of which we
 need the "dev" version. Unbound also uses ``libldns``, but this is included in
 the tarball we've already downloaded.
 
@@ -101,11 +101,11 @@ download as well.
 
 With all the requirements met, we can now start the compilation process in the
 Unbound directory. The first step here is configuring. With ``./configure
--h`` you can look at the extensive list of configurables for Unbound. A nice
-feature is that ``configure`` will tell you what it's missing during
-configuration. A common error is for the paths to the two libraries we just
-installed, which can be manually specified with ``--with-ssl=`` and
-``--with-libexpat=``.
+-h`` you can look at the extensive list of configuration options for Unbound.
+A nice feature is that ``configure`` will tell you what it's missing during
+configuration.
+A common error is for the paths to the two libraries we just installed, which
+can be manually specified with ``--with-ssl=`` and ``--with-libexpat=``.
 
 .. code-block:: bash
 
@@ -164,24 +164,25 @@ repository and unpack it.
 To compile Unbound on MacOS (or anything really), we need to install the Mac
 specific development tools called "Xcode". This is available on the app store
 and requires ~12 GB space on the hard disk. Alternatively, if you don't want
-multiple Gigabytes of largely unused space on your harddisk a slimmed down
+multiple Gigabytes of largely unused space on your hard disk a slimmed down
 version also exists called the "Command Line Tools". This includes all the tools
 to compile on a Mac can also be installed via the terminal.
 
 .. code-block:: bash
-    
+
     xcode-select --install
 
 This command will open a window where the selection can be made of what to
 install. If you just want the Command Line Tools select this option.
 
-To verify that Xcode is installed correctly we check that we have the :command:`gcc` compiler by asking for the version.
+To verify that Xcode is installed correctly we check that we have the
+:command:`gcc` compiler by asking for the version.
 
 .. code-block:: bash
 
     gcc --version
 
-.. 
+..
     stackoverflow answer for skipping entire Xcode: 
     https://stackoverflow.com/questions/31043217/how-to-enable-unbound-dnssec-dns-resolver-on-mac-os-x-10-10-3-yosemite
 
@@ -197,11 +198,11 @@ which can become important in the :command:`configure` step.
 
 With all the requirements met, we can now start the compilation process in the
 Unbound directory. The first step here is configuring. With ``./configure
--h`` you can look at the extensive list of configurables for Unbound. A nice
-feature is that :command:`configure` will tell you what it's missing during
-configuration. A common error is for the paths to the two libraries we just
-installed, which can be manually specified with ``--with-ssl=`` and
-``--with-libexpat=``.
+-h`` you can look at the extensive list of configuration options for Unbound.
+A nice feature is that :command:`configure` will tell you what it's missing
+during configuration.
+A common error is for the paths to the two libraries we just installed, which
+can be manually specified with ``--with-ssl=`` and ``--with-libexpat=``.
 
 .. code-block:: bash
 
@@ -239,30 +240,31 @@ Testing
 -------
 
 A simple test to determine if the installation was successful is to invoke the
-:command:`unbound` command with the :option:`-V` option, which is the "version"
-option. This shows the version and build options used, as well as proving that
-the install was successful. You may have to use ``sudo`` to run this, depending
-on the instalation.
+:command:`unbound` command with the :option:`-V<unbound -V>` option, which is
+the "version" option.
+This shows the version and build options used, as well as proving that the
+install was successful.
+You may have to use ``sudo`` to run this, depending on the installation.
 
 .. code-block:: bash
 
     unbound -V
 
 If all the previous steps were successful we can continue to configuring our
-Unbound instance. 
+Unbound instance.
 
 Another handy trick you can use during testing is to run Unbound in the
-foreground using the :option:`-d` option and increase the verbosity level using
-the :option:`-v` option multiple times. This allows you to see steps Unbound
-takes and also where it fails.
+foreground using the :option:`-d<unbound -d>` option and increase the verbosity
+level using the :option:`-v<unbound -v>` option multiple times.
+This allows you to see steps Unbound takes and also where it fails.
 Another useful, more detailed trick in combination with the foreground is to
-make Unbound log on the foreground. To do this, the following line needs to
-be added to the config file.
+make Unbound log on the foreground.
+To do this, the following line needs to be added to the configuration file.
 
 .. code-block:: bash
 
     server:
         use_syslog: no
 
-Now that Unbound is installed we can :doc:`continue to configuring
-it<configuration>`.
+Now that Unbound is installed we can
+:doc:`continue to configuring it<configuration>`.

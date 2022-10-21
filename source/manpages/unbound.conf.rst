@@ -1050,9 +1050,10 @@ access-control: *<IP netblock> <action>*
 
     The *allow_setrd* action ignores the recursion desired (RD) bit and treats
     all requests as if the recursion desired bit is set.
-    Note that this behavior violates RFC 1034 which states that a name server
-    should never perform recursive service unless asked via the RD bit since
-    this interferes with trouble shooting of name servers and their databases.
+    Note that this behavior violates :rfc:`1034` which states that a name
+    server should never perform recursive service unless asked via the RD bit
+    since this interferes with trouble shooting of name servers and their
+    databases.
     This prohibited behavior may be useful if another DNS server must forward
     requests for specific zones to a resolver DNS server, but only supports
     stub domains and sends queries to the resolver DNS server with the RD bit
@@ -1425,7 +1426,7 @@ harden-dnssec-stripped: *<yes or no>*
 .. _unbound.conf.harden-below-nxdomain:
 
 harden-below-nxdomain: *<yes or no>*
-    From :RFC:`8020` (with title "NXDOMAIN: There Really Is Nothing
+    From :rfc:`8020` (with title "NXDOMAIN: There Really Is Nothing
     Underneath"), returns NXDOMAIN to queries for a name below another name
     that is already known to be NXDOMAIN.
     DNSSEC mandates noerror for empty nonterminals, hence this is possible.
@@ -1532,7 +1533,7 @@ private-address: *<IP address or subnet>*
     the **local-data** that you configured is allowed to, and you can specify
     additional names using **private-domain**.
     No private addresses are enabled by default.
-    We consider to enable this for the :RFC:`1918` private IP address space by
+    We consider to enable this for the :rfc:`1918` private IP address space by
     default in later releases.
     That would enable private addresses for ``10.0.0.0/8``, ``172.16.0.0/12``,
     ``192.168.0.0/16``, ``169.254.0.0/16``, ``fd00::/8`` and ``fe80::/10``,
@@ -1674,7 +1675,7 @@ trust-anchor-file: *<filename>*
 .. _unbound.conf.auto-trust-anchor-file:
 
 auto-trust-anchor-file: *<filename>*
-    File with trust anchor for one zone, which is tracked with :RFC:`5011`
+    File with trust anchor for one zone, which is tracked with :rfc:`5011`
     probes.
     The probes are run several times per month, thus the machine must be online
     frequently.
@@ -1712,7 +1713,7 @@ trusted-keys-file: *<filename>*
 .. _unbound.conf.trust-anchor-signaling:
 
 trust-anchor-signaling: *<yes or no>*
-    Send :RFC:`8145` key tag query after trust anchor priming.
+    Send :rfc:`8145` key tag query after trust anchor priming.
     Default is yes.
 
 .. _unbound.conf.root-key-sentinel:
@@ -1849,7 +1850,7 @@ serve-expired-ttl: *<seconds>*
     Limit serving of expired responses to configured seconds after expiration.
     0 disables the limit.
     This option only applies when **serve-expired** is enabled.
-    A suggested value per RFC 8767 is between 86400 (1 day) and 259200 (3
+    A suggested value per :rfc:`8767` is between 86400 (1 day) and 259200 (3
     days).
     The default is 0.
 
@@ -1867,17 +1868,17 @@ serve-expired-ttl-reset: *<yes or no>*
 serve-expired-reply-ttl: *<seconds>*
     TTL value to use when replying with expired data.
     If **serve-expired-client-timeout** is also used then it is RECOMMENDED to
-    use 30 as the value (:RFC:`8767`).
+    use 30 as the value (:rfc:`8767`).
     The default is 30.
 
 .. _unbound.conf.serve-expired-client-timeout:
 
 serve-expired-client-timeout: *<msec>*
     Time in milliseconds before replying to the client with expired data.
-    This essentially enables the serve-stale behavior as specified in RFC 8767
-    that first tries to resolve before immediately responding with expired
-    data.
-    A recommended value per :RFC:`8767` is 1800.
+    This essentially enables the serve-stale behavior as specified in
+    :rfc:`8767` that first tries to resolve before immediately responding with
+    expired data.
+    A recommended value per :rfc:`8767` is 1800.
     Setting this to 0 will disable this behavior.
     Default is 0.
 
@@ -1926,7 +1927,7 @@ zonemd-permissive-mode: *<yes or no>*
 .. _unbound.conf.add-holddown:
 
 add-holddown: *<seconds>*
-    Instruct the **auto-trust-anchor-file** probe mechanism for :RFC:`5011`
+    Instruct the **auto-trust-anchor-file** probe mechanism for :rfc:`5011`
     autotrust updates to add new trust anchors only after they have been
     visible for this time.
     Default is 30 days as per the RFC.
@@ -1934,7 +1935,7 @@ add-holddown: *<seconds>*
 .. _unbound.conf.del-holddown:
 
 del-holddown: *<seconds>*
-    Instruct the **auto-trust-anchor-file** probe mechanism for :RFC:`5011`
+    Instruct the **auto-trust-anchor-file** probe mechanism for :rfc:`5011`
     autotrust updates to remove revoked trust anchors after they have been kept
     in the revoked list for this long.
     Default is 30 days as per the RFC.
@@ -1942,7 +1943,7 @@ del-holddown: *<seconds>*
 .. _unbound.conf.keep-missing:
 
 keep-missing: *<seconds>*
-    Instruct the **auto-trust-anchor-file** probe mechanism for :RFC:`5011`
+    Instruct the **auto-trust-anchor-file** probe mechanism for :rfc:`5011`
     autotrust updates to remove missing trust anchors after they have been
     unseen for this long.
     This cleans up the state file if the target zone does not perform trust
@@ -2184,7 +2185,7 @@ local-zone: *<zone> <type>*
             local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
             local-data: "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa. 10800 IN PTR localhost."
 
-    home.arpa (:RFC:`8375`)
+    home.arpa (:rfc:`8375`)
         Default content:
 
         .. code-block:: text
@@ -2193,7 +2194,7 @@ local-zone: *<zone> <type>*
             local-data: "home.arpa. 10800 IN NS localhost."
             local-data: "home.arpa. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    onion (:RFC:`7686`)
+    onion (:rfc:`7686`)
         Default content:
 
         .. code-block:: text
@@ -2202,7 +2203,7 @@ local-zone: *<zone> <type>*
             local-data: "onion. 10800 IN NS localhost."
             local-data: "onion. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    test (:RFC:`6761`)
+    test (:rfc:`6761`)
         Default content:
 
         .. code-block:: text
@@ -2211,7 +2212,7 @@ local-zone: *<zone> <type>*
             local-data: "test. 10800 IN NS localhost."
             local-data: "test. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    invalid (:RFC:`6761`)
+    invalid (:rfc:`6761`)
         Default content:
 
         .. code-block:: text
@@ -2220,13 +2221,13 @@ local-zone: *<zone> <type>*
             local-data: "invalid. 10800 IN NS localhost."
             local-data: "invalid. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
-    reverse :RFC:`1918` local use zones
+    reverse :rfc:`1918` local use zones
         Reverse data for zones ``10.in-addr.arpa``, ``16.172.in-addr.arpa`` to
         ``31.172.in-addr.arpa``, ``168.192.in-addr.arpa``.
         The **local-zone:** is set static and as **local-data:** SOA and NS
         records are provided.
 
-    reverse :RFC:`3330` IP4 this, link-local, testnet and broadcast
+    reverse :rfc:`3330` IP4 this, link-local, testnet and broadcast
         Reverse data for zones ``0.in-addr.arpa``, ``254.169.in-addr.arpa``,
         ``2.0.192.in-addr.arpa`` (TEST NET 1), ``100.51.198.in-addr.arpa``
         (TEST NET 2), ``113.0.203.in-addr.arpa`` (TEST NET 3),
@@ -2234,14 +2235,14 @@ local-zone: *<zone> <type>*
         And from ``64.100.in-addr.arpa`` to ``127.100.in-addr.arpa`` (Shared
         Address Space).
 
-    reverse :RFC:`4291` IP6 unspecified
+    reverse :rfc:`4291` IP6 unspecified
         Reverse data for zone
         ``0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa.``
 
-    reverse :RFC:`4193` IPv6 Locally Assigned Local Addresses
+    reverse :rfc:`4193` IPv6 Locally Assigned Local Addresses
         Reverse data for zone ``D.F.ip6.arpa``.
 
-    reverse :RFC:`4291` IPv6 Link Local Addresses
+    reverse :rfc:`4291` IPv6 Link Local Addresses
         Reverse data for zones ``8.E.F.ip6.arpa`` to ``B.E.F.ip6.arpa``.
 
     reverse IPv6 Example Prefix
@@ -2573,7 +2574,7 @@ edns-client-string-opcode: *<opcode>*
 
 ede: *<yes or no>*
     If enabled, Unbound will respond with Extended DNS Error codes
-    (:RFC:`8914`).
+    (:rfc:`8914`).
     These EDEs attach informative error messages to a response for various
     errors.
     Default is "no".
@@ -2586,11 +2587,13 @@ ede: *<yes or no>*
 .. _unbound.conf.ede-serve-expired:
 
 ede-serve-expired: *<yes or no>*
-    If enabled, Unbound will attach an Extended DNS Error (:RFC:`8914`) *Code 3
+    If enabled, Unbound will attach an Extended DNS Error (:rfc:`8914`) *Code 3
     - Stale Answer* as EDNS0 option to the expired response.
     Note that this will not attach the EDE code without setting the global ede
     option to "yes" as well.
     Default is "no".
+
+.. _unbound.conf.remote:
 
 Remote Control Options
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -2716,7 +2719,7 @@ Consider adding **server:** statements for **domain-insecure:** and for
 **local-zone: <name> nodefault** for the zone if it is a locally served zone.
 The insecure clause stops DNSSEC from invalidating the zone.
 The *local zone nodefault* (or *transparent*) clause makes the (reverse-) zone
-bypass Unbound's filtering of :RFC:`1918` zones.
+bypass Unbound's filtering of :rfc:`1918` zones.
 
 .. _unbound.conf.stub.name:
 
