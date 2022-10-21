@@ -53,6 +53,11 @@ extensions = [
 intersphinx_mapping = {
     'nsd': ('https://nsd.docs.nlnetlabs.nl/en/latest/', None)
 }
+# Don't allow implicit cross references (probably vague links that *could* be
+# resolved by the external projects above.
+# Interlinking then needs to be explicitly used with:
+#   :external+<name>:...
+intersphinx_disabled_reftypes = ['*']
 
 autosectionlabel_prefix_document = True
 
