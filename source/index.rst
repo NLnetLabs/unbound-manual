@@ -48,6 +48,7 @@ license, with attribution to NLnet Labs.
    :maxdepth: 2
    :caption: Core
 
+   topics/core/proxy
    topics/core/serve-stale
    topics/core/performance
    topics/core/monitoring
