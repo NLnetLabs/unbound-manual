@@ -23,13 +23,13 @@ import sphinx_rtd_theme
 
 project = 'Unbound'
 year = datetime.datetime.now().year
-copyright = f'2018–{year}, NLnet Labs'
+copyright = f'1999–{year}, NLnet Labs'
 author = 'NLnet Labs'
 
 # The short X.Y version
-version = '1.14.0'
+version = '1.17.0'
 # The full version, including alpha/beta/rc tags
-release = '1.14.0'
+release = '1.17.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -167,25 +167,25 @@ unbound_authors = ("Unbound developers are mentioned in the CREDITS file in "
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('manpages/unbound', 'unbound',
-     'Unbound DNS validating resolver', unbound_authors, 8),
+     f'Unbound DNS validating resolver {version}.', unbound_authors, 8),
 
     ('manpages/unbound-checkconf', 'unbound-checkconf',
-     'Check unbound configuration file for errors.', unbound_authors, 8),
+     f'Check Unbound {version} configuration file for errors.', unbound_authors, 8),
 
     ('manpages/unbound-anchor', 'unbound-anchor',
-     'Unbound anchor utility.', unbound_authors, 8),
+     f'Unbound {version} anchor utility.', unbound_authors, 8),
 
     ('manpages/unbound.conf', 'unbound.conf',
-     'Unbound configuration file.', unbound_authors, 5),
+     f'Unbound {version} configuration file.', unbound_authors, 5),
 
     ('manpages/unbound-control', 'unbound-control',
-     'Unbound remote server control utility.', unbound_authors, 8),
+     f'Unbound {version} remote server control utility.', unbound_authors, 8),
 
     ('manpages/unbound-host', 'unbound-host',
-     'Unbound DNS lookup utility', unbound_authors, 1),
+     f'Unbound {version} DNS lookup utility.', unbound_authors, 1),
 
     ('manpages/libunbound', 'libunbound',
-     'Unbound DNS validating resolver functions.', unbound_authors, 3)
+     f'Unbound DNS validating resolver {version} functions.', unbound_authors, 3)
 ]
 
 # -- Options for Texinfo output ----------------------------------------------
