@@ -4006,6 +4006,10 @@ On top of that, for each query only 100 different subnets are allowed to be
 stored for each address family.
 Exceeding that number, older entries will be purged from cache.
 
+This module does not interact with the
+:ref:`serve-expired\*:<unbound.conf.serve-expired>` and
+:ref:`prefetch:<unbound.conf.prefetch>` options.
+
 .. _unbound.conf.ecs.send-client-subnet:
 
 send-client-subnet: *<IP address>*

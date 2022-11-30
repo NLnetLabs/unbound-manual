@@ -225,7 +225,8 @@ lookup *name*
 
 flush *name*
     Remove the name from the cache.
-    Removes the types A, AAAA, NS, SOA, CNAME, DNAME, MX, PTR, SRV and NAPTR.
+    Removes the types A, AAAA, NS, SOA, CNAME, DNAME, MX, PTR, SRV, NAPTR,
+    SVCB and HTTPS.
     Because that is fast to do.
     Other record types can be removed using **flush_type** or **flush_zone**.
 
