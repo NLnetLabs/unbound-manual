@@ -23,7 +23,7 @@ import sphinx_rtd_theme
 
 project = 'Unbound'
 year = datetime.datetime.now().year
-copyright = f'1999–{year}, NLnet Labs'
+copyright = f'1999-{year}, NLnet Labs'
 author = 'NLnet Labs'
 
 # The short X.Y version
