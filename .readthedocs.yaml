@@ -21,4 +21,4 @@ build:
     post_build:
       #- bash scripts/use_defaults_for_manpages.sh
       - echo `pwd`
-      - echo `ls -al`
+      - echo `ls -al _build/html/manpages`
