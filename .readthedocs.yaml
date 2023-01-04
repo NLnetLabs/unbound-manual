@@ -19,4 +19,6 @@ build:
     python: "3"
   jobs:
     post_build:
-      - echo "test"
+      #- bash scripts/use_defaults_for_manpages.sh
+      - echo `pwd`
+      - echo `ls -al`
