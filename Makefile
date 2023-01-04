@@ -15,12 +15,11 @@ help:
 .PHONY: help Makefile man
 
 # Wrap man target with our logic
+# Rename all the generated files to be copied into the Unbound source
 man: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	# Rename all the generated files to be copied into the Unbound source
-	for f in $(BUILDDIR)/man/*
-	do
-		mv $f $f.in
+	for f in $(BUILDDIR)/man/*; do \
+		mv $$f $$f.in; \
 	done
 
 # Catch-all target: route all unknown targets to Sphinx using the new
