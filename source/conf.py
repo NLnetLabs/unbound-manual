@@ -201,6 +201,7 @@ man_pages = [
     ('manpages/libunbound', 'libunbound',
      f'Unbound DNS validating resolver {version} functions.', unbound_authors, 3)
 ]
+man_make_section_directory = False
 
 # -- Options for Texinfo output ----------------------------------------------
 
