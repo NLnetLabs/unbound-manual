@@ -18,6 +18,7 @@
 
 import datetime
 import sphinx_rtd_theme
+import re
 
 # -- Project information -----------------------------------------------------
 
@@ -27,7 +28,15 @@ copyright = f'1999-{year}, NLnet Labs'
 author = 'NLnet Labs'
 
 # The short X.Y version
-version = '1.17.0'
+version = '?.?.?'
+# Take the version from the Unbound submodule
+package_version_re = re.compile(r"^PACKAGE_VERSION='(?P<version>\d+\.\d+\.\d+)'")
+with open('../unbound/configure', 'r') as f:
+    for line in f:
+        m = package_version_re.match(line)
+        if m:
+            version = m.group('version')
+            break
 # The full version, including alpha/beta/rc tags
 release = version
 
