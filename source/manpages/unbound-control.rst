@@ -100,6 +100,14 @@ reload
     Reload the server.
     This flushes the cache and reads the config file fresh.
 
+.. _unbound-control.commands.reload_keep_cache:
+
+reload_keep_cache
+    Reload the server but try to keep the RRset and message cache if
+    (re)configuration allows for it.
+    That means the caches sizes and the number of threads must not change
+    between reloads.
+
 .. _unbound-control.commands.verbosity:
 
 verbosity *number*

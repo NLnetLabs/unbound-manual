@@ -196,6 +196,18 @@ extended-statistics: *<yes or no>*
 
     Default: no
 
+.. _unbound.conf.statistics-inhibit-zero:
+
+statistics-inhibit-zero: *<yes or no>*
+    If enabled, selected extended statistics with a value of 0 are inhibited
+    from printing with
+    :doc:`unbound-control(8)</manpages/unbound-control>`.
+    These are query types, query classes, query opcodes, answer rcodes
+    (except NOERROR, FORMERR, SERVFAIL, NXDOMAIN, NOTIMPL, REFUSED)
+    and PRZ actions.
+
+    Default: yes
+
 .. _unbound.conf.num-threads:
 
 num-threads: *<number>*
@@ -600,7 +612,7 @@ ip-freebind: *<yes or no>*
 ip-dscp: *<number>*
     The value of the Differentiated Services Codepoint (DSCP) in the
     differentiated services field (DS) of the outgoing IP packet headers.
-    The field replaces the outdated IPv4 Type-Of-Service field and the IPV6
+    The field replaces the outdated IPv4 Type-Of-Service field and the IPv6
     traffic class field.
 
 .. _unbound.conf.rrset-cache-size:
@@ -2843,7 +2855,7 @@ response-ip-data: *<IP-netblock> <"resource record string">*
     *<"Resource record string">* is similar to that of
     :ref:`access-control-tag-action:<unbound.conf.access-control-tag-action>`,
     but it must be of either AAAA, A or CNAME types.
-    If the *<IP-netblock>* is an IPv6/IPV4 prefix, the record must be AAAA/A
+    If the *<IP-netblock>* is an IPv6/IPv4 prefix, the record must be AAAA/A
     respectively, unless it is a CNAME (which can be used for both versions of
     IP netblocks).
     If it is CNAME there must not be more than one
@@ -3076,6 +3088,27 @@ outbound-msg-retry: *<number>*
     nameserver in the zone.
 
     Default: 5
+
+.. _unbound.conf.max-sent-count:
+
+max-sent-count: *<number>*
+    Hard limit on the number of outgoing queries Unbound will make while
+    resolving a name, making sure large NS sets do not loop.
+    Results in SERVFAIL when reached.
+    It resets on query restarts (e.g., CNAME) and referrals.
+
+    Default: 32
+
+.. _unbound.conf.max-query-restarts:
+
+max-query-restarts: *<number>*
+    Hard limit on the number of times Unbound is allowed to restart a query
+    upon encountering a CNAME record.
+    Results in SERVFAIL when reached.
+    Changing this value needs caution as it can allow long CNAME chains to be
+    accepted, where Unbound needs to verify (resolve) each link individually.
+
+    Default: 11
 
 .. _unbound.conf.fast-server-permil:
 
