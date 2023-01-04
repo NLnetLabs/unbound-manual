@@ -177,7 +177,7 @@ latex_documents = [
 
 unbound_authors = ("Unbound developers are mentioned in the CREDITS file in "
                    "the distribution.")
-# Unbound default values
+# Unbound default values ...
 UNBOUND_RUN_DIR = "/usr/local/etc/unbound"
 UNBOUND_ROOTKEY_FILE = f"{UNBOUND_RUN_DIR}/root.key"
 UNBOUND_ROOTCERT_FILE = f"{UNBOUND_RUN_DIR}/icannbundle.pem"
@@ -186,6 +186,17 @@ UNBOUND_PIDFILE = f"{UNBOUND_RUN_DIR}/unbound.pid"
 UNBOUND_USERNAME = "unbound"
 ub_conf_file = f"{UNBOUND_RUN_DIR}/unbound.conf"
 DNSTAP_SOCKET_PATH = ""
+# ... make them available as substitutions in rst
+rst_epilog = f"""
+.. |UNBOUND_RUN_DIR| replace:: {UNBOUND_RUN_DIR}
+.. |UNBOUND_ROOTKEY_FILE| replace:: {UNBOUND_ROOTKEY_FILE}
+.. |UNBOUND_ROOTCERT_FILE| replace:: {UNBOUND_ROOTCERT_FILE}
+.. |UNBOUND_CHROOT_DIR| replace:: {UNBOUND_CHROOT_DIR}
+.. |UNBOUND_PIDFILE| replace:: {UNBOUND_PIDFILE}
+.. |UNBOUND_USERNAME| replace:: {UNBOUND_USERNAME}
+.. |ub_conf_file| replace:: {ub_conf_file}
+.. |DNSTAP_SOCKET_PATH| replace:: {DNSTAP_SOCKET_PATH}
+"""
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
