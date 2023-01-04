@@ -62,7 +62,7 @@ The available options are:
 
     The config file to read with settings.
     If not given the default config file
-    :file:`@ub_conf_file@` is used.
+    :file:`|ub_conf_file|` is used.
 
 .. option:: -s <server[@port]>
 
@@ -1133,10 +1133,10 @@ num.rpz.action.<rpz_action>
 Files
 -----
 
-@ub_conf_file@
+|ub_conf_file|
     Unbound configuration file.
 
-@UNBOUND_RUN_DIR@
+|UNBOUND_RUN_DIR|
     directory with private keys (:file:`unbound_server.key` and
     :file:`unbound_control.key`) and self-signed certificates
     (:file:`unbound_server.pem` and :file:`unbound_control.pem`).

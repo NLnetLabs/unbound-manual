@@ -114,7 +114,7 @@ The available options are:
 
        Enables DNSSEC validation.
        Reads the root anchor from the default configured root anchor at the
-       default location, :file:`@UNBOUND_ROOTKEY_FILE@`.
+       default location, :file:`|UNBOUND_ROOTKEY_FILE|`.
 
 .. option:: -f <keyfile>
 

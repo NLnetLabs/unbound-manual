@@ -1459,7 +1459,7 @@ chroot: *<directory>*
     If given, a *chroot(2)* is done to the given directory.
     If you give ``""`` no *chroot(2)* is performed.
 
-    Default: @UNBOUND_CHROOT_DIR@
+    Default: |UNBOUND_CHROOT_DIR|
 
 .. _unbound.conf.username:
 
@@ -1472,7 +1472,7 @@ username: *<name>*
     If you change the port number in the config file, and that new port number
     requires privileges, then a reload will fail; a restart is needed.
 
-    Default: @UNBOUND_USERNAME@
+    Default: |UNBOUND_USERNAME|
 
 .. _unbound.conf.directory:
 
@@ -1485,7 +1485,7 @@ directory: *<directory>*
     :ref:`include:<unbound.conf.include>` file statements then those includes
     can be relative to the working directory.
 
-    Default: @UNBOUND_RUN_DIR@
+    Default: |UNBOUND_RUN_DIR|
 
 .. _unbound.conf.logfile:
 
@@ -1590,18 +1590,18 @@ log-servfail: *<yes or no>*
 
 pidfile: *<filename>*
     The process id is written to the file.
-    Default is :file:`"@UNBOUND_PIDFILE@"`.
+    Default is :file:`"|UNBOUND_PIDFILE|"`.
     So,
 
     .. code-block:: bash
 
-        kill -HUP `cat @UNBOUND_PIDFILE@`
+        kill -HUP `cat |UNBOUND_PIDFILE|`
 
     triggers a reload,
 
     .. code-block:: bash
 
-        kill -TERM `cat @UNBOUND_PIDFILE@`
+        kill -TERM `cat |UNBOUND_PIDFILE|`
 
     gracefully terminates.
 
@@ -4404,7 +4404,7 @@ dnstap-socket-path: *<file name>*
     Sets the unix socket file name for connecting to the server that is
     listening on that socket.
 
-    Default: "@DNSTAP_SOCKET_PATH@"
+    Default: "|DNSTAP_SOCKET_PATH|"
 
 .. _unbound.conf.dnstap.dnstap-ip:
 
@@ -4780,16 +4780,16 @@ Mb after heavy usage.
 Files
 -----
 
-@UNBOUND_RUN_DIR@
+|UNBOUND_RUN_DIR|
     default Unbound working directory.
 
-@UNBOUND_CHROOT_DIR@
+|UNBOUND_CHROOT_DIR|
     default *chroot(2)* location.
 
-@ub_conf_file@
+|ub_conf_file|
     Unbound configuration file.
 
-@UNBOUND_PIDFILE@
+|UNBOUND_PIDFILE|
     default Unbound pidfile with process ID of the running daemon.
 
 unbound.log

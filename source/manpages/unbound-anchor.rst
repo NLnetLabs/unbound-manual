@@ -61,13 +61,13 @@ Suggested usage:
 
    # in the init scripts.
    # provide or update the root anchor (if necessary)
-   unbound-anchor -a "@UNBOUND_ROOTKEY_FILE@"
+   unbound-anchor -a "|UNBOUND_ROOTKEY_FILE|"
    # Please note usage of this root anchor is at your own risk
    # and under the terms of our LICENSE (see source).
    #
    # start validating resolver
    # the unbound.conf contains:
-   # auto-trust-anchor-file: "@UNBOUND_ROOTKEY_FILE@"
+   # auto-trust-anchor-file: "|UNBOUND_ROOTKEY_FILE|"
    unbound -c unbound.conf
 
 This tool provides builtin default contents for the root anchor and root update
@@ -91,7 +91,7 @@ The available options are:
 .. option:: -a <file>
 
        The root anchor key file, that is read in and written out.
-       Default is :file:`@UNBOUND_ROOTKEY_FILE@`.
+       Default is :file:`|UNBOUND_ROOTKEY_FILE|`.
        If the file does not exist, or is empty, a builtin root key is written
        to it.
 
@@ -256,12 +256,12 @@ a rootkey file.
 Files
 -----
 
-@UNBOUND_ROOTKEY_FILE@
+|UNBOUND_ROOTKEY_FILE|
        The root anchor file, updated with 5011 tracking, and read and written
        to.
        The file is created if it does not exist.
 
-@UNBOUND_ROOTCERT_FILE@
+|UNBOUND_ROOTCERT_FILE|
        The trusted self-signed certificate that is used to verify the
        downloaded DNSSEC root trust anchor.
        You can update it by fetching it from

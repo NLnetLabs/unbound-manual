@@ -81,7 +81,7 @@ The available options are:
 .. option:: -c <cfgfile>
 
    Set the config file with settings for unbound to read instead of reading the
-   file at the default location, :file:`@ub_conf_file@`.
+   file at the default location, :file:`|ub_conf_file|`.
    The syntax is described in :doc:`unbound.conf(5)</manpages/unbound.conf>`.
 
 .. option:: -d

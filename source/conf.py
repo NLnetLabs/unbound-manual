@@ -177,6 +177,16 @@ latex_documents = [
 
 unbound_authors = ("Unbound developers are mentioned in the CREDITS file in "
                    "the distribution.")
+# Unbound default values
+UNBOUND_RUN_DIR = "/usr/local/etc/unbound"
+UNBOUND_ROOTKEY_FILE = f"{UNBOUND_RUN_DIR}/root.key"
+UNBOUND_ROOTCERT_FILE = f"{UNBOUND_RUN_DIR}/icannbundle.pem"
+UNBOUND_CHROOT_DIR = f"{UNBOUND_RUN_DIR}"
+UNBOUND_PIDFILE = f"{UNBOUND_RUN_DIR}/unbound.pid"
+UNBOUND_USERNAME = "unbound"
+ub_conf_file = f"{UNBOUND_RUN_DIR}/unbound.conf"
+DNSTAP_SOCKET_PATH = ""
+
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [

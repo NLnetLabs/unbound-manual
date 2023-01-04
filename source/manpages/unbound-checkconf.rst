@@ -84,7 +84,7 @@ correct config file.
 Files
 -----
 
-@ub_conf_file@
+|ub_conf_file|
     Unbound configuration file.
 
 See Also

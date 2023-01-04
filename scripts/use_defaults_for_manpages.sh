@@ -13,8 +13,6 @@ UNBOUND_USERNAME=unbound
 ub_conf_file=${UNBOUND_RUN_DIR}/unbound.conf
 DNSTAP_SOCKET_PATH=''
 
-
-
 for f in ${MANPAGES_HTML_DIR}/*
 do
     sed -i \
