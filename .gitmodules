@@ -1,0 +1,3 @@
+[submodule "unbound"]
+	path = unbound
+	url = https://github.com/NLnetLabs/unbound.git
