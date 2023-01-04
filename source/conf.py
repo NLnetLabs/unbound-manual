@@ -29,7 +29,7 @@ author = 'NLnet Labs'
 # The short X.Y version
 version = '1.17.0'
 # The full version, including alpha/beta/rc tags
-release = '1.17.0'
+release = version
 
 # -- General configuration ---------------------------------------------------
 
