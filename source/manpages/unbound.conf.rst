@@ -1459,7 +1459,7 @@ chroot: *<directory>*
     If given, a *chroot(2)* is done to the given directory.
     If you give ``""`` no *chroot(2)* is performed.
 
-    Default: /usr/local/etc/unbound
+    Default: @UNBOUND_CHROOT_DIR@
 
 .. _unbound.conf.username:
 
@@ -1472,7 +1472,7 @@ username: *<name>*
     If you change the port number in the config file, and that new port number
     requires privileges, then a reload will fail; a restart is needed.
 
-    Default: unbound
+    Default: @UNBOUND_USERNAME@
 
 .. _unbound.conf.directory:
 
@@ -1485,7 +1485,7 @@ directory: *<directory>*
     :ref:`include:<unbound.conf.include>` file statements then those includes
     can be relative to the working directory.
 
-    Default: /usr/local/etc/unbound
+    Default: @UNBOUND_RUN_DIR@
 
 .. _unbound.conf.logfile:
 
@@ -1590,18 +1590,18 @@ log-servfail: *<yes or no>*
 
 pidfile: *<filename>*
     The process id is written to the file.
-    Default is :file:`"/usr/local/etc/unbound/unbound.pid"`.
+    Default is :file:`"@UNBOUND_PIDFILE@"`.
     So,
 
     .. code-block:: bash
 
-        kill -HUP `cat /usr/local/etc/unbound/unbound.pid`
+        kill -HUP `cat @UNBOUND_PIDFILE@`
 
     triggers a reload,
 
     .. code-block:: bash
 
-        kill -TERM `cat /usr/local/etc/unbound/unbound.pid`
+        kill -TERM `cat @UNBOUND_PIDFILE@`
 
     gracefully terminates.
 
@@ -4404,7 +4404,7 @@ dnstap-socket-path: *<file name>*
     Sets the unix socket file name for connecting to the server that is
     listening on that socket.
 
-    Default: ""
+    Default: "@DNSTAP_SOCKET_PATH@"
 
 .. _unbound.conf.dnstap.dnstap-ip:
 
@@ -4780,16 +4780,16 @@ Mb after heavy usage.
 Files
 -----
 
-/usr/local/etc/unbound
+@UNBOUND_RUN_DIR@
     default Unbound working directory.
 
-/usr/local/etc/unbound
+@UNBOUND_CHROOT_DIR@
     default *chroot(2)* location.
 
-/usr/local/etc/unbound/unbound.conf
+@ub_conf_file@
     Unbound configuration file.
 
-/usr/local/etc/unbound/unbound.pid
+@UNBOUND_PIDFILE@
     default Unbound pidfile with process ID of the running daemon.
 
 unbound.log

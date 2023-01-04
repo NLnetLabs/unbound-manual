@@ -84,7 +84,7 @@ correct config file.
 Files
 -----
 
-/usr/local/etc/unbound/unbound.conf
+@ub_conf_file@
     Unbound configuration file.
 
 See Also

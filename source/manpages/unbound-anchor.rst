@@ -61,13 +61,13 @@ Suggested usage:
 
    # in the init scripts.
    # provide or update the root anchor (if necessary)
-   unbound-anchor -a "/usr/local/etc/unbound/root.key"
+   unbound-anchor -a "@UNBOUND_ROOTKEY_FILE@"
    # Please note usage of this root anchor is at your own risk
    # and under the terms of our LICENSE (see source).
    #
    # start validating resolver
    # the unbound.conf contains:
-   # auto-trust-anchor-file: "/usr/local/etc/unbound/root.key"
+   # auto-trust-anchor-file: "@UNBOUND_ROOTKEY_FILE@"
    unbound -c unbound.conf
 
 This tool provides builtin default contents for the root anchor and root update
@@ -91,14 +91,14 @@ The available options are:
 .. option:: -a <file>
 
        The root anchor key file, that is read in and written out.
-       Default is :file:`/usr/local/etc/unbound/root.key`.
+       Default is :file:`@UNBOUND_ROOTKEY_FILE@`.
        If the file does not exist, or is empty, a builtin root key is written
        to it.
 
 .. option:: -c <file>
 
        The root update certificate file, that is read in.
-       Default is :file:`/usr/local/etc/unbound/icannbundle.pem`.
+       Default is :file:`@UNBOUND_ROOTCERT_FILE`.
        If the file does not exist, or is empty, a builtin certificate is used.
 
 .. option:: -l
@@ -256,17 +256,17 @@ a rootkey file.
 Files
 -----
 
-/usr/local/etc/unbound/root.key
-       The root anchor file, updated with 5011 tracking, and  read  and written
+@UNBOUND_ROOTKEY_FILE@
+       The root anchor file, updated with 5011 tracking, and read and written
        to.
        The file is created if it does not exist.
 
-/usr/local/etc/unbound/icannbundle.pem
+@UNBOUND_ROOTCERT_FILE@
        The trusted self-signed certificate that is used to verify the
-       downloaded DNSSEC root trust  anchor.
-       You can update it by fetching  it from
+       downloaded DNSSEC root trust anchor.
+       You can update it by fetching it from
        https://data.iana.org/root-anchors/icannbundle.pem (and validate it).
-       If the file does  not  exist  or  is empty, a builtin version is used.
+       If the file does not exist or is empty, a builtin version is used.
 
 https://data.iana.org/root-anchors/root-anchors.xml
        Source for the root key information.
