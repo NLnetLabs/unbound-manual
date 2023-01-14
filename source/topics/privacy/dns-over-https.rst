@@ -111,7 +111,7 @@ Unbound to listen on the HTTPS port:
 
     server:
         interface: 127.0.0.1@443
-        tls-service-key "key.pem"
+        tls-service-key: "key.pem"
         tls-service-pem: "cert.pem"
 
 The port that Unbound will use for incoming DoH traffic is by default set to 443
