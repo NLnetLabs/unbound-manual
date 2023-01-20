@@ -37,7 +37,7 @@ online and has Internet connectivity via your router.
 
 Because of the variety of machines that Unbound can run on we cannot create a
 comprehensive tutorial for all possible options. For this tutorial we will use
-**Ubuntu 20.04.1 LTS** as a stepping stone you can adapt and apply to
+**Ubuntu 22.04 LTS** as a stepping stone you can adapt and apply to
 other systems.
 
 While you could download the code from GitHub and build it yourself, getting a

@@ -21,7 +21,7 @@ be outdated if this package has not been updated recently. If you like to
 upgrade to the latest version, we recommend :ref:`compiling Unbound
 yourself<getting-started/installation:Building from source/Compiling>`.
 
-Ubuntu 20.04.1 LTS
+Ubuntu 22.04 LTS
 ^^^^^^^^^^^^^^^^^^
 
 Installing Unbound with the built-in package manager should be as easy as:
@@ -62,7 +62,7 @@ libraries, and their header files. To include the header files we need to get
 the development version, usually called ``libssl-dev`` and ``libexpat1-dev``
 respectively.
 
-Ubuntu 20.04.1 LTS
+Ubuntu 22.04 LTS
 ^^^^^^^^^^^^^^^^^^
 
 First of all, we need our copy of the Unbound code, so we download the tarball
@@ -75,6 +75,10 @@ of the latest version and untar it.
 
 
 We'll need some tools, such as a compiler and the :command:`make` program.
+
+.. note::
+    During installations with the pacakge manager, a screen will come up asking
+    which services need to be restarted. Using the defaults for this is fine.
 
 .. code-block:: bash
 
