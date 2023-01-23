@@ -38,9 +38,9 @@ from the :doc:`/getting-started/configuration` page. We always recommend
 enabling `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, for
 which the setup can also be found in the configuration page. 
 
-Once we have a configuration we are happy with we need tell our machine to use 
+Once we have a configuration we are happy with, we need to tell our machine to use 
 Unbound by default instead of what it is currently using. This works differently 
-on different operating systems, below we will go through this for a selection of OSes.
+on different operating systems. Below we will go through this for a selection of OSes.
 
 .. note::
 
@@ -176,7 +176,7 @@ the ``127.0.0.1`` IP specified as we did earlier.
 Package manager
 ^^^^^^^^^^^^^^^
 
-To make Unbound persistant between restarts, we need to add it to the systemd
+To make Unbound persistent between restarts, we need to add it to the systemd
 service manager, for which we'll need a service file. If you installed Unbound
 via the package manager, this service file is already created for you and the
 only thing that is missing, is it executing our own configuration file.
@@ -189,7 +189,7 @@ specify the config location).
 
 Before you proceed to the next step, make sure to stop the Unbound that may 
 still be running. Now we can start our Unbound with systemd, which will restart
-automatically it if the system is rebooted.
+automatically when the system is rebooted.
 
 .. code-block:: text
 
@@ -202,7 +202,7 @@ To check that everything is correct, you can see the status (which should be
 
     systemctl status unbound
 
-We can now :command:`dig` a final time, to verify that this works
+We can now :command:`dig` a final time, to verify that this works.
 
 
 Compilation

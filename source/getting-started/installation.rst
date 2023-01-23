@@ -22,7 +22,7 @@ upgrade to the latest version, we recommend :ref:`compiling Unbound
 yourself<getting-started/installation:Building from source/Compiling>`.
 
 Ubuntu 22.04 LTS
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 Installing Unbound with the built-in package manager should be as easy as:
 
@@ -63,7 +63,7 @@ the development version, usually called ``libssl-dev`` and ``libexpat1-dev``
 respectively.
 
 Ubuntu 22.04 LTS
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 First of all, we need our copy of the Unbound code, so we download the tarball
 of the latest version and untar it.
@@ -77,7 +77,7 @@ of the latest version and untar it.
 We'll need some tools, such as a compiler and the :command:`make` program.
 
 .. note::
-    During installations with the pacakge manager, a screen will come up asking
+    During installations with the package manager, a screen will come up asking
     which services need to be restarted. Using the defaults for this is fine.
 
 .. code-block:: bash
