@@ -208,7 +208,7 @@ We can now :command:`dig` a final time, to verify that this works.
 Compilation
 ^^^^^^^^^^^
 
-The steps for making Unbound persistant are almost exactly the same as if you
+The steps for making Unbound persistent are almost exactly the same as if you
 installed it via the package manager, except that the service file that is 
 needed by systemd does not exist yet. So instead of changing it, we create it 
 and call it ``unbound.service``, and copy the minimally modified service file 
@@ -243,7 +243,7 @@ and copy the file contents below:
     WantedBy=multi-user.target
 
 Note that in this file ``systemctl`` uses the default config location. This 
-location is different depending on the instalation method used. In this case the 
+location is different depending on the installation method used. In this case the 
 default config file is located at :file:`/usr/local/etc/unbound`. We need to copy
 the config that we are going to use here.
 
@@ -279,7 +279,7 @@ We can then look at the status, which should be "active".
 
 
 If you succeeded Unbound should now be the default resolver on your machine and
-it will start during the start-up of your machine.
+it will start when your machine boots.
 
 macOS Big Sur
 *************

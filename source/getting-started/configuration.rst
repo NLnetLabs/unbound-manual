@@ -120,7 +120,7 @@ changing the IP address in the config to ``127.0.0.1``. This looks like:
         # specify the interface to answer queries from by ip-address.
         interface: 127.0.0.1
 
-If you want to change this behavior, on :doc:`this page</use-cases/local-stub>`
+If you want to change this behaviour, on :doc:`this page</use-cases/local-stub>`
 we show how to change the system resolver to be Unbound.
 
 Set up Remote Control
@@ -186,7 +186,7 @@ verification of the integrity of the responses to the queries you send.
 To help, we can use the :doc:`/manpages/unbound-anchor` command.
 
 :command:`unbound-anchor` performs the setup by configuring a trust anchor. This
-trust anchor will only serve as the initial anchor from builtin values. To keep
+trust anchor will only serve as the initial anchor from built-in values. To keep
 this anchor up to date, Unbound must be able to read and write to this file. The
 default location that :command:`unbound-anchor` creates this in is determined by
 your installation method.
