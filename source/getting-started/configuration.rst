@@ -109,7 +109,7 @@ again.
 Then Unbound will fork to the background and run until you either kill it or
 reboot the machine.
 
-You may run into an error where Unbound tells you it cannot bind to the 
+You may run into an error where Unbound tells you it cannot bind to
 ``0.0.0.0`` as it's already in use. This is because the system resolver 
 ``systemd-resolved`` is already running on that port. You can go around this by
 changing the IP address in the config to ``127.0.0.1``. This looks like:
