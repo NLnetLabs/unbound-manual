@@ -1,3 +1,4 @@
+# installed/updated with "env pip install -U -r requirements.txt"
 sphinx==4.4
 sphinx-version-warning==1.1.2
 sphinx-tabs==3.2.0

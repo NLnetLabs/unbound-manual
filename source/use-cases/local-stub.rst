@@ -30,40 +30,81 @@ test is by asking the version number.
     unbound -V
 
 Once we have a working version of Unbound installed we need to configure it to
-be a recursive cacheing resolver (information about recursive resolvers can be
+be a recursive caching resolver (information about recursive resolvers can be
 found `here <https://www.cloudflare.com/en-gb/learning/dns/dns-server-types/>`_,
 but is not necessary for our purposes here). Luckily for us Unbound already
 behaves as such by default, so for basic purposes we can use the configuration
 from the :doc:`/getting-started/configuration` page. We always recommend
 enabling `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, for
-which the setup can also be found in the configuration page.
+which the setup can also be found in the configuration page. 
 
-Once we have a installed, configured and running Unbound instance, we need tell
-our machine to use this instance by default instead of what it is currently
-using. This works differently on different operating systems, below we will go
-through this for a selection of OSes.
+Once we have a configuration we are happy with, we need to tell our machine to use 
+Unbound by default instead of what it is currently using. This works differently 
+on different operating systems. Below we will go through this for a selection of OSes.
 
-Ubuntu 20.04.1 LTS
+.. note::
+
+    Make sure your Unbound can run with the configuration we create. Steps for
+    this can be found :doc:`on the configuration page</getting-started/configuration>`.
+
+Ubuntu 22.04 LTS
 ******************
 
 The resolver your machine uses by default is defined in
-:file:`/etc/systemd/resolved.conf` in the ``DNS`` entry (It uses ``127.0.0.53``
-). While just changing this file will work as long as the machine doesn't
-reboot, we need to make sure that this change is persistent. To do that, we need
-to change the ``DNS`` entry to be equal to ``127.0.0.1`` (or whatever IP address
-Unbound is bound to) so the machine uses Unbound as default. To make the change
-persistent, we also need to set the ``DNSStubListener`` to ``no`` so that is not
-changed by our router (such as with a "recommended resolver" mentioned below).
-We also want to enable the ``DNSSEC`` option so that we can verify the integrity
-the responses we get to our DNS queries. With your favourite text editor (e.g.
-:command:`nano`) we can modify the file:
+:file:`/etc/systemd/resolved.conf` in the ``DNS`` entry and uses the IP address ``127.0.0.53``.
+
+We can test this by using :command:`dig` to "example.com" and looking at the
+output.
+
+.. code-block:: bash
+
+    dig example.com
+
+Near the bottom of the output we can see ``127.0.0.53`` IP address.
+
+.. code-block:: text
+
+    ;; SERVER: 127.0.0.53#53(127.0.0.53)
+
+To change this, we are going to change the :file:`resolved.conf`.
+While just changing this file will work as long as the machine doesn't
+reboot, we need to make sure that this change is *persistent*. To do that, we
+need to change the ``DNS`` entry to be equal to ``127.0.0.1`` (or whatever IP address Unbound is bound to in your configuration) so the machine uses Unbound
+as default. So the interface would look like this in the Unbound config:
+
+.. code-block:: bash
+
+    server:
+        # specify the interface to answer queries from by ip-address.
+        interface: 127.0.0.1
+
+To test that Unbound is running, we can tell :command:`dig` to use a specific
+server with the ``@``.
+
+.. code-block:: bash
+
+    dig example.com @127.0.0.1
+
+If Unbound is running, the output should contain the address that we specified 
+in the config:
+
+.. code-block:: text
+
+    ;; SERVER: 127.0.0.1#53(127.0.0.1)
+
+If we changed :file:`resolved.conf` now, the default resolver would be persistent
+until the router wants to update it. To make sure it doesn't do that we also need to set the ``DNSStubListener`` to ``no`` so that is not changed by our
+router (such as with a "recommended resolver" mentioned below). We also want to
+enable the ``DNSSEC`` option so that we can verify the integrity the responses
+we get to our DNS queries. With your favourite text editor (e.g. :command:`nano`
+) we can modify the file:
 
 .. code-block:: bash
 
     nano /etc/systemd/resolved.conf
 
-Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
-"#") the options:
+Here, under there ``[Resolve]`` header we add/substitute our changes to the
+options:
 
 .. code-block:: text
 
@@ -79,13 +120,20 @@ Here, under there ``[Resolve]`` header we add (or rather, enable by removing the
     DNSStubListener=no
     #DNSStubListenerExtra=
 
-To actually have the system start using Unbound, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified.
+To actually have the system start using our changed config, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified.
 
 .. code-block:: bash
 
     ln -fs /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
-With this file modified, we can restart using this configuration with: 
+.. note::
+
+    Make sure your Unbound is running at at the IP address from the modified 
+    resolv.conf before the next step, otherwise you might break your internet
+    connection.
+
+With the resolv.conf file modified, we can restart systemd using the new resolver
+configuration with:
 
 .. code-block:: bash
 
@@ -102,25 +150,132 @@ server should give the same result as specifying it did above (with
 
 Here we tell the :command:`dig` tool to look up the IP address for
 ``example.com``. We did not specify where :command:`dig` should ask this, so it
-goes to the default resolver of the machine. To verify the default is indeed our
-running Unbound instance we look at the footer section of the output of the
-command. There we can see a server IP address under the ``SERVER`` entry. If the
-default is correctly set to be Unbound, the entry will be the IP address of the
-Unbound instance you configured (in this case ``127.0.0.1``):
+goes to the default resolver of the machine.
+
+.. code-block:: text
+
+    dig example.com
+
+It should look the same as with 
+the ``127.0.0.1`` IP specified as we did earlier.
 
 .. code-block:: text
 
     ;; SERVER: 127.0.0.1#53(127.0.0.1)
 
-Note that the "SERVER" section in the output from :command:`dig` should also
-contain the local IP address of our server.
+.. note::
+
+    Unbound is not persistent at this point, and will not start up when your 
+    system does (and possibly "breaking" your internet). This is fixed by
+    restarting your Unbound upon reboot.
+
+Package manager
+^^^^^^^^^^^^^^^
+
+To make Unbound persistent between restarts, we need to add it to the systemd
+service manager, for which we'll need a service file. If you installed Unbound
+via the package manager, this service file is already created for you and the
+only thing that is missing, is it executing our own configuration file.
+
+To make sure we execute Unbound with our own configuration, we copy our config
+file to the default location of the config file:
+:file:`/etc/unbound/unbound.conf`. Make sure Unbound starts using the copied
+configuration (this can be done with the :option:`-c<unbound -c>` flag to
+specify the config location).
+
+Before you proceed to the next step, make sure to stop the Unbound that may 
+still be running. Now we can start our Unbound with systemd, which will restart
+automatically when the system is rebooted.
 
 .. code-block:: text
 
-    ;; SERVER: 127.0.0.1#53(127.0.0.1)
+    systemctl start unbound
 
-..
-    XXX IS UNBOUND PERSISTENT HERE?!
+To check that everything is correct, you can see the status (which should be 
+"active"):
+
+.. code-block:: text
+
+    systemctl status unbound
+
+We can now :command:`dig` a final time, to verify that this works.
+
+
+Compilation
+^^^^^^^^^^^
+
+The steps for making Unbound persistent are almost exactly the same as if you
+installed it via the package manager, except that the service file that is 
+needed by systemd does not exist yet. So instead of changing it, we create it 
+and call it ``unbound.service``, and copy the minimally modified service file 
+supplied by the package manager. It should be located at: 
+``/lib/systemd/system/unbound.service``.
+
+So using your favorite text editor open the file:
+
+.. code-block:: bash
+
+    nano /lib/systemd/system/unbound.service
+
+and copy the file contents below:
+
+.. code-block:: text
+
+    [Unit]
+    Description=Unbound DNS server
+    Documentation=man:unbound(8)
+    After=network.target
+    Before=nss-lookup.target
+    Wants=nss-lookup.target
+
+    [Service]
+    Type=simple
+    Restart=on-failure
+    EnvironmentFile=-/usr/local/etc/unbound
+    ExecStart=/usr/local/sbin/unbound -d -p $DAEMON_OPTS
+    ExecReload=+/bin/kill -HUP $MAINPID
+
+    [Install]
+    WantedBy=multi-user.target
+
+Note that in this file ``systemctl`` uses the default config location. This 
+location is different depending on the installation method used. In this case the 
+default config file is located at :file:`/usr/local/etc/unbound`. We need to copy
+the config that we are going to use here.
+
+Once you have your config copied in the right location, we need to make sure the 
+system can find it. 
+
+Because we change the service file on disk (we created it), systemctl needs to 
+be reloaded:
+
+.. code-block:: text
+
+    systemctl daemon-reload
+
+We then need to enable Unbound as a systemctl service:
+
+.. code-block:: text
+
+    systemctl enable unbound
+
+If all steps went correctly, we can start Unbound now using systemctl. Note that 
+any previous Unbound instances with the same config (specifically the same 
+ip-address) needs to be stopped.
+
+.. code-block:: text
+    
+    systemctl start unbound
+
+We can then look at the status, which should be "active".
+
+.. code-block:: text
+    
+    systemctl status unbound
+
+
+If you succeeded Unbound should now be the default resolver on your machine and
+it will start when your machine boots.
 
 macOS Big Sur
 *************
