@@ -147,6 +147,8 @@ is ``/dns-query``:
     ; EDNS: version: 0; flags: do ; udp: 4096
     ;; MSG SIZE  rcvd: 241
 
+(``dohclient`` can be built with ``make dohclient`` in Unbound's source tree.)
+
 Queries to other paths will be answered with a ``404`` status code. The
 endpoint can be changed using the http-endpoint configuration option.
 
