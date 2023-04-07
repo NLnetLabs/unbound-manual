@@ -150,9 +150,7 @@ default install directory. The default install directory is
 ``/usr/local/etc/unbound/`` on most systems, but some distributions may put it
 in ``/etc/unbound/`` or ``/var/lib/unbound``.
 
-Apart from an extensive configuration file, with just about all the possible
-configuration options, :command:`unbound-control-setup` creates the
-cryptographic keys necessary for the control option:
+:command:`unbound-control-setup` creates the cryptographic keys necessary for the control option:
 
 .. code-block:: bash
 
