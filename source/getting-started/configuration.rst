@@ -220,7 +220,7 @@ file.
 Note that on some systems the ``/usr/local/etc/unbound/`` directory might be
 write-protected.
 
-If the :command:`unbound-control-setup` command fails due to the insufficient
+If the :command:`unbound-anchor` command fails due to the insufficient
 permissions, run the command as the correct user, here we use the user
 ``unbound`` as this is the default user.
 
