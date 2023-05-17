@@ -162,7 +162,7 @@ of failure, mostly a failure at the DNS server.
 The example prints all the data elements and their length.
 
 Here are some other results that you can get. The first is an alias, with
-several addresses, and the second is a nonexistant name:
+several addresses, and the second is a nonexistent name:
 
 .. code-block:: text
 
