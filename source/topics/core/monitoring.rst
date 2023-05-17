@@ -64,10 +64,13 @@ your system. The ``statefile`` is a temporary file.
 
 .. code-block:: text
 
-   [unbound*] user root env.statefile
-   /usr/local/var/munin/plugin-state/unbound-state env.unbound_conf
-   /usr/local/etc/unbound/unbound.conf env.unbound_control
-   /usr/local/sbin/unbound-control env.spoof_warn 1000 env.spoof_crit 100000
+   [unbound*]
+   user root
+   env.statefile /usr/local/var/munin/plugin-state/unbound-state
+   env.unbound_conf /usr/local/etc/unbound/unbound.conf
+   env.unbound_control /usr/local/sbin/unbound-control
+   env.spoof_warn 1000
+   env.spoof_crit 100000
 
 Restart the munin-node daemon. Munin will automatically pick up the new graph
 and plot it with ``rrdtool``.
