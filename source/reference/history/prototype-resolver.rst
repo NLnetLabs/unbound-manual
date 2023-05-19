@@ -56,7 +56,7 @@ Prototype?
 Java, while a fine, fine language, isn't what we envision as the final
 implementation language of the non-prototype resolver.  That would be C.  For
 the prototype, however, Java was chosen because of the excellent `DNSjava
-<http://www.dnsjava.org>`_ library and the familarity with the same on the part
+<http://www.dnsjava.org>`_ library and the familiarity with the same on the part
 of one of the main developers.
 
 The intent is to use a prototype to explore and validate a particular design for

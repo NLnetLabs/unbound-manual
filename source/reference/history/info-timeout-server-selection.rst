@@ -95,7 +95,7 @@ When a domain starts to become unresponsive, it is probed.  In this regime
 only one request is allowed to probe to a particular IP.  This conserves
 resources, as other requests are turned away, and do to not use up
 port-numbers, sockets and requestlist elements.  Also it lowers the
-traffic towards the destination (that is apparantly having trouble),
+traffic towards the destination (that is apparently having trouble),
 which may help it get back up.
 
 An IP address is in the probing regime if it fits the following criteria.
@@ -223,7 +223,7 @@ Control
 
 The timeout behaviour can be controlled and configured.
 
-The configation consists of the size of the infra-cache (please allow
+The configuration consists of the size of the infra-cache (please allow
 sufficient elements to store information about IP addresses).  And the
 infra-ttl time can be configured.  By setting the infra-ttl lower,
 unbound will probe servers that are not responsive more aggressively.

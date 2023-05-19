@@ -12,7 +12,7 @@ Internet drafts that have been implemented in Unbound.
 
 ============== ====
 :rfc:`1034`    Domain Names – Concepts and Facilities
-:rfc:`1035`    Domain Names – Implementation and Specifciation
+:rfc:`1035`    Domain Names – Implementation and Specification
 :rfc:`1101`    DNS Encoding of Network Names and Other Types
 :rfc:`1123`    Requirements for Internet Hosts -- Application and Support
 :rfc:`1183`    New DNS RR Definitions
