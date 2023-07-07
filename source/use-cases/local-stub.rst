@@ -11,10 +11,10 @@ it together with ad blockers and firewalls, or self-run resolvers. Setting it up
 as a caching resolver for your own machine can be quite simple as we’ll showcase
 below.
 
-We strongly recommend setting up `DNSSEC
-<https://unbound.docs.nlnetlabs.nl/en/latest/getting-started/configuration.html#set-up-trust-anchor-enable-dnssec>`_ during the Unbound
-configuration step, as it allows the verification of the integrity of the
-responses to the queries you send.
+We strongly recommend
+`setting up DNSSEC </getting-started/configuration.html#set-up-trust-anchor-enable-dnssec>`_
+during the Unbound configuration step, as it allows the verification of the
+integrity of the responses to the queries you send.
 
 If you need to install Unbound first visit the
 :doc:`/getting-started/installation` page.
@@ -35,8 +35,7 @@ found `here <https://www.cloudflare.com/en-gb/learning/dns/dns-server-types/>`_,
 but is not necessary for our purposes here). Luckily for us Unbound already
 behaves as such by default, so for basic purposes we can use the configuration
 from the :doc:`/getting-started/configuration` page. We always recommend
-enabling `DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, for
-which the setup can also be found in the configuration page. 
+`enabling DNSSEC </getting-started/configuration.html#set-up-trust-anchor-enable-dnssec>`_.
 
 Once we have a configuration we are happy with, we need to tell our machine to use 
 Unbound by default instead of what it is currently using. This works differently 
