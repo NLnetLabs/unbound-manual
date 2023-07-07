@@ -12,7 +12,7 @@ as a caching resolver for your own machine can be quite simple as we’ll showca
 below.
 
 We strongly recommend setting up `DNSSEC
-<https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_ during the Unbound
+<https://unbound.docs.nlnetlabs.nl/en/latest/getting-started/configuration.html#set-up-trust-anchor-enable-dnssec>`_ during the Unbound
 configuration step, as it allows the verification of the integrity of the
 responses to the queries you send.
 
