@@ -35,7 +35,7 @@ found `here <https://www.cloudflare.com/en-gb/learning/dns/dns-server-types/>`_,
 but is not necessary for our purposes here). Luckily for us Unbound already
 behaves as such by default, so for basic purposes we can use the configuration
 from the :doc:`/getting-started/configuration` page. We always recommend
-:doc:`enabling DNSSEC </getting-started/configuration.html#set-up-trust-anchor-enable-dnssec>`.
+:doc:`enabling DNSSEC </getting-started/configuration#set-up-trust-anchor-enable-dnssec>`.
 
 Once we have a configuration we are happy with, we need to tell our machine to use 
 Unbound by default instead of what it is currently using. This works differently 
