@@ -257,7 +257,7 @@ range. Note that the IP address we chose above (``192.168.0.1`` and
 To prepare our configuration we are going to modify the existing configuration in
 :file:`/etc/unbound/unbound.conf`. If you open the file for the first time, you
 see that there is already an “include” in there. The "include" enables us to do
-`DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which allows
+`DNSSEC <https://www.sidn.nl/en/modern-internet-standards/dnssec>`_, which allows
 Unbound to verify the source of the answers that it receives, as well as QNAME
 minimisation. For convenience these configuration options have already been
 added in the minimal configuration.
