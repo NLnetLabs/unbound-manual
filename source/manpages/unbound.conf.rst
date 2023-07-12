@@ -868,7 +868,7 @@ edns-tcp-keepalive-timeout: *<msec>*
     A minimum actual timeout of 200 milliseconds is observed regardless of the
     advertised timeout.
 
-    Default: 120000 (2 seconds)
+    Default: 120000 (2 minutes)
 
 .. _unbound.conf.tcp-upstream:
 
