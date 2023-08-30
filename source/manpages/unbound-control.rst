@@ -597,6 +597,21 @@ threadX.num.queries
 threadX.num.queries_ip_ratelimited
     number of queries rate limited by thread
 
+.. _unbound-control.stats.threadX.num.queries_cookie_valid:
+
+threadX.num.queries_cookie_valid
+    number of queries with a valid DNS Cookie by thread
+
+.. _unbound-control.stats.threadX.num.queries_cookie_client:
+
+threadX.num.queries_cookie_client
+    number of queries with a client part only DNS Cookie by thread
+
+.. _unbound-control.stats.threadX.num.queries_cookie_invalid:
+
+threadX.num.queries_cookie_invalid
+    number of queries with an invalid DNS Cookie by thread
+
 .. _unbound-control.stats.threadX.num.cachehits:
 
 threadX.num.cachehits
@@ -643,6 +658,19 @@ threadX.num.prefetch
 
 threadX.num.expired
     number of replies that served an expired cache entry.
+
+.. _unbound-control.stats.threadX.num.queries_timed_out:
+
+threadX.num.queries_timed_out
+    number of queries that are dropped because they waited in the UDP socket
+    buffer for too long.
+
+.. _unbound-control.stats.threadX.query.queue_time_us.max:
+
+threadX.query.queue_time_us.max
+    The maximum wait time for packets in the socket buffer, in microseconds.
+    This is only reported when
+    :ref:`sock-queue-timeout:<unbound.conf.sock-queue-timeout>` is enabled.
 
 .. _unbound-control.stats.threadX.num.recursivereplies:
 
@@ -717,6 +745,26 @@ threadX.tcpusage
 total.num.queries
     summed over threads.
 
+.. _unbound-control.stats.total.num.queries_ip_ratelimited:
+
+total.num.queries_ip_ratelimited
+    summed over threads.
+
+.. _unbound-control.stats.total.num.queries_cookie_valid:
+
+total.num.queries_cookie_valid
+    summed over threads.
+
+.. _unbound-control.stats.total.num.queries_cookie_client:
+
+total.num.queries_cookie_client
+    summed over threads.
+
+.. _unbound-control.stats.total.num.queries_cookie_invalid:
+
+total.num.queries_cookie_invalid
+    summed over threads.
+
 .. _unbound-control.stats.total.num.cachehits:
 
 total.num.cachehits
@@ -756,6 +804,16 @@ total.num.prefetch
 
 total.num.expired
     summed over threads.
+
+.. _unbound-control.stats.total.num.queries_timed_out:
+
+total.num.queries_timed_out
+    summed over threads.
+
+.. _unbound-control.stats.total.query.queue_time_us.max:
+
+total.query.queue_time_us.max
+    the maximum of the thread values.
 
 .. _unbound-control.stats.total.num.recursivereplies:
 
@@ -972,7 +1030,7 @@ num.query.ratelimited
 num.query.dnscrypt.shared_secret.cachemiss
     The number of dnscrypt queries that did not find a shared secret in the
     cache.
-    The can be use to compute the shared secret hitrate.
+    This can be use to compute the shared secret hitrate.
 
 .. _unbound-control.stats.num.query.dnscrypt.replay:
 
@@ -1059,6 +1117,24 @@ key.cache.count
     These are DNSSEC keys, one item per delegation point, and their validation
     status.
 
+.. _unbound-control.stats.msg.cache.max_collisions:
+
+msg.cache.max_collisions
+    The maximum number of hash table collisions in the msg cache.
+    This is the number of hashes that are identical when a new element is
+    inserted in the hash table.
+    If the value is very large, like hundreds, something is wrong with the
+    performance of the hash table, hash values are incorrect or malicious.
+
+.. _unbound-control.stats.rrset.cache.max_collisions:
+
+rrset.cache.max_collisions
+    The maximum number of hash table collisions in the rrset cache.
+    This is the number of hashes that are identical when a new element is
+    inserted in the hash table.
+    If the value is very large, like hundreds, something is wrong with the
+    performance of the hash table, hash values are incorrect or malicious.
+
 .. _unbound-control.stats.dnscrypt_shared_secret.cache.count:
 
 dnscrypt_shared_secret.cache.count
@@ -1119,8 +1195,15 @@ num.query.subnet
 num.query.subnet_cache
     Number of queries answered from the edns client subnet cache.
     These are counted as cachemiss by the main counters, but hit the client
-    subnet specific cache, after getting processed by the edns client subnet
+    subnet specific cache after getting processed by the edns client subnet
     module.
+
+.. _unbound-control.stats.num.query.cachedb:
+
+num.query.cachedb
+    Number of queries answered from the external cache of cachedb.
+    These are counted as cachemiss by the main counters, but hit the cachedb
+    external cache after getting processed by the cachedb module.
 
 .. _unbound-control.stats.num.rpz.action.<rpz_action>:
 

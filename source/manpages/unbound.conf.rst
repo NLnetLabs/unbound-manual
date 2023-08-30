@@ -373,7 +373,7 @@ incoming-num-tcp: *<number>*
 
     Default: 10
 
-.. _unbound.conf.ends-buffer-size:
+.. _unbound.conf.edns-buffer-size:
 
 edns-buffer-size: *<number>*
     Number of bytes size to advertise as the EDNS reassembly buffer size.
@@ -398,7 +398,7 @@ max-udp-size: *<number>*
     client, always.
     Suggested values are 512 to 4096.
 
-    Default: 4096
+    Default: 1232 (same as :ref:`edns-buffer-size:<unbound.conf.edns-buffer-size>`)
 
 .. _unbound.conf.stream-wait-size:
 
@@ -870,6 +870,19 @@ edns-tcp-keepalive-timeout: *<msec>*
 
     Default: 120000 (2 minutes)
 
+.. _unbound.conf.sock-queue-timeout:
+
+sock-queue-timeout: *<sec>*
+    UDP queries that have waited in the socket buffer for a long time can be
+    dropped.
+    The time is set in seconds, 3 could be a good value to ignore old queries
+    that likely the client does not need a reply for any more.
+    This could happen if the host has not been able to service the queries for
+    a while, i.e. Unbound is not running, and then is enabled again.
+    It uses timestamp socket options.
+
+    Default: 0 (disabled)
+
 .. _unbound.conf.tcp-upstream:
 
 tcp-upstream: *<yes or no>*
@@ -1238,6 +1251,7 @@ access-control: *<IP netblock> <action>*
     :ref:`allow<unbound.conf.access-control.action.allow>`,
     :ref:`allow_setrd<unbound.conf.access-control.action.allow_setrd>`,
     :ref:`allow_snoop<unbound.conf.access-control.action.allow_snoop>`,
+    :ref:`allow_cookie<unbound.conf.access-control.action.allow_cookie>`,
     :ref:`deny_non_local<unbound.conf.access-control.action.deny_non_local>` or
     :ref:`refuse_non_local<unbound.conf.access-control.action.refuse_non_local>`.
 
@@ -1288,7 +1302,7 @@ access-control: *<IP netblock> <action>*
 
     allow_snoop
         Gives non-recursive access too.
-        This give both recursive and non recursive access.
+        This gives both recursive and non recursive access.
         The name *allow_snoop* refers to cache snooping, a technique to use
         non-recursive queries to examine the cache contents (for malicious
         acts).
@@ -1298,6 +1312,25 @@ access-control: *<IP netblock> <action>*
         In that case use
         :ref:`allow_snoop<unbound.conf.access-control.action.allow_snoop>` for
         your administration host.
+
+    .. _unbound.conf.access-control.action.allow_cookie:
+
+    allow_cookie
+        Allows access to UDP queries that contain a valid DNS Cookie as
+        specified in RFC 7873 and RFC 9018, when the
+        :ref:`answer-cookie:<unbound.conf.answer-cookie>` option is enabled.
+        UDP queries containing only a DNS Client Cookie and no Server Cookie,
+        or an invalid DNS Cookie, will receive a BADCOOKIE response including a
+        newly generated DNS Cookie, allowing clients to retry with that DNS
+        Cookie.
+        The *allow_cookie* action will also accept requests over stateful
+        transports, regardless of the presence of an DNS Cookie and regardless
+        of the :ref:`answer-cookie:<unbound.conf.answer-cookie>` setting.
+        If :ref:`ip-ratelimit:<unbound.conf.ip-ratelimit>` is used, clients
+        with a valid DNS Cookie will bypass the ratelimit.
+        If a ratelimit for such clients is still needed,
+        :ref:`ip-ratelimit-cookie:<unbound.conf.ip-ratelimit-cookie>` can be
+        used instead.
 
     .. _unbound.conf.access-control.action.deny_non_local:
     .. _unbound.conf.access-control.action.refuse_non_local:
@@ -1793,6 +1826,18 @@ harden-algo-downgrade: *<yes or no>*
     Zone signers must produce zones that allow this feature to work, but
     sometimes they do not, and turning this option off avoids that validation
     failure.
+
+    Default: no
+
+.. _unbound.conf.harden-unknown-additional:
+
+harden-unknown-additional: *<yes or no>*
+    Harden against unknown records in the authority section and additional
+    section.
+    If no, such records are copied from the upstream and presented to the
+    client together with the answer.
+    If yes, it could hamper future protocol developments that want to add
+    records.
 
     Default: no
 
@@ -2454,6 +2499,7 @@ local-zone: *<zone> <type>*
     :ref:`inform_deny<unbound.conf.local-zone.type.inform_deny>`,
     :ref:`inform_redirect<unbound.conf.local-zone.type.inform_redirect>`,
     :ref:`always_transparent<unbound.conf.local-zone.type.always_transparent>`,
+    :ref:`block_a<unbound.conf.local-zone.type.block_a>`,
     :ref:`always_refuse<unbound.conf.local-zone.type.always_refuse>`,
     :ref:`always_nxdomain<unbound.conf.local-zone.type.always_nxdomain>`,
     :ref:`always_null<unbound.conf.local-zone.type.always_null>`,
@@ -2588,6 +2634,15 @@ local-zone: *<zone> <type>*
     always_transparent
         Like :ref:`transparent<unbound.conf.local-zone.type.transparent>`, but
         ignores local data and resolves normally.
+
+    .. _unbound.conf.local-zone.type.block_a:
+
+    block_a
+        Like :ref:`transparent<unbound.conf.local-zone.type.transparent>`, but
+        ignores local data and resolves normally all query types excluding A.
+        For A queries it unconditionally returns NODATA.
+        Useful in cases when there is a need to explicitly force all apps to
+        use IPv6 protocol and avoid any queries to IPv4.
 
     .. _unbound.conf.local-zone.type.always_refuse:
 
@@ -3019,7 +3074,6 @@ ratelimit-below-domain: *<domain> <number qps or 0>*
 
 ip-ratelimit: *<number or 0>*
     Enable global ratelimiting of queries accepted per ip address.
-    0 disables the feature.
     This option is experimental at this time.
     The ratelimit is in queries per second that are allowed.
     More queries are completely dropped and will not receive a reply, SERVFAIL
@@ -3027,7 +3081,27 @@ ip-ratelimit: *<number or 0>*
     IP ratelimiting happens before looking in the cache.
     This may be useful for mitigating amplification attacks.
 
-    Default: 0
+    Default: 0 (disabled)
+
+.. _unbound.conf.ip-ratelimit-cookie:
+
+ip-ratelimit-cookie: *<number or 0>*
+    Enable global ratelimiting of queries accepted per IP address with a valid
+    DNS Cookie.
+    This option is experimental at this time.
+    The ratelimit is in queries per second that are allowed.
+    More queries are completely dropped and will not receive a reply, SERVFAIL
+    or otherwise.
+    IP ratelimiting happens before looking in the cache.
+    This option could be useful in combination with
+    :ref:`allow_cookie<unbound.conf.access-control.action.allow_cookie>`, in an
+    attempt to mitigate other amplification attacks than UDP reflections (e.g.,
+    attacks targeting Unbound itself) which are already handled with DNS
+    Cookies.
+    If used, the value is suggested to be higher than
+    :ref:`ip-ratelimit:<unbound.conf.ip-ratelimit>` e.g., tenfold.
+
+    Default: 0 (disabled)
 
 .. _unbound.conf.ip-ratelimit-size:
 
@@ -3136,6 +3210,24 @@ fast-server-num: *<number>*
     turns this on or off.
 
     Default: 3
+
+.. _unbound.conf.answer-cookie:
+
+answer-cookie: *<yes or no>*
+    If enabled, Unbound will answer to requests containing DNS Cookies as
+    specified in RFC 7873 and RFC 9018.
+
+    Default: no
+
+.. _unbound.conf.cookie-secret:
+
+cookie-secret: *"<128 bit hex string>"*
+    Server's secret for DNS Cookie generation.
+    Useful to explicitly set for servers in an anycast deployment that need to
+    share the secret in order to verify each other's Server Cookies.
+    An example hex string would be "000102030405060708090a0b0c0d0e0f".
+
+    Default: 128 bits random secret generated at startup time
 
 .. _unbound.conf.edns-client-string:
 
@@ -3547,14 +3639,34 @@ Authority zones are configured with **auth-zone:**, and each one must have a
 There can be multiple ones, by listing multiple auth-zone clauses, each with a
 different name, pertaining to that part of the namespace.
 The authority zone with the name closest to the name looked up is used.
-Authority zones are processed after :ref:`local-zone:<unbound.conf.local-zone>`
-and before cache (:ref:`for-downstream:
-yes<unbound.conf.auth.for-downstream>`), and when used in this manner make
-Unbound respond like an authority server.
-Authority zones are also processed after cache, just before going to the
-network to fetch information for recursion (:ref:`for-upstream:
-yes<unbound.conf.auth.for-upstream>`), and when used in this manner provide a
-local copy of an authority server that speeds up lookups of that data.
+Authority zones can be processed on two distinct, non-exclusive, configurable
+stages.
+
+With :ref:`for-downstream: yes<unbound.conf.auth.for-downstream>` (default),
+authority zones are processed after **local-zones** and before cache.
+When used in this manner, Unbound responds like an authority server with no
+further processing other than returning an answer from the zone contents.
+A notable example, in this case, is CNAME records which are returned verbatim
+to downstream clients without further resolution.
+
+With :ref:`for-upstream: yes<unbound.conf.auth.for-upstream>` (default),
+authority zones are processed after the cache lookup, just before going to the
+network to fetch information for recursion.
+When used in this manner they provide a local copy of an authority server
+that speeds up lookups for that data during resolving.
+
+If both options are enabled (default), client queries for an authority zone are
+answered authoritatively from Unbound, while internal queries that require data
+from the authority zone consult the local zone data instead of going to the
+network.
+
+An interesting configuration is
+:ref:`for-downstream: no<unbound.conf.auth.for-downstream>`,
+:ref:`for-upstream: yes<unbound.conf.auth.for-upstream>`
+that allows for hyperlocal behavior where both client and internal queries
+consult the local zone data while resolving.
+In this case, the aforementioned CNAME example will result in a thoroughly
+resolved answer.
 
 Authority zones can be read from zonefile.
 And can be kept updated via AXFR and IXFR.
@@ -3893,6 +4005,31 @@ dns64-ignore-aaaa: *<domain name>*
     Can be entered multiple times, list a new domain for which it applies, one
     per line.
     Applies also to names underneath the name given.
+
+NAT64 Operation
+^^^^^^^^^^^^^^^
+
+NAT64 operation allows using a NAT64 prefix for outbound requests to IPv4-only
+servers.
+It is controlled by two options in the
+:ref:`server:<unbound.conf.server>` section:
+
+.. _unbound.conf.nat64.do-nat64:
+
+do-nat64: *<yes or no>*
+    Use NAT64 to reach IPv4-only servers.
+    Consider also enabling :ref:`prefer-ip6:<unbound.conf.prefer-ip6>`
+    to prefer native IPv6 connections to nameservers.
+
+    Default: no
+
+.. _unbound.conf.nat64.nat64-prefix:
+
+nat64-prefix: *<IPv6 prefix>*
+    Use a specific NAT64 prefix to reach IPv4-only servers.
+    The prefix length must be one of /32, /40, /48, /56, /64 or /96.
+
+    Default: 64:ff9b::/96 (same as :ref:`dns64-prefix:<unbound.conf.dns64.dns64-prefix>`)
 
 DNSCrypt Options
 ^^^^^^^^^^^^^^^^
@@ -4344,6 +4481,22 @@ redis-server-port: *<port number>*
     The TCP port number of the Redis server.
 
     Default: 6379
+
+.. _unbound.conf.cachedb.redis-server-path:
+
+redis-server-path: *<unix socket path>*
+    The unix socket path to connect to the redis server.
+    Unix sockets may have better throughput than the IP address option.
+
+    Default: "" (disabled)
+
+.. _unbound.conf.cachedb.redis-server-password:
+
+redis-server-password: *"<password>"*
+    The Redis AUTH password to use for the redis server.
+    Only relevant if Redis is configured for client password authorisation.
+
+    Default: "" (disabled)
 
 .. _unbound.conf.cachedb.redis-timeout:
 
