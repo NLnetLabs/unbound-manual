@@ -6,12 +6,11 @@ build:
     python: "3"
 
 sphinx:
-  configuration: docs/conf.py
+  configuration: source/conf.py
 
 python:
   install:
     - requirements: requirements.txt
-  system_packages: false
 
 # Build PDF & ePub
 formats:
