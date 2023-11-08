@@ -2278,6 +2278,23 @@ ignore-cd-flag: *<yes or no>*
 
     Default: no
 
+.. _unbound.conf.disable-edns-do:
+
+disable-edns-do: *<yes or no>*
+    Disable the EDNS DO flag in upstream requests.
+    It breaks DNSSEC validation for Unbound's clients.
+    This results in the upstream name servers to not include DNSSEC records in
+    their replies and could be helpful for devices that cannot handle DNSSEC
+    information.
+    When the option is enabled, clients that set the DO flag receive no EDNS
+    record in the response to indicate the lack of support to them.
+    If this option is enabled but Unbound is already configured for DNSSEC
+    validation (i.e., the validator module is enabled; default) this option is
+    implicitly turned off with a warning as to not break DNSSEC validation in
+    Unbound.
+
+    Default: no
+
 .. _unbound.conf.serve-expired:
 
 serve-expired: *<yes or no>*
@@ -4461,7 +4478,14 @@ secret-seed: *"<secret string>"*
     If the backend database is shared by multiple Unbound instances, all
     instances must use the same secret seed.
 
-    Default: default
+    Default: "default"
+
+cachedb-no-store: *<yes or no>*
+    If the backend should be read from, but not written to.
+    This makes this instance not store dns messages in the backend.
+    But if data is available it is retrieved.
+
+    Default: no
 
 The following **cachedb:** options are specific to the ``redis`` backend.
 
@@ -4523,6 +4547,20 @@ redis-expire-records: *<yes or no>*
         Redis SETEX support is required for this option (Redis >= 2.0.0).
 
     Default: no
+
+.. _unbound.conf.cachedb.redis-logical-db:
+
+redis-logical-db: *<logical database index>*
+    The logical database in Redis to use.
+    These are databases in the same Redis instance sharing the same
+    configuration and persisted in the same RDB/AOF file.
+    If unsure about using this option, Redis documentation
+    (https://redis.io/commands/select/) suggests not to use a single Redis
+    instance for multiple unrelated applications.
+    The default database in Redis is 0 while other logical databases need to be
+    explicitly SELECT'ed upon connecting.
+
+    Default: 0
 
 DNSTAP Logging Options
 ^^^^^^^^^^^^^^^^^^^^^^
