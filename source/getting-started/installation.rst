@@ -268,7 +268,7 @@ To do this, the following line needs to be added to the configuration file.
 .. code-block:: bash
 
     server:
-        use_syslog: no
+        use-syslog: no
 
 Now that Unbound is installed we can
 :doc:`continue to configuring it<configuration>`.
