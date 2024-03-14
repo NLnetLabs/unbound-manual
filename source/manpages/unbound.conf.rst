@@ -1240,6 +1240,12 @@ tcp-connection-limit: *<IP netblock> <limit>*
 .. _unbound.conf.access-control:
 
 access-control: *<IP netblock> <action>*
+    Specify treatment of incoming queries from their originating IP address.
+    Queries can be allowed to have access to this server that gives DNS
+    answers, or refused, with other actions possible.
+    The IP address range can be specified as a netblock, it is possible to give
+    the statement several times in order to specify the treatment of different
+    netblocks.
     The netblock is given as an IPv4 or IPv6 address with /size appended for a
     classless network block.
     The most specific netblock match is used, if none match
@@ -1316,7 +1322,7 @@ access-control: *<IP netblock> <action>*
     .. _unbound.conf.access-control.action.allow_cookie:
 
     allow_cookie
-        Allows access to UDP queries that contain a valid DNS Cookie as
+        Allows access only to UDP queries that contain a valid DNS Cookie as
         specified in RFC 7873 and RFC 9018, when the
         :ref:`answer-cookie:<unbound.conf.answer-cookie>` option is enabled.
         UDP queries containing only a DNS Client Cookie and no Server Cookie,
@@ -1326,11 +1332,8 @@ access-control: *<IP netblock> <action>*
         The *allow_cookie* action will also accept requests over stateful
         transports, regardless of the presence of an DNS Cookie and regardless
         of the :ref:`answer-cookie:<unbound.conf.answer-cookie>` setting.
-        If :ref:`ip-ratelimit:<unbound.conf.ip-ratelimit>` is used, clients
-        with a valid DNS Cookie will bypass the ratelimit.
-        If a ratelimit for such clients is still needed,
-        :ref:`ip-ratelimit-cookie:<unbound.conf.ip-ratelimit-cookie>` can be
-        used instead.
+        UDP queries without a DNS Cookie receive REFUSED responses with the TC
+        flag set, that may trigger fall back to TCP for those clients.
 
     .. _unbound.conf.access-control.action.deny_non_local:
     .. _unbound.conf.access-control.action.refuse_non_local:
@@ -1599,6 +1602,16 @@ log-tag-queryreply: *<yes or no>*
     This makes filtering logs easier.
 
     Default: no (backwards compatible)
+
+.. _unbound.conf.log-destaddr:
+
+log-destaddr: *<yes or no>*
+    Prints the destination address, port and type in the
+    :ref:`log-replies<unbound.conf.log-replies>` output.
+    This disambiguates what type of traffic, eg. UDP or TCP, and to what local
+    port the traffic was sent to.
+
+    Default: no
 
 .. _unbound.conf.log-local-actions:
 
@@ -3097,6 +3110,10 @@ ip-ratelimit: *<number or 0>*
     or otherwise.
     IP ratelimiting happens before looking in the cache.
     This may be useful for mitigating amplification attacks.
+    Clients with a valid DNS Cookie will bypass the ratelimit.
+    If a ratelimit for such clients is still needed,
+    :ref:`ip-ratelimit-cookie<unbound.conf.ip-ratelimit-cookie>`
+    can be used instead.
 
     Default: 0 (disabled)
 
