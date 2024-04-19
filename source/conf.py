@@ -48,6 +48,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.autosectionlabel',
     'notfound.extension',
+    'sphinxcontrib.jquery',
 ]
 
 intersphinx_mapping = {
