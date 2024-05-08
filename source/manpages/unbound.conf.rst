@@ -509,6 +509,65 @@ unknown-server-time-limit: *<msec>*
 
     Default: 376
 
+.. _unbound.conf.discard-timeout:
+
+discard-timeout: *<msec>*
+    The wait time in msec where recursion requests are dropped.
+    This is to stop a large number of replies from accumulating.
+    They receive no reply, the work item continues to recurse.
+    It is nice to be a bit larger than
+    :ref:`serve-expired-client-timeout<unbound.conf.serve-expired-client-timeout>`
+    if that is enabled.
+    A value of ``1900`` msec is suggested.
+    The value ``0`` disables it.
+
+    Default: 1900
+
+.. _unbound.conf.wait-limit:
+
+wait-limit: *<number>*
+    The number of replies that can wait for recursion, for an IP address.
+    This makes a ratelimit per IP address of waiting replies for recursion.
+    It stops very large amounts of queries waiting to be returned to one
+    destination.
+    The value ``0`` disables wait limits.
+
+    Default: 1000
+
+.. _unbound.conf.wait-limit-cookie:
+
+wait-limit-cookie: *<number>*
+    The number of replies that can wait for recursion, for an IP address
+    that sent the query with a valid DNS Cookie.
+    Since the cookie validates the client address, this limit can be higher.
+
+    Default: 10000
+
+.. _unbound.conf.wait-limit-netblock:
+
+wait-limit-netblock: *<netblock>* *<number>*
+    The wait limit for the netblock.
+    If not given the
+    :ref:`wait-limit<unbound.conf.wait-limit>`
+    value is used.
+    The most specific netblock is used to determine the limit.
+    Useful for overriding the default for a specific, group or individual,
+    server.
+    The value ``-1`` disables wait limits for the netblock.
+
+    Default: (none)
+
+.. _unbound.conf.wait-limit-cookie-netblock:
+
+wait-limit-cookie-netblock: *<netblock>* *<number>*
+    The wait limit for the netblock, when the query has a DNS Cookie.
+    If not given, the
+    :ref:`wait-limit-cookie<unbound.conf.wait-limit-cookie>`
+    value is used.
+    The value ``-1`` disables wait limits for the netblock.
+
+    Default: (none)
+
 .. _unbound.conf.so-rcvbuf:
 
 so-rcvbuf: *<number>*
@@ -666,6 +725,19 @@ cache-max-negative-ttl: *<seconds>*
 
     Default: 3600
 
+.. _unbound.conf.cache-min-negative-ttl:
+
+cache-min-negative-ttl: *<seconds>*
+    Time to live minimum for negative responses, these have a SOA in the
+    authority section that is limited in time.
+    If this is disabled and
+    :ref:`cache-min-ttl<unbound.conf.cache-min-ttl>`
+    is configured, it will take effect instead.
+    In that case you can set this to ``1`` to honor the upstream TTL.
+    This applies to NXDOMAIN and NODATA answers.
+
+    Default: 0 (disabled)
+
 .. _unbound.conf.infra-host-ttl:
 
 infra-host-ttl: *<seconds>*
@@ -816,6 +888,11 @@ tcp-idle-timeout: *<msec>*
     number configured.
     A minimum timeout of 200 milliseconds is observed regardless of the option
     value used.
+    It will be overriden by
+    :ref:`edns-tcp-keepalive-timeout<unbound.conf.edns-tcp-keepalive-timeout>`
+    if
+    :ref:`edns-tcp-keepalive<unbound.conf.edns-tcp-keepalive>`
+    is enabled.
 
     Default: 30000 (30 seconds)
 
@@ -852,21 +929,15 @@ edns-tcp-keepalive: *<yes or no>*
 .. _unbound.conf.edns-tcp-keepalive-timeout:
 
 edns-tcp-keepalive-timeout: *<msec>*
-    The period Unbound will wait for a query on a TCP connection when EDNS TCP
-    Keepalive is active.
-    If this timeout expires Unbound closes the connection.
+    Overrides
+    :ref:`tcp-idle-timeout<unbound.conf.tcp-idle-timeout>`
+    when
+    :ref:`edns-tcp-keepalive<unbound.conf.edns-tcp-keepalive>`
+    is enabled.
+    If the client supports the EDNS TCP Keepalive option,
     If the client supports the EDNS TCP Keepalive option, Unbound sends the
     timeout value to the client to encourage it to close the connection before
     the server times out.
-
-    When the number of free incoming TCP buffers falls below 50% of the total
-    number configured, the advertised timeout is progressively reduced to 1% of
-    the configured value, then to 0.2% of the configured value if the number of
-    free buffers falls below 35% of the total number configured, and finally to
-    0 if the number of free buffers falls below 20% of the total number
-    configured.
-    A minimum actual timeout of 200 milliseconds is observed regardless of the
-    advertised timeout.
 
     Default: 120000 (2 minutes)
 
@@ -4435,12 +4506,6 @@ usual, and stores the answer in the backend.
 
 This module interacts with the *serve-expired-\** options and will reply with
 expired data if Unbound is configured for that.
-Currently the use of
-:ref:`serve-expired-client-timeout:<unbound.conf.serve-expired-client-timeout>`
-and :ref:`serve-expired-reply-ttl:<unbound.conf.serve-expired-reply-ttl>` is
-not consistent for data originating from the external cache as these will
-result in a reply with 0 TTL without trying to update the data first, ignoring
-the configured values.
 
 If Unbound was built with ``--with-libhiredis`` on a system that has installed
 the hiredis C client library of Redis, then the ``redis`` backend can be used.
@@ -4497,12 +4562,32 @@ secret-seed: *"<secret string>"*
 
     Default: "default"
 
+.. _unbound.conf.cachedb.cachedb-no-store:
+
 cachedb-no-store: *<yes or no>*
     If the backend should be read from, but not written to.
     This makes this instance not store dns messages in the backend.
     But if data is available it is retrieved.
 
     Default: no
+
+.. _unbound.conf.cachedb.cachedb-check-when-serve-expired:
+
+cachedb-check-when-serve-expired: *<yes or no>*
+    If enabled, the cachedb is checked before an expired response is returned.
+    When
+    :ref:`serve-expired<unbound.conf.serve-expired>`
+    is enabled, without
+    :ref:`serve-expired-client-timeout<unbound.conf.serve-expired-client-timeout>`
+    , it then does not immediately respond with an expired response from cache,
+    but instead first checks the cachedb for valid contents, and if so returns it.
+    If the cachedb also has no valid contents, the serve expired response is sent.
+    If also
+    :ref:`serve-expired-client-timeout<unbound.conf.serve-expired-client-timeout>`
+    is enabled, the expired response is delayed until the timeout expires.
+    Unless the lookup succeeds within the timeout.
+
+    Default: yes
 
 The following **cachedb:** options are specific to the ``redis`` backend.
 

@@ -392,13 +392,15 @@ insecure_remove *zone*
 
 .. _unbound-control.commands.forward_add:
 
-forward_add [``+i``] *zone addr ...*
+forward_add [``+it``] *zone addr ...*
     Add a new forward zone to running Unbound.
     With ``+i`` option also adds a domain-insecure for the zone (so it can
     resolve insecurely if you have a DNSSEC root trust anchor configured for
     other names).
     The addr can be IP4, IP6 or nameserver names, like forward-zone config in
     unbound.conf.
+    The ``+t`` option sets it to use TLS upstream, like
+    :ref:`forward-tls-upstream: yes<unbound.conf.forward.forward-tls-upstream>`.
 
 .. _unbound-control.commands.forward_remove:
 
@@ -408,13 +410,15 @@ forward_remove [``+i``] *zone*
 
 .. _unbound-control.commands.stub_add:
 
-stub_add [``+ip``] *zone addr ...*
+stub_add [``+ipt``] *zone addr ...*
     Add a new stub zone to running Unbound.
     With ``+i`` option also adds a domain-insecure for the zone.
     With ``+p`` the stub zone is set to prime, without it it is set to
     notprime.
     The addr can be IP4, IP6 or nameserver names, like the **stub-zone:**
     config in unbound.conf.
+    The ``+t`` option sets it to use TLS upstream, like
+    :ref:`stub-tls-upstream: yes<unbound.conf.stub.stub-tls-upstream>`.
 
 .. _unbound-control.commands.stub_remove:
 
