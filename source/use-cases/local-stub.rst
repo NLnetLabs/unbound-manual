@@ -312,7 +312,9 @@ also exists if you want to script this step). The steps go as follows:
 ..
     XXX DO WE NEED TO ADD PICTURES HERE? 
 
-Once the IP address is added we can test our Unbound instance (assuming it's running)  with :command:`dig`. Note that the Unbound instance cannot be reached before it has been added in the DNS tab in System Preferences.
+Once the IP address is added you can test your Unbound instance (assuming it's
+running) with :command:`dig`. Note that the Unbound instance cannot be reached
+before it has been added in the DNS tab in System Preferences.
 
 .. code-block:: bash
 
@@ -321,33 +323,34 @@ Once the IP address is added we can test our Unbound instance (assuming it's run
 .. attention::
     If you restart your Mac at this stage in the process, you will not have
     access to the internet anymore. This is because Unbound does not
-    automatically restart if your machine restarts. To make remedy this, we
+    automatically restart if your machine restarts. To make remedy this, you
     need to add Unbound to the startup routine on your Mac.
 
 Depending on your installation method, either via ``Homebrew`` or compiling
 Unbound yourself, the method of making Unbound persistent differs slightly.
-For both methods we use :command:`launchctl` to start Unbound on the startup of
-your machine.
 
 Homebrew
 ^^^^^^^^
 
-If you installed Unbound using Homebrew, the XML file required by
-:command:`launchctl` is already supplied during installation. The file can be
-found at ``/Library/LaunchDaemons/homebrew.mxcl.unbound.plist``. To load this
-file we invoke the following command.
+If you installed Unbound using Homebrew, you can start Unbound with:
 
 .. code-block:: bash
 
-    sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.unbound.plist
+    sudo brew services start unbound
+
+``brew services`` will handle registering the appropriate ``.plist`` file under
+``/Library/LaunchDaemons/`` and remove it when Unbound is uninstalled.
 
 Now every time you restart your machine, Unbound should restart too.
+
 
 Compilation
 ^^^^^^^^^^^
 
-If you installed Unbound by compiling it yourself, we need to create an XML file
-for :command:`launchctl`. Conveniently we've created one for you:
+If you installed Unbound by compiling it yourself, you need to create an XML
+plist file for :command:`launchd` to handle the Unbound service.
+Put the following content into the file
+``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist``:
 
 ..
     zet XML in unbound/contrib (contributed code)
@@ -388,16 +391,13 @@ Lastly, we add the location of the default configuration file.
 The location in the XML can be changed to another location if this is
 convenient.
 
-Using the text editor of choice, we then create the file
-``/Library/LaunchDaemons/nl.nlnetlabs.unbound.plist`` and insert the above
-supplied XML code. To be able to use the file, we need to change the permissions
-of the file using :command:`chmod`
+To be able to use the file, you need to change the permissions with:
 
 .. code-block:: bash
 
     sudo chmod 644 /Library/LaunchDaemons/nl.nlnetlabs.unbound.plist
 
-We can then load the file with the following command.
+And load it with:
 
 .. code-block:: bash
 
