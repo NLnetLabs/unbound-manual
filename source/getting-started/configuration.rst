@@ -22,7 +22,7 @@ during the installation process).
 .. code-block:: bash
 
     server:
-        # can be uncommented if you do not need user privilige protection
+        # can be uncommented if you do not need user privilege protection
         # username: ""
 
         # can be uncommented if you do not need file access protection
@@ -68,7 +68,7 @@ configuration file:
 .. code-block:: text
 
     server:
-	# disable user privilige protection
+	# disable user privilege protection
 	username: ""
 
 If it is enabled, after the setup, any other user privileges are dropped and
