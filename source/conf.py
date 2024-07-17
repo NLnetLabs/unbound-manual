@@ -16,8 +16,10 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import os
 import datetime
 import sphinx_rtd_theme
+import requests
 
 # -- Project information -----------------------------------------------------
 
@@ -30,6 +32,18 @@ author = 'NLnet Labs'
 version = '1.19.3'
 # The full version, including alpha/beta/rc tags
 release = version
+
+try:
+    response_versions = requests.get(
+        f"https://readthedocs.org/api/v2/version/?project__slug=unbound&active=true",
+        timeout=2,
+    ).json()
+    versions = [
+        (version["slug"], f"/{version['project']['language']}/{version['slug']}/")
+        for version in response_versions["results"]
+    ]
+except Exception:
+    versions = []
 
 # -- General configuration ---------------------------------------------------
 
@@ -49,6 +63,7 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'notfound.extension',
     'sphinxcontrib.jquery',
+    'sphinx_rtd_theme',
 ]
 
 intersphinx_mapping = {
@@ -129,6 +144,36 @@ html_static_path = ['resources']
 #
 # html_sidebars = {}
 
+# Set canonical URL from the Read the Docs Domain
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "")
+scheme = "https"
+
+html_context = {
+        'html_theme': html_theme,
+        'current_version': version,
+        'version_slug': version,
+
+        'PRODUCTION_DOMAIN': "readthedocs.org",
+        'versions': versions,
+        # "downloads": downloads,
+        # "subprojects": subprojects,
+
+        'slug': "unbound",
+        'rtd_language': language,
+        'canonical_url': html_baseurl,
+
+        'conf_py_path': "/source/",
+
+        'github_user': "NLnetLabs",
+        'github_repo': "unbound",
+        'github_version': os.environ.get("READTHEDOCS_GIT_IDENTIFIER", "main"),
+        'display_github': True,
+        'READTHEDOCS': True,
+        'using_theme': False,
+        'new_theme': True,
+        'source_suffix': ".rst",
+        'docsearch_disabled': False,
+    }
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
