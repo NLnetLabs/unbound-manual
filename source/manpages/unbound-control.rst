@@ -212,6 +212,7 @@ local_datas_remove
 dump_cache
     The contents of the cache is printed in a text format to stdout.
     You can redirect it to a file to store the cache in a file.
+    Not supported in remote Unbounds in multi-process operation.
 
 .. _unbound-control.commands.load_cache:
 
@@ -222,6 +223,7 @@ load_cache
     returned to clients.
     Loading data into the cache in this way is supported in order to aid with
     debugging.
+    Not supported in remote Unbounds in multi-process operation.
 
 .. _unbound-control.commands.lookup:
 
@@ -231,21 +233,27 @@ lookup *name*
 
 .. _unbound-control.commands.flush:
 
-flush *name*
+flush [``+c``] *name*
     Remove the name from the cache.
     Removes the types A, AAAA, NS, SOA, CNAME, DNAME, MX, PTR, SRV, NAPTR,
     SVCB and HTTPS.
     Because that is fast to do.
     Other record types can be removed using **flush_type** or **flush_zone**.
 
+    The ``+c`` option removes the items also from the cachedb cache.
+    If cachedb is in use.
+
 .. _unbound-control.commands.flush_type:
 
-flush_type *name type*
+flush_type [``+c``] *name type*
     Remove the name, type information from the cache.
+
+    The ``+c`` option removes the items also from the cachedb cache.
+    If cachedb is in use.
 
 .. _unbound-control.commands.flush_zone:
 
-flush_zone name
+flush_zone [``+c``] name
     Remove all information at or below the name from the cache.
     The rrsets and key entries are removed so that new lookups will be
     performed.
@@ -254,19 +262,28 @@ flush_zone name
     with serve-expired enabled, it'll serve that information but schedule a
     prefetch for new information).
 
+    The ``+c`` option removes the items also from the cachedb cache.
+    If cachedb is in use.
+
 .. _unbound-control.commands.flush_bogus:
 
-flush_bogus
+flush_bogus [``+c``]
     Remove all bogus data from the cache.
+
+    The ``+c`` option removes the items also from the cachedb cache.
+    If cachedb is in use.
 
 .. _unbound-control.commands.flush_negative:
 
-flush_negative
+flush_negative [``+c``]
     Remove all negative data from the cache.
     This is nxdomain answers, nodata answers and servfail answers.
     Also removes bad key entries (which could be due to failed lookups) from
     the dnssec key cache, and iterator last-resort lookup failures from the
     rrset cache.
+
+    The ``+c`` option removes the items also from the cachedb cache.
+    If cachedb is in use.
 
 .. _unbound-control.commands.flush_stats:
 
@@ -553,6 +570,59 @@ view_local_datas_remove *view*
 view_local_datas *view*
     Add a list of *local_data* for given view from stdin.
     Like *local_datas*.
+
+.. _unbound-control.commands.add_cookie_secret:
+
+add_cookie_secret *secret*
+    Add or replace a cookie secret persistently.
+    *secret* needs to be an 128 bit hex string.
+
+    Cookie secrets can be either **active** or **staging**.
+    **Active** cookie secrets are used to create DNS Cookies, but verification
+    of a DNS Cookie succeeds with any of the **active** or **staging** cookie
+    secrets.
+    The state of the current cookie secrets can be printed with the
+    :ref:`print_cookie_secrets<unbound-control.commands.print_cookie_secrets>`
+    command.
+
+    When there are no cookie secrets configured yet, the *secret* is added as
+    **active**.
+    If there is already an **active** cookie secret, the *secret* is added as
+    **staging** or replacing an existing **staging** secret.
+
+    To "roll" a cookie secret used in an anycast set.
+    The new secret has to be added as **staging** secret to **all** nodes in
+    the anycast set.
+    When **all** nodes can verify DNS Cookies with the new secret, the new
+    secret can be activated with the
+    :ref:`activate_cookie_secret<unbound-control.commands.activate_cookie_secret>`
+    command.
+    After **all** nodes have the new secret **active** for at least one hour,
+    the previous secret can be dropped with the
+    :ref:`drop_cookie_secret<unbound-control.commands.drop_cookie_secret>`
+    command.
+
+    Persistence is accomplished by writing to a file which is configured with
+    the
+    :ref:`cookie-secret-file:<unbound.conf.cookie-secret-file>`
+    option in the server section of the config file.
+    This is disabled by default, "".
+
+.. _unbound-control.commands.drop_cookie_secret:
+
+drop_cookie_secret
+    Drop the **staging** cookie secret.
+
+.. _unbound-control.commands.activate_cookie_secret:
+
+activate_cookie_secret
+    Make the current **staging** cookie secret **active**, and the current
+    **active** cookie secret **staging**.
+
+.. _unbound-control.commands.print_cookie_secrets:
+
+print_cookie_secrets
+    Show the current configured cookie secrets with their status.
 
 Exit Code
 ---------

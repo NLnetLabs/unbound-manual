@@ -888,7 +888,7 @@ tcp-idle-timeout: *<msec>*
     number configured.
     A minimum timeout of 200 milliseconds is observed regardless of the option
     value used.
-    It will be overriden by
+    It will be overridden by
     :ref:`edns-tcp-keepalive-timeout<unbound.conf.edns-tcp-keepalive-timeout>`
     if
     :ref:`edns-tcp-keepalive<unbound.conf.edns-tcp-keepalive>`
@@ -1424,7 +1424,8 @@ access-control: *<IP netblock> <action>*
         :ref:`refuse_non_local<unbound.conf.access-control.action.refuse_non_local>`
         they receive error code REFUSED.
 
-    By default only localhost is *allowed*, the rest is refused.
+    By default only localhost (the 127.0.0.0/8 IP netblock, not the loopback
+    interface) is implicitly *allowed*, the rest is refused.
     The default is *refused*, because that is protocol-friendly.
     The DNS protocol is not designed to handle dropped packets due to policy,
     and dropping may result in (possibly excessive) retried queries.
@@ -1478,9 +1479,12 @@ interface-action: *<ip address or interface name [@port]> <action>*
 
     Default action for interfaces is
     :ref:`refuse<unbound.conf.access-control.action.refuse>`.
-    By default only localhost (the IP netblock, not the loopback interface) is
-    allowed through the default
+    By default only localhost (the 127.0.0.0/8 IP netblock, not the loopback
+    interface) is implicitly allowed through the default
     :ref:`access-control:<unbound.conf.access-control>` behavior.
+    This also means that any attempt to use the **interface-\*:** options for
+    the loopback interface will not work as they will be overridden by the
+    implicit default "access-control: 127.0.0.0/8 allow" option.
 
     .. note::
         The interface needs to be already specified with
@@ -3332,7 +3336,31 @@ cookie-secret: *"<128 bit hex string>"*
     share the secret in order to verify each other's Server Cookies.
     An example hex string would be "000102030405060708090a0b0c0d0e0f".
 
+    .. note::
+        This option is ignored if a
+        :ref:`cookie-secret-file:<unbound.conf.cookie-secret-file>` is present.
+        In that case the secrets from that file are used in DNS Cookie
+        calculations.
+
     Default: 128 bits random secret generated at startup time
+
+.. _unbound.conf.cookie-secret-file:
+
+cookie-secret-file: *<filename>*
+    File from which the secrets are read used in DNS Cookie calculations.
+    When this file exists, the secrets in this file are used and the secret
+    specified by the
+    :ref:`cookie-secret:<unbound.conf.cookie-secret>` option is ignored.
+    Enable it by setting a filename, like
+    "/usr/local/etc/unbound_cookiesecrets.txt".
+    The content of this file must be manipulated with the
+    :ref:`add_cookie_secret<unbound-control.commands.add_cookie_secret>`,
+    :ref:`drop_cookie_secret<unbound-control.commands.drop_cookie_secret>` and
+    :ref:`activate_cookie_secret<unbound-control.commands.activate_cookie_secret>`
+    commands to the :doc:`unbound-control(8)</manpages/unbound-control>` tool.
+    Please see that manpage on how to perform a safe cookie secret rollover.
+
+    Default: "" (disabled)
 
 .. _unbound.conf.edns-client-string:
 
@@ -4777,6 +4805,18 @@ dnstap-version: *<string>*
 
     Default: ""
 
+.. _unbound.conf.dnstap.dnstap-sample-rate:
+
+dnstap-sample-rate: *<number>*
+    The sample rate for log of messages, it logs only 1/N messages.
+    With 0 it is disabled.
+    This is useful in a high volume environment, where log functionality would
+    otherwise not be reliable.
+    For example 10 would spend only 1/10th time on logging, and 100 would only
+    spend a hundredth of the time on logging.
+
+    Default: 0 (disabled)
+
 .. _unbound.conf.dnstap.dnstap-log-resolver-query-messages:
 
 dnstap-log-resolver-query-messages: *<yes or no>*
@@ -4830,9 +4870,11 @@ Response Policy Zone Options
 
 Response Policy Zones are configured with **rpz:**, and each one must have a
 :ref:`name:<unbound.conf.rpz.name>`.
-There can be multiple ones, by listing multiple rpz clauses, each with a
+There can be multiple ones, by listing multiple RPZ clauses, each with a
 different name.
-RPZ clauses are applied in order of configuration.
+RPZ clauses are applied in order of configuration and any match from an earlier
+RPZ zone will terminate the RPZ lookup.
+Note that a PASSTHRU action is still considered a match.
 The respip module needs to be added to the
 :ref:`module-config<unbound.conf.module-config>`, e.g.:
 
@@ -4847,7 +4889,7 @@ RPZ QNAME triggers are applied after any
 :ref:`local-zone:<unbound.conf.local-zone>` and before any
 :ref:`auth-zone:<unbound.conf.auth>`.
 
-The RPZ zone is formatted with a SOA start record as usual.
+The RPZ zone is a regular DNS zone formatted with a SOA start record as usual.
 The items in the zone are entries, that specify what to act on (the trigger)
 and what to do (the action).
 The trigger to act on is recorded in the name, the action to do is recorded as

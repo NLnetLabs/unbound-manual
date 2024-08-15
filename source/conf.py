@@ -29,7 +29,7 @@ copyright = f'1999-{year}, NLnet Labs'
 author = 'NLnet Labs'
 
 # The short X.Y version
-version = '1.19.3'
+version = '1.21.0'
 # The full version, including alpha/beta/rc tags
 release = version
 
