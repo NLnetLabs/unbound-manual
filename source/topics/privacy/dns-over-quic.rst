@@ -7,8 +7,9 @@ DNS-over-QUIC (DoQ) uses the QUIC transport mechanism to encrypt queries and
 responses. Unbound can be configured to serve to clients over doq. For that
 the feature must be compiled in, with the support libraries that this needs.
 
-The means unbound supports doq clients downstream. The doq transport for DNS
-is from RFC 9250.
+The feature allows unbound to support doq clients downstream. The doq
+transport for DNS is from
+:rfc:`9250` .
 
 Configuration
 -------------
