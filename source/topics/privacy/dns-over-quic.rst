@@ -83,7 +83,7 @@ The ngtcp2 library can be compiled like this:
 
 .. code-block:: bash
 
-    git clone --depth1 -b v0.19.1 https://github.com/ngtcp2/ngtcp2 ngtcp2
+    git clone --depth 1 -b v0.19.1 https://github.com/ngtcp2/ngtcp2 ngtcp2
     cd ngtcp2
     autoreconf -i
     ./configure PKG_CONFIG_PATH=$PWD/../openssl+quic_install/lib/pkgconfig LDFLAGS="-Wl,-rpath,$PWD/../openssl+quic_install/lib" --prefix=/path/to/ngtcp2_install
