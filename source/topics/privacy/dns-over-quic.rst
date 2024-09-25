@@ -106,7 +106,7 @@ Compile unbound then like this:
     ./configure <other flags> --with-ssl=/path/to/openssl+quic_install --with-libngtcp2=/path/to/ngtcp2_install LDFLAGS="-Wl,-rpath -Wl,/path/to/ngtcp2_install/lib" --prefix=/path/to/unbound_install
     make
 
-Fill in the patch to the openssl+quic install and libngtcp2 install.
+Fill in the path to the openssl+quic install and libngtcp2 install.
 The rpath is set so that the dynamic libraries can be found in the search path.
 This then results in an unbound server that supports doq.
 
