@@ -59,6 +59,7 @@ license, with attribution to NLnet Labs.
 
    topics/privacy/aggressive-nsec
    topics/privacy/dns-over-https
+   topics/privacy/dns-over-quic
 
 .. toctree::
    :maxdepth: 2
