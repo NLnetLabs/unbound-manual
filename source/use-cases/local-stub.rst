@@ -119,7 +119,7 @@ options:
     DNSStubListener=no
     #DNSStubListenerExtra=
 
-Or better create a new ``resolved.conf.d`` directory using:
+Or better create a new ``resolved.conf.d`` directory within ``/etc/systemd`` using:
 
 .. code-block:: bash
 
