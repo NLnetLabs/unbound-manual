@@ -127,7 +127,6 @@ Or better create a new ``resolved.conf.d`` directory using:
 
 Add a new file, for example :file:`/etc/systemd/resolved.conf.d/unbound.conf`, with the following content:
 
-
 .. code-block:: text
 
     [Resolve]
