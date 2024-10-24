@@ -81,21 +81,21 @@ all the options.
 
     # unbound.conf(5) config file for unbound(8).
     server:
-    directory: "/etc/unbound"
-    username: unbound
-    # make sure unbound can access entropy from inside the chroot.
-    # e.g. on linux the use these commands (on BSD, devfs(8) is used):
-    #      mount --bind -n /dev/urandom /etc/unbound/dev/urandom
-    # and  mount --bind -n /dev/log /etc/unbound/dev/log
-    chroot: "/etc/unbound"
-    # logfile: "/etc/unbound/unbound.log"  #uncomment to use logfile.
-    pidfile: "/etc/unbound/unbound.pid"
-    # verbosity: 1      # uncomment and increase to get more logging.
-    # listen on all interfaces, answer queries from the local subnet.
-    interface: 0.0.0.0
-    interface: ::0
-    access-control: 10.0.0.0/8 allow
-    access-control: 2001:DB8::/64 allow
+        directory: "/etc/unbound"
+        username: unbound
+        # make sure unbound can access entropy from inside the chroot.
+        # e.g. on linux the use these commands (on BSD, devfs(8) is used):
+        #      mount --bind -n /dev/urandom /etc/unbound/dev/urandom
+        # and  mount --bind -n /dev/log /etc/unbound/dev/log
+        chroot: "/etc/unbound"
+        # logfile: "/etc/unbound/unbound.log"  #uncomment to use logfile.
+        pidfile: "/etc/unbound/unbound.pid"
+        # verbosity: 1      # uncomment and increase to get more logging.
+        # listen on all interfaces, answer queries from the local subnet.
+        interface: 0.0.0.0
+        interface: ::0
+        access-control: 10.0.0.0/8 allow
+        access-control: 2001:DB8::/64 allow
 
 File Format
 -----------
