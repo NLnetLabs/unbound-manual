@@ -46,8 +46,8 @@ on different operating systems. Below we will go through this for a selection of
     Make sure your Unbound can run with the configuration we create. Steps for
     this can be found :doc:`on the configuration page</getting-started/configuration>`.
 
-Ubuntu 22.04 LTS
-******************
+Ubuntu
+******
 
 The resolver your machine uses by default is defined in
 :file:`/etc/systemd/resolved.conf` in the ``DNS`` entry and uses the IP address ``127.0.0.53``.
@@ -119,7 +119,22 @@ options:
     DNSStubListener=no
     #DNSStubListenerExtra=
 
-To actually have the system start using our changed config, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified.
+Or better create a new ``resolved.conf.d`` directory within ``/etc/systemd`` using:
+
+.. code-block:: bash
+
+    sudo mkdir -p /etc/systemd/resolved.conf.d/
+
+Add a new file, for example :file:`/etc/systemd/resolved.conf.d/unbound.conf`, with the following content:
+
+.. code-block:: text
+
+    [Resolve]
+    DNS=127.0.0.1
+    DNSSEC=yes
+    DNSStubListener=no
+
+To actually have the system start using our changed config, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified. Under Ubuntu 24.04 there is already a symbolic link between `/etc/resolv.conf` and `/run/systemd/resolve/resolv.conf`, so you can skip the step below.
 
 .. code-block:: bash
 

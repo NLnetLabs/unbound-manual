@@ -21,8 +21,8 @@ be outdated if this package has not been updated recently. If you like to
 upgrade to the latest version, we recommend :ref:`compiling Unbound
 yourself<getting-started/installation:Building from source/Compiling>`.
 
-Ubuntu 22.04 LTS
-^^^^^^^^^^^^^^^^
+Ubuntu
+^^^^^^
 
 Installing Unbound with the built-in package manager should be as easy as:
 
