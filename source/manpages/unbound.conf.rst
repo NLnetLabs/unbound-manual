@@ -5093,24 +5093,24 @@ Mb after heavy usage.
 
         # example settings that reduce memory usage
         server:
-        num-threads: 1
-        outgoing-num-tcp: 1 # this limits TCP service, uses less buffers.
-        incoming-num-tcp: 1
-        outgoing-range: 60  # uses less memory, but less performance.
-        msg-buffer-size: 8192   # note this limits service, 'no huge stuff'.
-        msg-cache-size: 100k
-        msg-cache-slabs: 1
-        rrset-cache-size: 100k
-        rrset-cache-slabs: 1
-        infra-cache-numhosts: 200
-        infra-cache-slabs: 1
-        key-cache-size: 100k
-        key-cache-slabs: 1
-        neg-cache-size: 10k
-        num-queries-per-thread: 30
-        target-fetch-policy: "2 1 0 0 0 0"
-        harden-large-queries: "yes"
-        harden-short-bufsize: "yes"
+            num-threads: 1
+            outgoing-num-tcp: 1 # this limits TCP service, uses less buffers.
+            incoming-num-tcp: 1
+            outgoing-range: 60  # uses less memory, but less performance.
+            msg-buffer-size: 8192   # note this limits service, 'no huge stuff'.
+            msg-cache-size: 100k
+            msg-cache-slabs: 1
+            rrset-cache-size: 100k
+            rrset-cache-slabs: 1
+            infra-cache-numhosts: 200
+            infra-cache-slabs: 1
+            key-cache-size: 100k
+            key-cache-slabs: 1
+            neg-cache-size: 10k
+            num-queries-per-thread: 30
+            target-fetch-policy: "2 1 0 0 0 0"
+            harden-large-queries: "yes"
+            harden-short-bufsize: "yes"
 
 Files
 -----
