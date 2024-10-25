@@ -134,8 +134,9 @@ Add a new file, for example :file:`/etc/systemd/resolved.conf.d/unbound.conf`, w
     DNSSEC=yes
     DNSStubListener=no
 
-To actually have the system start using our changed config, 
+To actually have the system start using our changed config,
 we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified. 
+
 Under Ubuntu 24.04 there is already a symbolic link between `/etc/resolv.conf` and
 `/run/systemd/resolve/resolv.conf`, so you can skip the step below.
 
