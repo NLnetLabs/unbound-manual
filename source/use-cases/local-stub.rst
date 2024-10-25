@@ -134,7 +134,10 @@ Add a new file, for example :file:`/etc/systemd/resolved.conf.d/unbound.conf`, w
     DNSSEC=yes
     DNSStubListener=no
 
-To actually have the system start using our changed config, we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified. Under Ubuntu 24.04 there is already a symbolic link between `/etc/resolv.conf` and `/run/systemd/resolve/resolv.conf`, so you can skip the step below.
+To actually have the system start using our changed config, 
+we then need to create a symlink to overwrite :file:`/etc/resolv.conf` to the one we modified. 
+Under Ubuntu 24.04 there is already a symbolic link between `/etc/resolv.conf` and
+`/run/systemd/resolve/resolv.conf`, so you can skip the step below.
 
 .. code-block:: bash
 
@@ -152,6 +155,15 @@ configuration with:
 .. code-block:: bash
 
     systemctl restart systemd-resolved
+
+.. note::
+
+    Another service exists under certain distributions called: ``unbound-resolvconf``. 
+    In case this service cause problems (like: Failed to set DNS configuration).
+    And you already have configured systemd resolved successfully and the ``dig`` command works correctly.
+    You can you safely stop and disable or mask the ``unbound-resolvconf`` service. 
+
+    To disable the unbound-resolvconf service run: ``systemctl disable unbound-resolvconf.service``
 
 If successful, the operating system should use our Unbound instance as default.
 A quick test a :command:`dig` without specifying the address of the Unbound
@@ -181,7 +193,7 @@ the ``127.0.0.1`` IP specified as we did earlier.
 
     Unbound is not persistent at this point, and will not start up when your 
     system does (and possibly "breaking" your internet). This is fixed by
-    restarting your Unbound upon reboot.
+    starting your Unbound upon reboot.
 
 Package manager
 ^^^^^^^^^^^^^^^
@@ -203,14 +215,20 @@ automatically when the system is rebooted.
 
 .. code-block:: text
 
-    systemctl start unbound
+    systemctl start unbound.service
 
-To check that everything is correct, you can see the status (which should be 
-"active"):
+Make sure the Unbound service is indeed enabled:
 
 .. code-block:: text
 
-    systemctl status unbound
+    systemctl enable unbound.service
+
+To check that everything is correct, you can see the status (which should be 
+"active" and also show "enabled"):
+
+.. code-block:: text
+
+    systemctl status unbound.service
 
 We can now :command:`dig` a final time, to verify that this works.
 
