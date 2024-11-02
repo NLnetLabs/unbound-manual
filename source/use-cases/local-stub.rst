@@ -159,12 +159,15 @@ configuration with:
 
 .. note::
 
-    Another service exists under certain distributions called: ``unbound-resolvconf``. 
-    In case this service cause problems (like: Failed to set DNS configuration).
-    And you already have configured systemd resolved successfully and the ``dig`` command works correctly.
-    You can you safely stop and disable or mask the ``unbound-resolvconf`` service. 
+    If you encounter issues like “Failed to set DNS configuration” reported by a service called
+    ``unbound-resolvconf`` (available on some distributions), you can safely stop, disable, or mask this service.
 
-    To disable the unbound-resolvconf service run: ``systemctl disable unbound-resolvconf.service``
+    This is only necessary if:
+
+    - You've already configured systemd-resolved successfully.
+    - The ``dig`` command works as expected.
+
+    To disable the ``unbound-resolvconf`` service run: ``systemctl disable unbound-resolvconf.service``
 
 If successful, the operating system should use our Unbound instance as default.
 A quick test a :command:`dig` without specifying the address of the Unbound
