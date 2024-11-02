@@ -164,8 +164,8 @@ configuration with:
 
     This is only necessary if:
 
-    - You've already configured systemd-resolved successfully.
-    - The ``dig`` command works as expected.
+    * You've already configured systemd-resolved successfully.
+    * The ``dig`` command works as expected.
 
     To disable the ``unbound-resolvconf`` service run: ``systemctl disable unbound-resolvconf.service``
 
