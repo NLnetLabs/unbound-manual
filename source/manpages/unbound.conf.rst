@@ -996,6 +996,13 @@ tls-upstream: *<yes or no>*
     :ref:`forward-tls-upstream:<unbound.conf.forward.forward-tls-upstream>`.
     And also with
     :ref:`stub-tls-upstream:<unbound.conf.stub.stub-tls-upstream>`.
+    If the
+    :ref:`tls-upstream:<unbound.conf.tls-upstream>`
+    option is enabled, it is for all the forwards and stubs, where the
+    :ref:`forward-tls-upstream:<unbound.conf.forward.forward-tls-upstream>`
+    and
+    :ref:`stub-tls-upstream:<unbound.conf.stub.stub-tls-upstream>`
+    options are ignored, as if they had been set to yes.
 
     Default: no
 
@@ -1282,6 +1289,27 @@ proxy-protocol-port: *<portnr>*
     There is no support for PROXYv2 on a DoH or DNSCrypt listening interface.
 
     Can list multiple, each on a new statement.
+
+.. _unbound.conf.quic-port:
+
+quic-port: *<number>*
+    The port number on which to provide DNS-over-QUIC service.
+    Only interfaces configured with that port number as @number get the QUIC
+    service.
+    The interface uses QUIC for the UDP traffic on that port number.
+
+    Default: 853
+
+.. _unbound.conf.quic-size:
+
+quic-size: *<size in bytes>*
+    Maximum number of bytes for all QUIC buffers and data combined.
+    A plain number is in bytes, append 'k', 'm' or 'g' for kilobytes, megabytes
+    or gigabytes (1024*1024 bytes in a megabyte).
+    New connections receive connection refused when the limit is exceeded.
+    New streams are reset when the limit is exceeded.
+
+    Default: 8m
 
 .. _unbound.conf.use-systemd:
 
@@ -1645,6 +1673,15 @@ log-time-ascii: *<yes or no>*
 
     Default: no (prints the seconds since 1970 in brackets)
 
+.. _unbound.conf.log-time-iso:
+
+log-time-iso: *<yes or no>*
+    Log time in ISO8601 format, if
+    :ref:`log-time-ascii: yes`<unbound.conf.log-time-ascii>`
+    is also set.
+
+    Default: no
+
 .. _unbound.conf.log-queries:
 
 log-queries: *<yes or no>*
@@ -1849,6 +1886,15 @@ harden-glue: *<yes or no>*
     Will trust glue only if it is within the servers authority.
 
     Default: yes
+
+.. _unbound.conf.harden-unverified-glue:
+
+harden-unverified-glue: *<yes or no>*
+    Will trust only in-zone glue.
+    Will try to resolve all out of zone (*unverified*) glue.
+    Will fallback to the original glue if unable to resolve.
+
+    Default: no
 
 .. _unbound.conf.harden-dnssec-stripped:
 
@@ -2062,8 +2108,8 @@ do-not-query-localhost: *<yes or no>*
 .. _unbound.conf.prefetch:
 
 prefetch: *<yes or no>*
-    If yes, message cache elements are prefetched before they expire to keep
-    the cache up to date.
+    If yes, cache hits on message cache elements that are on their last 10
+    percent of their TTL value trigger a prefetch to keep the cache up to date.
     Turning it on gives about 10 percent more traffic and load on the machine,
     but popular items do not expire from the cache.
 
@@ -2104,14 +2150,13 @@ minimal-responses: *<yes or no>*
     If yes, Unbound does not insert authority/additional sections into response
     messages when those sections are not required.
     This reduces response size significantly, and may avoid TCP fallback for
-    some responses.
-    This may cause a slight speedup.
-
+    some responses which may cause a slight speedup.
     The default is yes, even though the DNS protocol RFCs mandate these
-    sections, and the additional content could be of use and save roundtrips
-    for clients.
-    Because they are not used, and the saved roundtrips are easier saved with
-    prefetch, whilst this is faster.
+    sections, and the additional content could save roundtrips for clients that
+    use the additional content.
+    However these sections are hardly used by clients.
+    Enabling prefetch can benefit clients that need the additional content
+    by trying to keep that content fresh in the cache.
 
     Default: yes
 
@@ -3292,6 +3337,36 @@ max-query-restarts: *<number>*
     accepted, where Unbound needs to verify (resolve) each link individually.
 
     Default: 11
+
+.. _unbound.conf.iter-scrub-ns:
+
+iter-scrub-ns: *<number>*
+    Limit on the number of NS records allowed in an rrset of type NS, from the
+    iterator scrubber.
+    This protects the internals of the resolver from overly large NS sets.
+
+    Default: 20
+
+.. _unbound.conf.iter-scrub-cname:
+
+iter-scrub-cname: *<number>*
+    Limit on the number of CNAME, DNAME records in an answer, from the iterator
+    scrubber.
+    This protects the internals of the resolver from overly long indirection
+    chains.
+    Clips off the remainder of the reply packet at that point.
+
+    Default: 11
+
+.. _unbound.conf.max-global-quota:
+
+max-global-quota: *<number>*
+    Limit on the number of upstream queries sent out for an incoming query and
+    its subqueries from recursion.
+    It is not reset during the resolution.
+    When it is exceeded the query is failed and the lookup process stops.
+
+    Default: 128
 
 .. _unbound.conf.fast-server-permil:
 
@@ -4661,6 +4736,26 @@ redis-timeout: *<msec>*
     a new connection later.
 
     Default: 100
+
+.. _unbound.conf.cachedb.redis-command-timeout:
+
+redis-command-timeout: *<msec>*
+    The timeout to use for redis commands, in milliseconds.
+    If 0, it uses the
+    :ref:`redis-timeout:<unbound.conf.cachedb.redis-timeout>`
+    value.
+
+    Default: 0
+
+.. _unbound.conf.cachedb.redis-connect-timeout:
+
+redis-connect-timeout: *<msec>*
+    The timeout to use for redis connection set up, in milliseconds.
+    If 0, it uses the
+    :ref:`redis-timeout:<unbound.conf.cachedb.redis-timeout>`
+    value.
+
+    Default: 0
 
 .. _unbound.conf.cachedb.redis-expire-records:
 

@@ -996,7 +996,14 @@ mem.http.response_buffer
     Memory in bytes used by the HTTP/2 response buffers.
     Containing DNS responses waiting to be written back to the clients.
 
-.. _unbound-control.stats.histogram.<sec>.<usec>.to.<sec>.<usec>:
+.. _unbound-control.stats.mem.quic:
+
+mem.quic
+    Memory in bytes used by QUIC.
+    Containing connection information, stream information, queries read and
+    responses written back to the clients.
+
+.. _unbound-control.stats.histogram:
 
 histogram.<sec>.<usec>.to.<sec>.<usec>
     Shows a histogram, summed over all threads.
