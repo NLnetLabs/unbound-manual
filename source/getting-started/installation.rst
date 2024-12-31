@@ -215,7 +215,7 @@ can be manually specified with ``--with-ssl=`` and ``--with-libexpat=``.
 Or alternatively, when :command:`configure` cannot find ``libssl`` and
 ``libexpat`` and :command:`brew` installed them at the default directory (make
 sure you fill in the correct version, at the time of writing the latest version
-of openssl is ``1.1.1k`` and of libexapt is ``2.3.0``).
+of openssl is ``1.1.1k`` and of libexpat is ``2.3.0``).
 
 .. code-block:: bash
 
