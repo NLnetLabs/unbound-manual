@@ -79,6 +79,12 @@ Fill in a good place to put the quic install. The example uses no-shared,
 so that the shared library search path later does not find the wrong dynamic
 library, but a shared library works too of course.
 
+For the ngtcp2 library, the
+packages ``pkg-config autoconf automake autotools-dev libtool`` are needed
+to build the configure script. They can be installed
+like ``sudo apt install pkg-config autoconf automake autotools-dev libtool``
+and this makes the autoreconf command available.
+
 The ngtcp2 library can be compiled like this:
 
 .. code-block:: bash
