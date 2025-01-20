@@ -71,6 +71,7 @@ This is how to compile openssl+quic:
 
     git clone --depth 1 -b OpenSSL_1_1_1o+quic https://github.com/quictls/openssl openssl+quic
     cd openssl+quic
+    git submodule update --init --recursive
     ./config enable-tls1_3 no-shared threads --prefix=/path/to/openssl+quic_install
     make
     make install
@@ -91,6 +92,7 @@ The ngtcp2 library can be compiled like this:
 
     git clone --depth 1 -b v0.19.1 https://github.com/ngtcp2/ngtcp2 ngtcp2
     cd ngtcp2
+    git submodule update --init --recursive
     autoreconf -i
     ./configure PKG_CONFIG_PATH=/path/to/openssl+quic_install/lib/pkgconfig LDFLAGS="-Wl,-rpath,/path/to/openssl+quic_install/lib" --prefix=/path/to/ngtcp2_install
     make
