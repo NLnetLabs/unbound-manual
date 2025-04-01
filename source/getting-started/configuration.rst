@@ -42,7 +42,7 @@ during the installation process).
 
         # addresses from the IP range that are allowed to connect to the resolver
         access-control: 192.168.0.0/16 allow
-        # access-control: 2001:DB8/64 allow
+        # access-control: 2001:DB8::/64 allow
 
 By default the Unbound configuration uses
 `chroot <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer
