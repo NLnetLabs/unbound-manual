@@ -554,6 +554,10 @@ wait-limit-netblock: *<netblock>* *<number>*
     Useful for overriding the default for a specific, group or individual,
     server.
     The value ``-1`` disables wait limits for the netblock.
+    By default the loopback has a wait limit netblock of ``-1``, it is not
+    limited, because it is separated from the rest of network for spoofed
+    packets.
+    The loopback addresses ``127.0.0.0/8`` and ``::1/128`` are default at ``-1``.
 
     Default: (none)
 
@@ -565,6 +569,7 @@ wait-limit-cookie-netblock: *<netblock>* *<number>*
     :ref:`wait-limit-cookie<unbound.conf.wait-limit-cookie>`
     value is used.
     The value ``-1`` disables wait limits for the netblock.
+    The loopback addresses ``127.0.0.0/8`` and ``::1/128`` are default at ``-1``.
 
     Default: (none)
 
@@ -1286,7 +1291,7 @@ proxy-protocol-port: *<portnr>*
 
     PROXYv2 is supported for UDP and TCP/TLS listening interfaces.
 
-    There is no support for PROXYv2 on a DoH or DNSCrypt listening interface.
+    There is no support for PROXYv2 on a DoH, DoQ or DNSCrypt listening interface.
 
     Can list multiple, each on a new statement.
 
@@ -1869,13 +1874,13 @@ target-fetch-policy: *<"list of numbers">*
 harden-short-bufsize: *<yes or no>*
     Very small EDNS buffer sizes from queries are ignored.
 
-    Default: on (as described in the standard)
+    Default: yes (as described in the standard)
 
 .. _unbound.conf.harden-large-queries:
 
 harden-large-queries: *<yes or no>*
     Very large queries are ignored.
-    Default is off, since it is legal protocol wise to send these, and could be
+    Default is no, since it is legal protocol wise to send these, and could be
     necessary for operation if TSIG or EDNS payload is very large.
 
     Default: no
@@ -1956,10 +1961,24 @@ harden-referral-path: *<yes or no>*
 harden-algo-downgrade: *<yes or no>*
     Harden against algorithm downgrade when multiple algorithms are advertised
     in the DS record.
-    If no, allows the weakest algorithm to validate the zone.
-    Zone signers must produce zones that allow this feature to work, but
-    sometimes they do not, and turning this option off avoids that validation
-    failure.
+    This works by first choosing only the strongest DS digest type as per
+    :rfc:`4509` (Unbound treats the highest algorithm as the strongest) and
+    then expecting signatures from all the advertised signing algorithms from
+    the chosen DS(es) to be present.
+    If no, allows any one supported algorithm to validate the zone, even if
+    other advertised algorithms are broken.
+    :rfc:`6840` mandates that zone signers must produce zones signed with all
+    advertised algorithms, but sometimes they do not.
+    :rfc:`6840` also clarifies that this requirement is not for validators and
+    validators should accept any single valid path.
+    It should thus be explicitly noted that this option violates :rfc:`6840`
+    for DNSSEC validation and should only be used to perform a signature
+    completeness test to support troubleshooting.
+
+    .. warning::
+        Using this option may break DNSSEC resolution with non :rfc:`6840`
+        conforming signers and/or in multi-signer configurations that don't
+        send all the advertised signatures.
 
     Default: no
 
@@ -1996,7 +2015,7 @@ caps-exempt: *<domain>*
 
 .. _unbound.conf.caps-whitelist:
 
-caps-whitelist: *<yes or no>*
+caps-whitelist: *<domain>*
     Alternate syntax for :ref:`caps-exempt:<unbound.conf.caps-exempt>`.
 
 .. _unbound.conf.qname-minimisation:
@@ -2195,9 +2214,6 @@ module-config: *"<module names>"*
     queries.
 
     The default is "validator iterator".
-
-    When the server is built with EDNS client subnet support the default is
-    "subnetcache validator iterator".
 
     Most modules that need to be listed here have to be listed at the beginning
     of the line.
@@ -2433,8 +2449,11 @@ disable-edns-do: *<yes or no>*
 serve-expired: *<yes or no>*
     If enabled, Unbound attempts to serve old responses from cache with a TTL
     of :ref:`serve-expired-reply-ttl:<unbound.conf.serve-expired-reply-ttl>` in
-    the response without waiting for the actual resolution to finish.
-    The actual resolution answer ends up in the cache later on.
+    the response.
+    By default the expired answer will be used after a resolution attempt
+    errored out or is taking more than
+    :ref:`serve-expired-client-timeout:<unbound.conf.serve-expired-client-timeout>`
+    to resolve.
 
     Default: no
 
@@ -2442,13 +2461,13 @@ serve-expired: *<yes or no>*
 
 serve-expired-ttl: *<seconds>*
     Limit serving of expired responses to configured seconds after expiration.
-    0 disables the limit.
+    ``0`` disables the limit.
     This option only applies when
     :ref:`serve-expired:<unbound.conf.serve-expired>` is enabled.
-    A suggested value per :rfc:`8767` is between 86400 (1 day) and 259200 (3
-    days).
+    A suggested value per RFC 8767 is between 86400 (1 day) and 259200 (3 days).
+    The default is 86400.
 
-    Default: 0
+    Default: 86400
 
 .. _unbound.conf.serve-expired-ttl-reset:
 
@@ -2478,10 +2497,11 @@ serve-expired-client-timeout: *<msec>*
     This essentially enables the serve-stale behavior as specified in
     :rfc:`8767` that first tries to resolve before immediately responding with
     expired data.
-    A recommended value per :rfc:`8767` is 1800.
-    Setting this to 0 will disable this behavior.
+    Setting this to ``0`` will disable this behavior and instead serve the
+    expired record immediately from the cache before attempting to refresh it
+    via resolution.
 
-    Default: 0
+    Default: 1800
 
 .. _unbound.conf.serve-original-ttl:
 
@@ -2851,7 +2871,8 @@ local-zone: *<zone> <type>*
         :ref:`transparent<unbound.conf.local-zone.type.transparent>`.
 
     The default zones are localhost, reverse ``127.0.0.1`` and ``::1``, the
-    home.arpa, onion, test, invalid and the AS112 zones.
+    ``home.arpa``, ``resolver.arpa``, ``service.arpa``, ``onion``, ``test``,
+    ``invalid`` and the AS112 zones.
     The AS112 zones are reverse DNS zones for private use and reserved IP
     addresses for which the servers on the internet cannot provide correct
     answers.
@@ -2905,6 +2926,24 @@ local-zone: *<zone> <type>*
             local-zone: "home.arpa." static
             local-data: "home.arpa. 10800 IN NS localhost."
             local-data: "home.arpa. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+
+    resolver.arpa (:rfc:`9462`)
+        Default content:
+
+        .. code-block:: text
+
+            local-zone: "resolver.arpa." static
+            local-data: "resolver.arpa. 10800 IN NS localhost."
+            local-data: "resolver.arpa. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
+
+    service.arpa (draft-ietf-dnssd-srp-25)
+        Default content:
+
+        .. code-block:: text
+
+            local-zone: "service.arpa." static
+            local-data: "service.arpa. 10800 IN NS localhost."
+            local-data: "service.arpa. 10800 IN SOA localhost. nobody.invalid. 1 3600 1200 604800 10800"
 
     onion (:rfc:`7686`)
         Default content:
@@ -3366,7 +3405,7 @@ max-global-quota: *<number>*
     It is not reset during the resolution.
     When it is exceeded the query is failed and the lookup process stops.
 
-    Default: 128
+    Default: 200
 
 .. _unbound.conf.fast-server-permil:
 
@@ -3461,13 +3500,13 @@ edns-client-string-opcode: *<opcode>*
 ede: *<yes or no>*
     If enabled, Unbound will respond with Extended DNS Error codes
     (:rfc:`8914`).
-    These EDEs attach informative error messages to a response for various
-    errors.
+    These EDEs privide additional information with a response mainly for, but
+    not limited to, DNS and DNSSEC errors.
 
     When the :ref:`val-log-level:<unbound.conf.val-log-level>` option is also
-    set to 2, responses with Extended DNS Errors concerning DNSSEC failures
-    that are not served from cache, will also contain a descriptive text
-    message about the reason for the failure.
+    set to ``2``, responses with Extended DNS Errors concerning DNSSEC failures
+    will also contain a descriptive text message about the reason for the
+    failure.
 
     Default: no
 
@@ -3478,8 +3517,27 @@ ede-serve-expired: *<yes or no>*
     - Stale Answer* as EDNS0 option to the expired response.
 
     .. note::
-        This will not attach the EDE code without setting
-        :ref:`ede: yes<unbound.conf.ede>` as well.
+        The :ref:`ede: yes<unbound.conf.ede>` option needs to be enabled as
+        well for this to work.
+
+    Default: no
+
+.. _unbound.conf.dns-error-reporting:
+
+dns-error-reporting: *<yes or no>*
+    If enabled, Unbound will send DNS Error Reports (:rfc:`9567`).
+    The name servers need to express support by attaching the Report-Channel
+    EDNS0 option on their replies specifying the reporting agent for the zone.
+    Any errors encountered during resolution that would result in Unbound
+    generating an Extended DNS Error (:rfc:`8914`) will be reported to the
+    zone's reporting agent.
+
+    The :ref:`ede: yes<unbound.conf.ede>` option does not need to be enabled
+    for this to work.
+
+    It is advised that the
+    :ref:`qname-minimisation:<unbound.conf.qname-minimisation>` option is also
+    enabled to increase privacy on the outgoing reports.
 
     Default: no
 
@@ -4054,6 +4112,8 @@ zonefile: *<filename>*
     If the file does not exist or is empty, Unbound will attempt to fetch zone
     data (eg. from the primary servers).
 
+.. _unbound.conf.view:
+
 View Options
 ^^^^^^^^^^^^
 
@@ -4384,6 +4444,15 @@ On top of that, for each query only 100 different subnets are allowed to be
 stored for each address family.
 Exceeding that number, older entries will be purged from cache.
 
+Note that due to the nature of how EDNS Client Subnet works, by segregating the
+client IP space in order to try and have tailored responses for prefixes of
+unknown sizes, resolution and cache response performance are impacted as a
+result.
+Usage of the subnetcache module should only be enabled in installations that
+require such functionality where the resolver and the clients belong to
+different networks.
+An example of that is an open resolver installation.
+
 This module does not interact with the
 :ref:`serve-expired\*:<unbound.conf.serve-expired>` and
 :ref:`prefetch:<unbound.conf.prefetch>` options.
@@ -4584,7 +4653,7 @@ ipsecmod-allow: *<domain>*
 
 .. _unbound.conf.ipsecmod-whitelist:
 
-ipsecmod-whitelist: *<yes or no>*
+ipsecmod-whitelist: *<domain>*
     Alternate syntax for :ref:`ipsecmod-allow:<unbound.conf.ipsecmod-allow>`.
 
 Cache DB Module Options
@@ -4714,7 +4783,7 @@ redis-server-port: *<port number>*
 .. _unbound.conf.cachedb.redis-server-path:
 
 redis-server-path: *<unix socket path>*
-    The unix socket path to connect to the redis server.
+    The unix socket path to connect to the Redis server.
     Unix sockets may have better throughput than the IP address option.
 
     Default: "" (disabled)
@@ -4722,7 +4791,7 @@ redis-server-path: *<unix socket path>*
 .. _unbound.conf.cachedb.redis-server-password:
 
 redis-server-password: *"<password>"*
-    The Redis AUTH password to use for the redis server.
+    The Redis AUTH password to use for the Redis server.
     Only relevant if Redis is configured for client password authorisation.
 
     Default: "" (disabled)
@@ -4730,7 +4799,7 @@ redis-server-password: *"<password>"*
 .. _unbound.conf.cachedb.redis-timeout:
 
 redis-timeout: *<msec>*
-    The period until when Unbound waits for a response from the Redis sever.
+    The period until when Unbound waits for a response from the Redis server.
     If this timeout expires Unbound closes the connection, treats it as if the
     Redis server does not have the requested data, and will try to re-establish
     a new connection later.
@@ -4740,8 +4809,8 @@ redis-timeout: *<msec>*
 .. _unbound.conf.cachedb.redis-command-timeout:
 
 redis-command-timeout: *<msec>*
-    The timeout to use for redis commands, in milliseconds.
-    If 0, it uses the
+    The timeout to use for Redis commands, in milliseconds.
+    If ``0``, it uses the
     :ref:`redis-timeout:<unbound.conf.cachedb.redis-timeout>`
     value.
 
@@ -4750,8 +4819,8 @@ redis-command-timeout: *<msec>*
 .. _unbound.conf.cachedb.redis-connect-timeout:
 
 redis-connect-timeout: *<msec>*
-    The timeout to use for redis connection set up, in milliseconds.
-    If 0, it uses the
+    The timeout to use for Redis connection set up, in milliseconds.
+    If ``0``, it uses the
     :ref:`redis-timeout:<unbound.conf.cachedb.redis-timeout>`
     value.
 
@@ -4786,6 +4855,87 @@ redis-logical-db: *<logical database index>*
     explicitly SELECT'ed upon connecting.
 
     Default: 0
+
+.. _unbound.conf.cachedb.redis-replica-server-host:
+
+redis-replica-server-host: *<server address or name>*
+    The IP (either v6 or v4) address or domain name of the Redis server.
+    In general an IP address should be specified as otherwise Unbound will have
+    to resolve the name of the server every time it establishes a connection to
+    the server.
+
+    This server is treated as a read-only replica server
+    (https://redis.io/docs/management/replication/#read-only-replica).
+    If specified, all Redis read commands will go to this replica server, while
+    the write commands will go to the
+    :ref:`redis-server-host:<unbound.conf.cachedb.redis-server-host>`.
+
+    Default: "" (disabled).
+
+.. _unbound.conf.cachedb.redis-replica-server-port:
+
+redis-replica-server-port: *<port number>*
+    The TCP port number of the Redis replica server.
+
+    Default: 6379
+
+.. _unbound.conf.cachedb.redis-replica-server-path:
+
+redis-replica-server-path: *<unix socket path>*
+    The unix socket path to connect to the Redis replica server.
+    Unix sockets may have better throughput than the IP address option.
+
+    Default: "" (disabled)
+
+.. _unbound.conf.cachedb.redis-replica-server-password:
+
+redis-replica-server-password: *"<password>"*
+    The Redis AUTH password to use for the Redis server.
+    Only relevant if Redis is configured for client password authorisation.
+
+    Default: "" (disabled)
+
+.. _unbound.conf.cachedb.redis-replica-timeout:
+
+redis-replica-timeout: *<msec>*
+    The period until when Unbound waits for a response from the Redis replica
+    server.
+    If this timeout expires Unbound closes the connection, treats it as if the
+    Redis server does not have the requested data, and will try to re-establish
+    a new connection later.
+
+    Default: 100
+
+.. _unbound.conf.cachedb.redis-replica-command-timeout:
+
+redis-replica-command-timeout: *<msec>*
+    The timeout to use for Redis replica commands, in milliseconds.
+    If ``0``, it uses the
+    :ref:`redis-replica-timeout:<unbound.conf.cachedb.redis-replica-timeout>`
+    value.
+
+    Default: 0
+
+.. _unbound.conf.cachedb.redis-replica-connect-timeout:
+
+redis-replica-connect-timeout: *<msec>*
+    The timeout to use for Redis replica connection set up, in milliseconds.
+    If ``0``, it uses the
+    :ref:`redis-replica-timeout:<unbound.conf.cachedb.redis-replica-timeout>`
+    value.
+
+    Default: 0
+
+.. _unbound.conf.cachedb.redis-replica-logical-db:
+
+redis-replica-logical-db: *<logical database index>*
+    Same as :ref:`redis-logical-db:<unbound.conf.cachedb.redis-logical-db>` but
+    for the Redis replica server.
+
+    Default: 0
+
+
+.. _unbound.conf.dnstap:
 
 DNSTAP Logging Options
 ^^^^^^^^^^^^^^^^^^^^^^
