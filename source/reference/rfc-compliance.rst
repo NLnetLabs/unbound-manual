@@ -117,4 +117,5 @@ Internet drafts that have been implemented in Unbound.
 :rfc:`8914`    Extended DNS Errors
 :rfc:`8976`    Message Digest for DNS Zones
 :rfc:`9156`    DNS Query Name Minimisation to Improve Privacy
+:rfc:`9567`    DNS Error Reporting
 ============== ====
