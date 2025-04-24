@@ -108,6 +108,186 @@ reload_keep_cache
     That means the caches sizes and the number of threads must not change
     between reloads.
 
+.. _unbound-control.commands.fast_reload:
+
+fast_reload [``+dpv``]
+    Reload the server, but keep downtime to a minimum, so that user queries
+    keep seeing service.
+    This needs the code compiled with threads.
+    The config is loaded in a thread, and prepared, then it briefly pauses the
+    existing server and updates config options.
+    The intent is that the pause does not impact the service of user queries.
+    The cache is kept.
+    Also user queries worked on are kept and continue, but with the new config
+    options.
+
+    .. note::
+        This command is experimental at this time.
+
+    The amount of temporal memory needed during a fast_reload is twice the
+    amount needed for configuration.
+    This is because Unbound temporarily needs to store both current
+    configuration values and new ones while trying to fast_reload.
+    Zones loaded from disk (authority zones and RPZ zones) are included in such
+    memory needs.
+
+    Options that can be changed are for
+    :ref:`forwards<unbound.conf.forward>`,
+    :ref:`stubs<unbound.conf.stub>`,
+    :ref:`views<unbound.conf.view>`,
+    :ref:`authority zones<unbound.conf.auth>`,
+    :ref:`RPZ zones<unbound.conf.rpz>` and
+    :ref:`local zones<unbound.conf.local-zone>`.
+
+    Also
+    :ref:`access-control:<unbound.conf.access-control>` and similar options,
+    :ref:`interface-action:<unbound.conf.interface-action>` and similar
+    options and
+    :ref:`tcp-connection-limit:<unbound.conf.tcp-connection-limit>`.
+    It can reload some
+    :ref:`define-tag:<unbound.conf.define-tag>`
+    changes, more on that below.
+    Further options include
+    :ref:`insecure-lan-zones:<unbound.conf.insecure-lan-zones>`,
+    :ref:`domain-insecure:<unbound.conf.domain-insecure>`,
+    :ref:`trust-anchor-file:<unbound.conf.trust-anchor-file>`,
+    :ref:`trust-anchor:<unbound.conf.trust-anchor>`,
+    :ref:`trusted-keys-file:<unbound.conf.trusted-keys-file>`,
+    :ref:`auto-trust-anchor-file:<unbound.conf.auto-trust-anchor-file>`,
+    :ref:`edns-client-string:<unbound.conf.edns-client-string>`,
+    ipset,
+    :ref:`log-identity:<unbound.conf.log-identity>`,
+    :ref:`infra-cache-numhosts:<unbound.conf.infra-cache-numhosts>`,
+    :ref:`msg-cache-size:<unbound.conf.msg-cache-size>`,
+    :ref:`rrset-cache-size:<unbound.conf.rrset-cache-size>`,
+    :ref:`key-cache-size:<unbound.conf.key-cache-size>`,
+    :ref:`ratelimit-size:<unbound.conf.ratelimit-size>`,
+    :ref:`neg-cache-size:<unbound.conf.neg-cache-size>`,
+    :ref:`num-queries-per-thread:<unbound.conf.num-queries-per-thread>`,
+    :ref:`jostle-timeout:<unbound.conf.jostle-timeout>`,
+    :ref:`use-caps-for-id:<unbound.conf.use-caps-for-id>`,
+    :ref:`unwanted-reply-threshold:<unbound.conf.unwanted-reply-threshold>`,
+    :ref:`tls-use-sni:<unbound.conf.tls-use-sni>`,
+    :ref:`outgoing-tcp-mss:<unbound.conf.outgoing-tcp-mss>`,
+    :ref:`ip-dscp:<unbound.conf.ip-dscp>`,
+    :ref:`max-reuse-tcp-queries:<unbound.conf.max-reuse-tcp-queries>`,
+    :ref:`tcp-reuse-timeout:<unbound.conf.tcp-reuse-timeout>`,
+    :ref:`tcp-auth-query-timeout:<unbound.conf.tcp-auth-query-timeout>`,
+    :ref:`delay-close:<unbound.conf.delay-close>`.
+
+    It does not work with
+    :ref:`interface:<unbound.conf.interface>` and
+    :ref:`outgoing-interface:<unbound.conf.outgoing-interface>` changes,
+    also not with
+    :ref:`remote control<unbound.conf.remote>`,
+    :ref:`outgoing-port-permit:<unbound.conf.outgoing-port-permit>`,
+    :ref:`outgoing-port-avoid:<unbound.conf.outgoing-port-avoid>`,
+    :ref:`msg-buffer-size:<unbound.conf.msg-buffer-size>`,
+    any **\*-slabs** options and
+    :ref:`statistics-interval:<unbound.conf.statistics-interval>` changes.
+
+    For :ref:`dnstap<unbound.conf.dnstap>` these options can be changed:
+    :ref:`dnstap-log-resolver-query-messages:<unbound.conf.dnstap.dnstap-log-resolver-query-messages>`,
+    :ref:`dnstap-log-resolver-response-messages:<unbound.conf.dnstap.dnstap-log-resolver-response-messages>`,
+    :ref:`dnstap-log-client-query-messages:<unbound.conf.dnstap.dnstap-log-client-query-messages>`,
+    :ref:`dnstap-log-client-response-messages:<unbound.conf.dnstap.dnstap-log-client-response-messages>`,
+    :ref:`dnstap-log-forwarder-query-messages:<unbound.conf.dnstap.dnstap-log-forwarder-query-messages>` and
+    :ref:`dnstap-log-forwarder-response-messages:<unbound.conf.dnstap.dnstap-log-forwarder-response-messages>`.
+
+    It does not work with these options:
+    :ref:`dnstap-enable:<unbound.conf.dnstap.dnstap-enable>`,
+    :ref:`dnstap-bidirectional:<unbound.conf.dnstap.dnstap-bidirectional>`,
+    :ref:`dnstap-socket-path:<unbound.conf.dnstap.dnstap-socket-path>`,
+    :ref:`dnstap-ip:<unbound.conf.dnstap.dnstap-ip>`,
+    :ref:`dnstap-tls:<unbound.conf.dnstap.dnstap-tls>`,
+    :ref:`dnstap-tls-server-name:<unbound.conf.dnstap.dnstap-tls-server-name>`,
+    :ref:`dnstap-tls-cert-bundle:<unbound.conf.dnstap.dnstap-tls-cert-bundle>`,
+    :ref:`dnstap-tls-client-key-file:<unbound.conf.dnstap.dnstap-tls-client-key-file>` and
+    :ref:`dnstap-tls-client-cert-file:<unbound.conf.dnstap.dnstap-tls-client-cert-file>`.
+
+    The options
+    :ref:`dnstap-send-identity:<unbound.conf.dnstap.dnstap-send-identity>`,
+    :ref:`dnstap-send-version:<unbound.conf.dnstap.dnstap-send-version>`,
+    :ref:`dnstap-identity:<unbound.conf.dnstap.dnstap-identity>`, and
+    :ref:`dnstap-version:<unbound.conf.dnstap.dnstap-version>` can be loaded
+    when ``+p`` is not used.
+
+    The ``+v`` option makes the output verbose which includes the time it took
+    to do the reload.
+    With ``+vv`` it is more verbose which includes the amount of memory that
+    was allocated temporarily to perform the reload; this amount of memory can
+    be big if the config has large contents.
+    In the timing output the 'reload' time is the time during which the server
+    was paused.
+
+    The ``+p`` option makes the reload not pause threads, they keep running.
+    Locks are acquired, but items are updated in sequence, so it is possible
+    for threads to see an inconsistent state with some options from the old
+    and some options from the new config, such as cache TTL parameters from the
+    old config and forwards from the new config.
+    The stubs and forwards are updated at the same time, so that they are
+    viewed consistently, either old or new values together.
+    The option makes the reload time take eg. 3 microseconds instead of 0.3
+    milliseconds during which the worker threads are interrupted.
+    So, the interruption is much shorter, at the expense of some inconsistency.
+    After the reload itself, every worker thread is briefly contacted to make
+    them release resources, this makes the delete timing a little longer, and
+    takes up time from the remote control servicing worker thread.
+
+    With the nopause option (``+p``), the reload does not work to reload some
+    options, that fast reload works on without the nopause option:
+    :ref:`val-bogus-ttl:<unbound.conf.val-bogus-ttl>`,
+    :ref:`val-override-date:<unbound.conf.val-override-date>`,
+    :ref:`val-sig-skew-min:<unbound.conf.val-sig-skew-min>`,
+    :ref:`val-sig-skew-max:<unbound.conf.val-sig-skew-max>`,
+    :ref:`val-max-restart:<unbound.conf.val-max-restart>`,
+    :ref:`val-nsec3-keysize-iterations:<unbound.conf.val-nsec3-keysize-iterations>`,
+    :ref:`target-fetch-policy:<unbound.conf.target-fetch-policy>`,
+    :ref:`outbound-msg-retry:<unbound.conf.outbound-msg-retry>`,
+    :ref:`max-sent-count:<unbound.conf.max-sent-count>`,
+    :ref:`max-query-restarts:<unbound.conf.max-query-restarts>`,
+    :ref:`do-not-query-address:<unbound.conf.do-not-query-address>`,
+    :ref:`do-not-query-localhost:<unbound.conf.do-not-query-localhost>`,
+    :ref:`private-address:<unbound.conf.private-address>`,
+    :ref:`private-domain:<unbound.conf.private-domain>`,
+    :ref:`caps-exempt:<unbound.conf.caps-exempt>`,
+    :ref:`nat64-prefix:<unbound.conf.nat64.nat64-prefix>`,
+    :ref:`do-nat64:<unbound.conf.nat64.do-nat64>`,
+    :ref:`infra-host-ttl:<unbound.conf.infra-host-ttl>`,
+    :ref:`infra-keep-probing:<unbound.conf.infra-keep-probing>`,
+    :ref:`ratelimit:<unbound.conf.ratelimit>`,
+    :ref:`ip-ratelimit:<unbound.conf.ip-ratelimit>`,
+    :ref:`ip-ratelimit-cookie:<unbound.conf.ip-ratelimit-cookie>`,
+    :ref:`wait-limit-netblock:<unbound.conf.wait-limit-netblock>`,
+    :ref:`wait-limit-cookie-netblock:<unbound.conf.wait-limit-cookie-netblock>`,
+    :ref:`ratelimit-below-domain:<unbound.conf.ratelimit-below-domain>`,
+    :ref:`ratelimit-for-domain:<unbound.conf.ratelimit-for-domain>`.
+
+    The ``+d`` option makes the reload drop queries that the worker threads are
+    working on.
+    This is like
+    :ref:`flush_requestlist<unbound-control.commands.flush_requestlist>`.
+    Without it the queries are kept so that users keep getting answers for
+    those queries that are currently processed.
+    The drop makes it so that queries during the life time of the
+    query processing see only old, or only new config options.
+
+    When there are changes to the config tags, from the
+    :ref:`define-tag:<unbound.conf.define-tag>` option,
+    then the ``+d`` option is implicitly turned on with a warning printout, and
+    queries are dropped.
+    This is to stop references to the old tag information, by the old
+    queries.
+    If the number of tags is increased in the newly loaded config, by
+    adding tags at the end, then the implicit ``+d`` option is not needed.
+
+    For response ip, that is actions associated with IP addresses, and perhaps
+    intersected with access control tag and action information, those settings
+    are stored with a query when it comes in based on its source IP address.
+    The old information is kept with the query until the queries are done.
+    This is gone when those queries are resolved and finished, or it is
+    possible to flush the requestlist with ``+d``.
+
 .. _unbound-control.commands.verbosity:
 
 verbosity *number*
@@ -686,6 +866,16 @@ threadX.num.queries_cookie_client
 threadX.num.queries_cookie_invalid
     number of queries with an invalid DNS Cookie by thread
 
+.. _unbound-control.stats.threadX.num.queries_discard_timeout:
+
+threadX.num.queries_discard_timeout
+    number of queries removed due to discard-timeout by thread
+
+.. _unbound-control.stats.threadX.num.queries_wait_limit:
+
+threadX.num.queries_wait_limit
+    number of queries removed due to wait-limit by thread
+
 .. _unbound-control.stats.threadX.num.cachehits:
 
 threadX.num.cachehits
@@ -717,6 +907,11 @@ threadX.num.dnscrypt.cleartext
 
 threadX.num.dnscrypt.malformed
     number of request that were neither cleartext, not valid dnscrypt messages.
+
+.. _unbound-control.stats.threadX.num.dns_error_reports:
+
+threadX.num.dns_error_reports
+    number of DNS Error Reports generated by thread
 
 .. _unbound-control.stats.threadX.num.prefetch:
 
@@ -839,6 +1034,16 @@ total.num.queries_cookie_client
 total.num.queries_cookie_invalid
     summed over threads.
 
+.. _unbound-control.stats.total.num.queries_discard_timeout:
+
+total.num.queries_discard_timeout
+    summed over threads.
+
+.. _unbound-control.stats.total.num.queries_wait_limit:
+
+total.num.queries_wait_limit
+    summed over threads.
+
 .. _unbound-control.stats.total.num.cachehits:
 
 total.num.cachehits
@@ -867,6 +1072,11 @@ total.num.dnscrypt.cleartext
 .. _unbound-control.stats.total.num.dnscrypt.malformed:
 
 total.num.dnscrypt.malformed
+    summed over threads.
+
+.. _unbound-control.stats.total.num.dns_error_reports:
+
+total.num.dns_error_reports
     summed over threads.
 
 .. _unbound-control.stats.total.num.prefetch:

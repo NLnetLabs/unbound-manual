@@ -72,6 +72,7 @@ Internet drafts that have been implemented in Unbound.
 :rfc:`5452`    Measures for Making DNS More Resilient against Forged Answers
 :rfc:`5702`    Use of SHA-2 Algorithms with RSA in DNSKEY and RRSIG Resource Records for DNSSEC
 :rfc:`5933`    Use of GOST Signature Algorithms in DNSKEY and RRSIG Resource Records for DNSSEC
+:rfc:`6146`    Stateful NAT64: Network Address and Protocol Translation from IPv6 Clients to IPv4 Servers
 :rfc:`6147`    DNS64: DNS Extensions for Network Address Translation from IPv6 Clients to IPv4 Servers
 :rfc:`6234`    US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)
 :rfc:`6303`    Locally Served DNS Zones
@@ -95,9 +96,11 @@ Internet drafts that have been implemented in Unbound.
 :rfc:`7646`    Definition and Use of DNSSEC Negative Trust Anchors
 :rfc:`7686`    The ".onion" Special-Use Domain Name
 :rfc:`7706`    Decreasing Access Time to Root Servers by Running One on Loopback
+:rfc:`7766`    DNS Transport over TCP - Implementation Requirements
 :rfc:`7830`    The EDNS(0) Padding Option
 :rfc:`7858`    Specification for DNS over Transport Layer Security (TLS)
 :rfc:`7871`    Client Subnet in DNS Queries
+:rfc:`7873`    Domain Name System (DNS) Cookies
 :rfc:`7929`    DNS-Based Authentication of Named Entities (DANE) Bindings for OpenPGP
 :rfc:`7958`    DNSSEC Trust Anchor Publication for the Root Zone
 :rfc:`8020`    NXDOMAIN: There Really Is Nothing Underneath
@@ -116,5 +119,10 @@ Internet drafts that have been implemented in Unbound.
 :rfc:`8806`    Running a Root Server Local to a Resolver
 :rfc:`8914`    Extended DNS Errors
 :rfc:`8976`    Message Digest for DNS Zones
+:rfc:`9018`    Interoperable Domain Name System (DNS) Server Cookies
+:rfc:`9077`    NSEC and NSEC3: TTLs and Aggressive Use
 :rfc:`9156`    DNS Query Name Minimisation to Improve Privacy
+:rfc:`9210`    DNS Transport over TCP - Operational Requirements
+:rfc:`9250`    DNS over Dedicated QUIC Connections
+:rfc:`9567`    DNS Error Reporting
 ============== ====
