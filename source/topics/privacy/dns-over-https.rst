@@ -111,15 +111,16 @@ Unbound to listen on the HTTPS port:
 
     server:
         interface: 127.0.0.1@443
-        tls-service-key "key.pem"
+        tls-service-key: "key.pem"
         tls-service-pem: "cert.pem"
 
-The port that Unbound will use for incoming DoH traffic is by default set to 443
-and can be changed using the :ref:`https-port:<unbound.conf.https-port>`
-configuration option.
+The port that Unbound will use for incoming DoH traffic is by default set to
+443 and can be changed using the
+:ref:`https-port:<unbound.conf.https-port>` configuration option.
 
-Unbound is now ready to handle DoH queries on the default HTTP endpoint, which
-is ``/dns-query``:
+``dohclient``, an Unbound test utility which can be built with
+``make dohclient`` in Unbound's source tree, shows that Unbound is now ready to
+handle DoH queries on the default HTTP endpoint, which is ``/dns-query``:
 
 .. code-block:: text
 
@@ -148,7 +149,8 @@ is ``/dns-query``:
     ;; MSG SIZE  rcvd: 241
 
 Queries to other paths will be answered with a ``404`` status code. The
-endpoint can be changed using the http-endpoint configuration option.
+endpoint can be changed using the
+:ref:`http-endpoint:<unbound.conf.http-endpoint>` configuration option.
 
 The maximum number of concurrent HTTP/2 streams can be configured using the
 :ref:`http-max-streams:<unbound.conf.http-max-streams>` configuration option.

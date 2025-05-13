@@ -21,8 +21,8 @@ be outdated if this package has not been updated recently. If you like to
 upgrade to the latest version, we recommend :ref:`compiling Unbound
 yourself<getting-started/installation:Building from source/Compiling>`.
 
-Ubuntu 20.04.1 LTS
-^^^^^^^^^^^^^^^^^^
+Ubuntu
+^^^^^^
 
 Installing Unbound with the built-in package manager should be as easy as:
 
@@ -62,8 +62,8 @@ libraries, and their header files. To include the header files we need to get
 the development version, usually called ``libssl-dev`` and ``libexpat1-dev``
 respectively.
 
-Ubuntu 20.04.1 LTS
-^^^^^^^^^^^^^^^^^^
+Ubuntu 22.04 LTS
+^^^^^^^^^^^^^^^^
 
 First of all, we need our copy of the Unbound code, so we download the tarball
 of the latest version and untar it.
@@ -75,6 +75,10 @@ of the latest version and untar it.
 
 
 We'll need some tools, such as a compiler and the :command:`make` program.
+
+.. note::
+    During installations with the package manager, a screen will come up asking
+    which services need to be restarted. Using the defaults for this is fine.
 
 .. code-block:: bash
 
@@ -211,7 +215,7 @@ can be manually specified with ``--with-ssl=`` and ``--with-libexpat=``.
 Or alternatively, when :command:`configure` cannot find ``libssl`` and
 ``libexpat`` and :command:`brew` installed them at the default directory (make
 sure you fill in the correct version, at the time of writing the latest version
-of openssl is ``1.1.1k`` and of libexapt is ``2.3.0``).
+of openssl is ``1.1.1k`` and of libexpat is ``2.3.0``).
 
 .. code-block:: bash
 
@@ -264,7 +268,7 @@ To do this, the following line needs to be added to the configuration file.
 .. code-block:: bash
 
     server:
-        use_syslog: no
+        use-syslog: no
 
 Now that Unbound is installed we can
 :doc:`continue to configuring it<configuration>`.

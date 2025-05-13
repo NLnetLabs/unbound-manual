@@ -22,7 +22,7 @@ during the installation process).
 .. code-block:: bash
 
     server:
-        # can be uncommented if you do not need user privilige protection
+        # can be uncommented if you do not need user privilege protection
         # username: ""
 
         # can be uncommented if you do not need file access protection
@@ -42,7 +42,7 @@ during the installation process).
 
         # addresses from the IP range that are allowed to connect to the resolver
         access-control: 192.168.0.0/16 allow
-        # access-control: 2001:DB8/64 allow
+        # access-control: 2001:DB8::/64 allow
 
 By default the Unbound configuration uses
 `chroot <https://wiki.archlinux.org/title/chroot>`_ to provide an extra layer
@@ -68,7 +68,7 @@ configuration file:
 .. code-block:: text
 
     server:
-	# disable user privilige protection
+	# disable user privilege protection
 	username: ""
 
 If it is enabled, after the setup, any other user privileges are dropped and
@@ -109,6 +109,20 @@ again.
 Then Unbound will fork to the background and run until you either kill it or
 reboot the machine.
 
+You may run into an error where Unbound tells you it cannot bind to
+``0.0.0.0`` as it's already in use. This is because the system resolver 
+``systemd-resolved`` is already running on that port. You can go around this by
+changing the IP address in the config to ``127.0.0.1``. This looks like:
+
+.. code-block:: bash
+
+    server:
+        # specify the interface to answer queries from by ip-address.
+        interface: 127.0.0.1
+
+If you want to change this behaviour, on :doc:`this page</use-cases/local-stub>`
+we show how to change the system resolver to be Unbound.
+
 Set up Remote Control
 ---------------------
 
@@ -136,9 +150,7 @@ default install directory. The default install directory is
 ``/usr/local/etc/unbound/`` on most systems, but some distributions may put it
 in ``/etc/unbound/`` or ``/var/lib/unbound``.
 
-Apart from an extensive configuration file, with just about all the possible
-configuration options, :command:`unbound-control-setup` creates the
-cryptographic keys necessary for the control option:
+:command:`unbound-control-setup` creates the cryptographic keys necessary for the control option:
 
 .. code-block:: bash
 
@@ -171,20 +183,25 @@ verification of the integrity of the responses to the queries you send.
 
 To help, we can use the :doc:`/manpages/unbound-anchor` command.
 
-
 :command:`unbound-anchor` performs the setup by configuring a trust anchor. This
-trust anchor will only serve as the initial anchor from builtin values. To keep
+trust anchor will only serve as the initial anchor from built-in values. To keep
 this anchor up to date, Unbound must be able to read and write to this file. The
 default location that :command:`unbound-anchor` creates this in is determined by
 your installation method.
 Usually the default directory is ``/usr/local/etc/unbound/``.
+
+.. note::
+    
+    During the dynamic linking, this command could output an error about
+    loading shared libraries. This is remedied by running ``ldconfig`` to reset
+    the dynamic library cache.
 
 .. code-block:: bash
 
     unbound-anchor
 
 Note that using a package manager to install Unbound, on some distributions,
-creates the root key during installation. On Ubuntu 20.04.1 LTS for example,
+creates the root key during installation. On Ubuntu 22.04 LTS for example,
 this location is ``/var/lib/unbound/root.key``. On macOS Big Sur this location
 is ``/opt/homebrew/etc/unbound/root.key`` If you create the root key yourself
 (by using the :command:`unbound-anchor` command), then the path to the anchor
@@ -203,7 +220,7 @@ file.
 Note that on some systems the ``/usr/local/etc/unbound/`` directory might be
 write-protected.
 
-If the :command:`unbound-control-setup` command fails due to the insufficient
+If the :command:`unbound-anchor` command fails due to the insufficient
 permissions, run the command as the correct user, here we use the user
 ``unbound`` as this is the default user.
 

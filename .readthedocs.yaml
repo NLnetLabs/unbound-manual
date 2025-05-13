@@ -1,22 +1,25 @@
 version: 2
 
-# Build PDF & ePub
-formats:
-  - epub
-  - pdf
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3"
+  jobs:
+    post_checkout:
+      - bash scripts/prepare_manpages_with_defaults.sh
+
+sphinx:
+  configuration: source/conf.py
 
 python:
   install:
     - requirements: requirements.txt
   system_packages: false
 
+# Build PDF & ePub
+formats:
+  - epub
+  - pdf
+
 submodules:
   include: all
-
-build:
-  os: ubuntu-20.04
-  tools:
-    python: "3"
-  jobs:
-    post_checkout:
-      - bash scripts/prepare_manpages_with_defaults.sh

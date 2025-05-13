@@ -202,8 +202,8 @@ Each policy zone is configured in
 Unbound using the **rpz:** clause.
 The full documentation for RPZ in Unbound can be found in the
 :doc:`/manpages/unbound.conf`.
-A minimal configuration with a single policy zone can look like, where
-additional elements can be uncommented:
+A minimal configuration with a single policy zone can look like the following,
+where additional elements can be uncommented:
 
 .. code-block:: text
 

@@ -37,7 +37,7 @@ online and has Internet connectivity via your router.
 
 Because of the variety of machines that Unbound can run on we cannot create a
 comprehensive tutorial for all possible options. For this tutorial we will use
-**Ubuntu 20.04.1 LTS** as a stepping stone you can adapt and apply to
+**Ubuntu 22.04 LTS** as a stepping stone you can adapt and apply to
 other systems.
 
 While you could download the code from GitHub and build it yourself, getting a
@@ -257,7 +257,7 @@ range. Note that the IP address we chose above (``192.168.0.1`` and
 To prepare our configuration we are going to modify the existing configuration in
 :file:`/etc/unbound/unbound.conf`. If you open the file for the first time, you
 see that there is already an “include” in there. The "include" enables us to do
-`DNSSEC <https://www.sidn.nl/en/cybersecurity/dnssec-explained>`_, which allows
+`DNSSEC <https://www.sidn.nl/en/modern-internet-standards/dnssec>`_, which allows
 Unbound to verify the source of the answers that it receives, as well as QNAME
 minimisation. For convenience these configuration options have already been
 added in the minimal configuration.

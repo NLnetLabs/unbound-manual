@@ -4,7 +4,7 @@ Monitoring and Reporting
 There are several ways to configure statistics in Unbound. In this section we'll
 cover Munin and Cacti, but there are many other third-party options available as
 well, using for example `Zabbix <https://github.com/jeftedelima/Unbound-DNS>`_
-or `Prometheus <https://github.com/svartalf/unbound-telemetry>`_.
+or `Prometheus <https://github.com/letsencrypt/unbound_exporter>`_.
 
 Configuration
 -------------
@@ -64,10 +64,13 @@ your system. The ``statefile`` is a temporary file.
 
 .. code-block:: text
 
-   [unbound*] user root env.statefile
-   /usr/local/var/munin/plugin-state/unbound-state env.unbound_conf
-   /usr/local/etc/unbound/unbound.conf env.unbound_control
-   /usr/local/sbin/unbound-control env.spoof_warn 1000 env.spoof_crit 100000
+   [unbound*]
+   user root
+   env.statefile /usr/local/var/munin/plugin-state/unbound-state
+   env.unbound_conf /usr/local/etc/unbound/unbound.conf
+   env.unbound_control /usr/local/sbin/unbound-control
+   env.spoof_warn 1000
+   env.spoof_crit 100000
 
 Restart the munin-node daemon. Munin will automatically pick up the new graph
 and plot it with ``rrdtool``.
