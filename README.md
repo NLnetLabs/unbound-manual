@@ -24,20 +24,35 @@ installing a local Python virtual environment for Sphinx that helps with
 buidling locally.
 
 Local builds are only useful when manpages need to be generated for the master
-version of Unbound.
+version of the Unbound code repository.
 That is an when an \*.rst manpage was edited in the Unbound repository and then
 Sphinx from this repository can generate the troff template manpage for the
 Unbound repository.
 
 
-## Generating manpages for the Unbound master branch
+## The unbound git submodule
+
+The unbound git submodule is only useful for the online man page generation and
+setting the version of the online documentation.
+
+When a new Unbound release is available, the submodule needs to be updated to
+point to the release tag/branch.
+
+The submodule plays no other role in this repository.
+
+
+## Generating templaged manpages for the Unbound master branch
 
 ```
 make man unbound_dir=</path/to/local/unbound/repo>
 ```
-This will copy the .rst manpages from the provided Unbound repository,
-invoke Sphinx to build the manpages and copy the templates (*.in) back to
-the same Unbound repository.
+This will copy the .rst manpages from the provided Unbound repository
+(`unbound_dir`), invoke Sphinx to build the manpages and copy the templates
+(*.in) back to the same Unbound repository.
+
+[!IMPORTANT]
+The provided Unbound repository (`unbound_dir`) should be the locally checked
+out Unbound source repository and NOT the git submodule.
 
 
 ## Releasing new versions
