@@ -47,10 +47,10 @@ venv_clean:
 # default values
 .PHONY: man Makefile
 man: Makefile $(VENV_READY)
-	@test -d $(unbound_dir) -a -d $(unbound_dir)/doc || (echo "unbound_dir is probably not set! Did you use 'make man unbound_dir=<unbound repo directory>' ?" && false)
-	bash scripts/prepare_manpages.sh $(unbound_dir)
+	@test -d $(unbound_dir) -a -d $(unbound_dir)/doc || (echo "unbound_dir is probably not set! Did you use 'make man unbound_dir=/path/to/unbound/repo' ?" && false)
+	@bash scripts/prepare_manpages.sh $(unbound_dir) && echo "Getting rst man pages from $(unbound_dir) and filling in default values ..."
 	. $(VENV_BIN)/activate && UNBOUND_LOCAL_MAN=yes $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -D today="@date@"
-	bash scripts/copy_built_manpages.sh $(unbound_dir)
+	@bash scripts/copy_built_manpages.sh $(unbound_dir) && echo "Copied templated manpages back to $(unbound_dir)/doc"
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
@@ -58,4 +58,4 @@ man: Makefile $(VENV_READY)
 # default values
 %: Makefile $(VENV_READY)
 	bash scripts/prepare_manpages_with_defaults.sh
-	. $(VENV_BIN)/activate && $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	. $(VENV_BIN)/activate &&                       $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
