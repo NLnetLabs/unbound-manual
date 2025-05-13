@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Manpages from and to directories
-MANPAGES_DIR=manpages
-MANPAGES_TARGET_DIR=../source/manpages  # Relative to MANPAGES_DIR
+MANPAGES_DIR="$(pwd)/manpages"
+MANPAGES_TARGET_DIR="$(pwd)/source/manpages"
 
 # Unbound default values
 UNBOUND_RUN_DIR=/usr/local/etc/unbound
@@ -14,8 +14,7 @@ UNBOUND_USERNAME=unbound
 ub_conf_file=${UNBOUND_RUN_DIR}/unbound.conf
 DNSTAP_SOCKET_PATH=''
 
-cd ${MANPAGES_DIR}
-for f in *
+for f in ${MANPAGES_DIR}/*
 do
     sed \
         -e 's#@UNBOUND_RUN_DIR\@#'${UNBOUND_RUN_DIR}'#g' \
@@ -26,6 +25,5 @@ do
         -e 's#@UNBOUND_USERNAME\@#'${UNBOUND_USERNAME}'#g' \
         -e 's#@ub_conf_file\@#'${ub_conf_file}'#g' \
         -e 's#@DNSTAP_SOCKET_PATH\@#'${DNSTAP_SOCKET_PATH}'#g' \
-        ${f} > ${MANPAGES_TARGET_DIR}/${f}
+        ${f} > ${MANPAGES_TARGET_DIR}/$(basename $f)
 done
-cd ..
