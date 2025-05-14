@@ -32,7 +32,6 @@ Filtering and Manipulating Data
 -------------------------------
 
 - Local Zones and Local Data
-- Expansion to all RPZ triggers and actions
 
 Privacy
 -------
