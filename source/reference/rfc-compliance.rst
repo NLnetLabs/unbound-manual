@@ -125,4 +125,5 @@ Internet drafts that have been implemented in Unbound.
 :rfc:`9210`    DNS Transport over TCP - Operational Requirements
 :rfc:`9250`    DNS over Dedicated QUIC Connections
 :rfc:`9567`    DNS Error Reporting
+:rfc:`9718`    DNSSEC Trust Anchor Publication for the Root Zone
 ============== ====
