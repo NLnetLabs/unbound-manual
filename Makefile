@@ -44,18 +44,28 @@ venv_clean:
 	rm -rf $(VENV)
 
 # For the man mode do not replace Unbound configure variables with their
-# default values
+# default values.
 .PHONY: man Makefile
 man: Makefile $(VENV_READY)
 	@test -d $(unbound_dir) -a -d $(unbound_dir)/doc || (echo "unbound_dir is probably not set! Did you use 'make man unbound_dir=/path/to/unbound/repo' ?" && false)
-	@bash scripts/prepare_manpages.sh $(unbound_dir) && echo "Getting rst man pages from $(unbound_dir) and filling in default values ..."
-	. $(VENV_BIN)/activate && UNBOUND_LOCAL_MAN=yes $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -D today="@date@"
+	@bash scripts/prepare_manpages.sh $(unbound_dir) && echo "Getting rst man pages from $(unbound_dir) ..."
+	. $(VENV_BIN)/activate && UNBOUND_NO_VERSION_FROM_REPO= $(SPHINXBUILD) -M man "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O) -D today="@date@"
 	@bash scripts/copy_built_manpages.sh $(unbound_dir) && echo "Copied templated manpages back to $(unbound_dir)/doc"
+
+# The 'localhtml' target is the same as the 'html' target (caught below and
+# passed to Sphinx) but allows for using a local # unbound repo to get the man
+# pages from.
+# Mostly used for development/debugging of new Sphinx/RST features.
+.PHONY: localhtml Makefile
+localhtml: Makefile $(VENV_READY)
+	@test -d $(unbound_dir) -a -d $(unbound_dir)/doc || (echo "unbound_dir is probably not set! Did you use 'make localhtml unbound_dir=/path/to/unbound/repo' ?" && false)
+	@bash scripts/prepare_manpages_with_defaults.sh $(unbound_dir) && echo "Getting rst man pages from $(unbound_dir) and filling in defaults ..."
+	. $(VENV_BIN)/activate &&                                $(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 # For the rest of the modes replace Unbound configure variables with their
-# default values
+# default values.
 %: Makefile $(VENV_READY)
-	bash scripts/prepare_manpages_with_defaults.sh
-	. $(VENV_BIN)/activate &&                       $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@bash scripts/prepare_manpages_with_defaults.sh && echo "Getting rst man pages from git submodule and filling in defaults ..."
+	. $(VENV_BIN)/activate &&                                $(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

@@ -34,7 +34,7 @@ version = '@version@'
 # The full version, including alpha/beta/rc tags
 release = '@version@'
 
-if not 'UNBOUND_LOCAL_MAN' in os.environ:
+if not 'UNBOUND_NO_VERSION_FROM_REPO' in os.environ:
     # Take the version from the Unbound submodule
     package_version_re = re.compile(r"^PACKAGE_VERSION='(?P<version>\d+\.\d+\.\d+)'")
     try:
