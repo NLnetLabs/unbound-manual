@@ -64,18 +64,18 @@ an RST_STREAM frame. The HTTP status codes that can be returned by Unbound are:
     The payload received in the POST request is too large. Payloads cannot be
     larger than the content-length communicated in the request header. The
     payload length is limited to 512 bytes if
-    :ref:`harden-large-queries:<unbound.conf.harden-large-queries>` is enabled,
+    :ref:`harden-large-queries<unbound.conf.harden-large-queries>` is enabled,
     and otherwise limited to the value configured in
-    :ref:`msg-buffer-size:<unbound.conf.msg-buffer-size>` (default
-    65552 bytes). To prevent the allocation of overly large buffers, the maximum
+    :ref:`msg-buffer-size<unbound.conf.msg-buffer-size>` (default 65552 bytes).
+    To prevent the allocation of overly large buffers, the maximum
     size is limited to the size of the first DATA frame if no content-length is
     received in the request.
 
 414 URI Too Long
     The base64url encoded DNS query in the GET request is too large. The DNS
     query length is limited to 512 bytes if
-    :ref:`harden-large-queries:<unbound.conf.harden-large-queries>` is enabled,
-    and limited to :ref:`msg-buffer-size:<unbound.conf.msg-buffer-size>`
+    :ref:`harden-large-queries<unbound.conf.harden-large-queries>` is enabled,
+    and limited to :ref:`msg-buffer-size<unbound.conf.msg-buffer-size>`
     otherwise.
 
 415 Unsupported Media Type
@@ -116,7 +116,7 @@ Unbound to listen on the HTTPS port:
 
 The port that Unbound will use for incoming DoH traffic is by default set to
 443 and can be changed using the
-:ref:`https-port:<unbound.conf.https-port>` configuration option.
+:ref:`https-port<unbound.conf.https-port>` configuration option.
 
 ``dohclient``, an Unbound test utility which can be built with
 ``make dohclient`` in Unbound's source tree, shows that Unbound is now ready to
@@ -150,10 +150,10 @@ handle DoH queries on the default HTTP endpoint, which is ``/dns-query``:
 
 Queries to other paths will be answered with a ``404`` status code. The
 endpoint can be changed using the
-:ref:`http-endpoint:<unbound.conf.http-endpoint>` configuration option.
+:ref:`http-endpoint<unbound.conf.http-endpoint>` configuration option.
 
 The maximum number of concurrent HTTP/2 streams can be configured using the
-:ref:`http-max-streams:<unbound.conf.http-max-streams>` configuration option.
+:ref:`http-max-streams<unbound.conf.http-max-streams>` configuration option.
 The default for this option is 100, as per HTTP/2 RFC recommended minimum.
 This value will be in the ``SETTINGS`` frame sent to the client, and enforced by
 Unbound.
@@ -162,7 +162,7 @@ Because requests can be spread out over multiple HTTP/2 frames, which can be
 interleaved between frames of different streams, we have to create buffers
 containing partial queries. A new counter is added to Unbound to limit the total
 memory consumed by all query buffers. The limit can be configured using the
-:ref:`http-query-buffer-size:<unbound.conf.http-query-buffer-size>` option.
+:ref:`http-query-buffer-size<unbound.conf.http-query-buffer-size>` option.
 New streams will be closed by sending an ``RST_STREAM`` frame when this limit is
 exceeded.
 
@@ -170,7 +170,7 @@ After Unbound is done resolving a request the DNS response will be stored in a
 buffer, waiting until Unbound is ready to sent them back to the client using
 HTTP. These buffers also have a maximum amount of memory they are allowed to
 consume. This maximum is configurable using the
-:ref:`http-response-buffer-size:<unbound.conf.http-response-buffer-size>`
+:ref:`http-response-buffer-size<unbound.conf.http-response-buffer-size>`
 configuration option.
 
 Metrics
