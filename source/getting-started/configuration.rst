@@ -130,7 +130,7 @@ A useful functionality to enable is the :doc:`/manpages/unbound-control`
 command. This makes starting, stopping, and reloading Unbound
 easier.
 To enable this functionality we need to add
-:ref:`remote-control:<unbound.conf.remote>` to the configuration file:
+:ref:`remote-control<unbound.conf.remote>` to the configuration file:
 
 .. code-block:: text
 

@@ -2,15 +2,16 @@ Performance Tuning
 ==================
 
 Most users will probably not have a need to tune and optimise their Unbound
-installation, but it could be useful for large resolver installations. This page
-contains recommendations based on user feedback. If you have different
-experiences or have recommendations, please share them on the `Unbound users
-mailing list <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_.
+installation, but it could be useful for large resolver installations.
+This page contains recommendations based on user feedback.
+If you have different experiences or have recommendations, please share them
+on the
+`Unbound users mailing list <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_.
 
 Configuration
 -------------
 
-Set :ref:`num-threads:<unbound.conf.num-threads>` equal to the number of CPU
+Set :ref:`num-threads<unbound.conf.num-threads>` equal to the number of CPU
 cores on the system.
 For example, for 4 CPUs with 2 cores each, use 8.
 
@@ -19,13 +20,20 @@ significantly improve UDP performance (on kernels that support it, otherwise it
 is inactive, the :doc:`/manpages/unbound-control` status command shows if it is
 active).
 
-Set ``*-slabs`` to a power of 2 close to the ``num-threads`` value.
-Do this for
-:ref:`msg-cache-slabs:<unbound.conf.msg-cache-slabs>`,
-:ref:`rrset-cache-slabs:<unbound.conf.rrset-cache-slabs>`,
-:ref:`infra-cache-slabs:<unbound.conf.infra-cache-slabs>` and
-:ref:`key-cache-slabs:<unbound.conf.key-cache-slabs>`.
+All the ``*-slabs`` configuration options will be automatically set to a power
+of 2 value close to the :ref:`num-threads<unbound.conf.num-threads>` value if
+left unconfigured.
 This reduces lock contention.
+
+If for some reason you want to expicitly configure them, do so for:
+:ref:`msg-cache-slabs<unbound.conf.msg-cache-slabs>`,
+:ref:`rrset-cache-slabs<unbound.conf.rrset-cache-slabs>`,
+:ref:`infra-cache-slabs<unbound.conf.infra-cache-slabs>`,
+:ref:`key-cache-slabs<unbound.conf.key-cache-slabs>`,
+:ref:`ratelimit-slabs<unbound.conf.ratelimit-slabs>` (if applicable),
+:ref:`ip-ratelimit-slabs<unbound.conf.ip-ratelimit-slabs>` (if applicable),
+:ref:`dnscrypt-shared-secret-cache-slabs<unbound.conf.dnscrypt.dnscrypt-shared-secret-cache-slabs>` (if applicable), and
+:ref:`dnscrypt-nonce-cache-slabs<unbound.conf.dnscrypt.dnscrypt-nonce-cache-slabs>` (if applicable).
 
 Increase the memory size of the cache.
 Use roughly twice as much rrset cache memory as you use msg cache memory.
@@ -34,21 +42,21 @@ For example, :ref:`rrset-cache-size: 100m<unbound.conf.rrset-cache-size>` and
 Due to malloc overhead, the total memory usage is likely to rise to double (or
 2.5x) the total cache memory that is entered into the configuration.
 
-Set the :ref:`outgoing-range:<unbound.conf.outgoing-range>` to as large a value
+Set the :ref:`outgoing-range<unbound.conf.outgoing-range>` to as large a value
 as possible, see the sections below on how to overcome the limit of 1024 in
 total.
 This services more clients at a time.
 With 1 core, try 950.
 With 2 cores, try 450.
 With 4 cores try 200.
-The :ref:`num-queries-per-thread:<unbound.conf.num-queries-per-thread>` is best
+The :ref:`num-queries-per-thread<unbound.conf.num-queries-per-thread>` is best
 set at half the number of the ``outgoing-range``, but you would like a whole
 lot to be able to soak up a spike in queries.
 Because of the limit on ``outgoing-range`` thus also limits
 ``num-queries-per-thread``, it is better to compile with ``libevent`` (see the
 section below), so that there is no more 1024 limit on ``outgoing-range``.
 
-Set :ref:`so-rcvbuf:<unbound.conf.so-rcvbuf>` to a larger value (4m or 8m) for a
+Set :ref:`so-rcvbuf<unbound.conf.so-rcvbuf>` to a larger value (4m or 8m) for a
 busy server.
 This sets the kernel buffer larger so that no messages are lost in spikes in
 the traffic.
@@ -60,7 +68,7 @@ On BSD change ``kern.ipc.maxsockbuf in /etc/sysctl.conf``.
 On OpenBSD change header and recompile kernel.
 On Solaris ``ndd -set /dev/udp udp_max_buf 8388608``.
 
-Also set :ref:`so-sndbuf:<unbound.conf.so-sndbuf>` to a larger value (4m or 8m)
+Also set :ref:`so-sndbuf<unbound.conf.so-sndbuf>` to a larger value (8m)
 for a busy server.
 Same as ``so-rcvbuf``, but now for spikes in replies, and it is
 ``net.core.wmem_max``.
@@ -126,9 +134,9 @@ with your favorite package manager. Before compiling unbound run:
     ./configure --with-libevent
 
 Now you can give any number you like for
-:ref:`outgoing-range:<unbound.conf.outgoing-range>`.
+:ref:`outgoing-range<unbound.conf.outgoing-range>`.
 Also increase the
-:ref:`num-queries-per-thread:<unbound.conf.num-queries-per-thread>` value.
+:ref:`num-queries-per-thread<unbound.conf.num-queries-per-thread>` value.
 
 .. code-block:: text
 
@@ -138,8 +146,8 @@ Also increase the
 
 Users report that libevent-1.4.8-stable works well. Users have confirmed it
 works well on Linux and FreeBSD with 4096 or 8192 as values.
-Double the :ref:`num-queries-per-thread:<unbound.conf.num-queries-per-thread>`
-and use that as :ref:`outgoing-range:<unbound.conf.outgoing-range>`.
+Double the :ref:`num-queries-per-thread<unbound.conf.num-queries-per-thread>`
+and use that as :ref:`outgoing-range<unbound.conf.outgoing-range>`.
 
 Stable(old) distributions can package older versions (such as libevent-1.1), for
 which there are crash reports, thus you may need to upgrade your libevent. In
@@ -184,10 +192,10 @@ To compile for forked operation, before compilation use:
 This disables threads and enable forked operation.
 Because no locking has to be done, the code speeds up (about 10 to 20%).
 
-In the configuration file, :ref:`num-threads:<unbound.conf.num-threads>` still
+In the configuration file, :ref:`num-threads<unbound.conf.num-threads>` still
 specifies the number of cores you want to use (even though it uses processes
 and not threads).
-And note that the :ref:`outgoing-range:<unbound.conf.outgoing-range>` and cache
+And note that the :ref:`outgoing-range<unbound.conf.outgoing-range>` and cache
 memory values are all per thread.
 This means that much more memory is used, as every core uses its own cache.
 Because every core has its own cache, if one gets cache poisoned, the others

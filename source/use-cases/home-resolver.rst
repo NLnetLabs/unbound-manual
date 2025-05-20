@@ -261,7 +261,7 @@ see that there is already an “include” in there. The "include" enables us to
 Unbound to verify the source of the answers that it receives, as well as QNAME
 minimisation. For convenience these configuration options have already been
 added in the minimal configuration.
-The configuration also includes the :ref:`remote-control:<unbound.conf.remote>`
+The configuration also includes the :ref:`remote-control<unbound.conf.remote>`
 section in the configuration to enable controlling Unbound using the
 :doc:`/manpages/unbound-control` command, which is useful if you want to
 modify the configuration on the fly later on.

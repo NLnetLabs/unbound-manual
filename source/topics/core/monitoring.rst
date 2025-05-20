@@ -14,7 +14,7 @@ enabled, more statistics are collected, for example what types of queries are
 sent to the resolver. Otherwise, only the total number of queries is collected.
 
 Statistics can be printed to the log file using
-:ref:`statistics-interval:<unbound.conf.statistics-interval>`, but
+:ref:`statistics-interval<unbound.conf.statistics-interval>`, but
 here we'll focus on using :doc:`/manpages/unbound-control` to obtain
 statistics on demand. If you set a ``statistics-interval``, every interval it is
 printed to the logfile.
@@ -28,7 +28,7 @@ demand.
 
 Various graphing tools expect the counters to go up over time. Some may expect
 counters to be reset to 0 since the previous statistics printout. The
-:ref:`statistics-cumulative:<unbound.conf.statistics-cumulative>` option
+:ref:`statistics-cumulative<unbound.conf.statistics-cumulative>` option
 controls the behaviour of Unbound.
 By default it is set to ``no``, which resets values to zero after stat
 printout.
@@ -78,7 +78,7 @@ and plot it with ``rrdtool``.
 Additional graphs are possible, below is a list of them, and examples. Create
 (additional) symbolic links to ``unbound_munin_`` with the names (in bold) of
 those graphs to enable their display. Several require that
-:ref:`extended-statistics:<unbound.conf.extended-statistics>` is enabled in
+:ref:`extended-statistics<unbound.conf.extended-statistics>` is enabled in
 the configuration.
 Pictures included are samples, your statistics may look different :-) .
 

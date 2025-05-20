@@ -197,7 +197,7 @@ How to use RPZ with Unbound
 -------------------------------
 
 The RPZ implementation in Unbound depends on the ``respip`` module, this module
-needs to be loaded using :ref:`module-config:<unbound.conf.module-config>`.
+needs to be loaded using :ref:`module-config<unbound.conf.module-config>`.
 Each policy zone is configured in
 Unbound using the **rpz:** clause.
 The full documentation for RPZ in Unbound can be found in the
@@ -301,7 +301,7 @@ policy zones.
 
 Unbound has the possibility to override the actions that will be used for
 policies in a zone that matches the zone’s triggers. This can be done using the
-:ref:`rpz-action-override:<unbound.conf.rpz.rpz-action-override>` configuration
+:ref:`rpz-action-override<unbound.conf.rpz.rpz-action-override>` configuration
 option.
 The possible values for the option are: ``nxdomain``, ``nodata``, ``passthru``,
 ``drop``, ``disabled``, and ``cname``.
@@ -311,7 +311,7 @@ the same name.
 The ``cname`` override option will make it possible to apply a local data action
 using a CNAME for all matching triggers in the policy zone.
 The CNAME to use in the answer can be configured using the
-:ref:`rpz-cname-override:<unbound.conf.rpz.rpz-cname-override>` configuration
+:ref:`rpz-cname-override<unbound.conf.rpz.rpz-cname-override>` configuration
 option.
 Using these overrides is nice if you use an external feed to get a list of
 triggers, but would like to redirect all your users to your own domain:
@@ -343,25 +343,25 @@ impacting your users. The difference between ``disabled`` and ``passthru`` is
 that disabled is not considered to be a valid match and will therefore not stop
 Unbound from looking at the next configured policy zone.
 
-When :ref:`rpz-log:<unbound.conf.rpz.rpz-log>` is set to yes, Unbound will log
+When :ref:`rpz-log<unbound.conf.rpz.rpz-log>` is set to yes, Unbound will log
 all applied actions for a policy zone.
 With ``rpz-log`` enabled you can specify a name for the log using
-:ref:`rpz-log-name:<unbound.conf.rpz.rpz-log-name>`, this way you can easily
+:ref:`rpz-log-name<unbound.conf.rpz.rpz-log-name>`, this way you can easily
 find all matches for a specific zone.
 It is also possible to get statistics per applied RPZ action using
 :ref:`unbound-control stats<unbound-control.commands.stats>` or
 :ref:`unbound-control stats_noreset<unbound-control.commands.stats_noreset>`.
-This requires the :ref:`extended-statistics:<unbound.conf.extended-statistics>`
-to be enabled.
+This requires the :ref:`extended-statistics<unbound.conf.extended-statistics>`
+configuration option to be enabled.
 
 Unbound’s RPZ implementation works together with the tags functionality.
 This makes it possible to enable (some of) the policy zones only for a subset
 of users.
 To do this, the tags need to be defined using
-:ref:`define-tag:<unbound.conf.define-tag>`, the correct tags need to be matched
+:ref:`define-tag<unbound.conf.define-tag>`, the correct tags need to be matched
 either with the client IP prefix using
-:ref:`access-control-tag:<unbound.conf.access-control-tag>` or the clients on
-a listening interface using :ref:`interface-tag:<unbound.conf.interface-tag>`,
+:ref:`access-control-tag<unbound.conf.access-control-tag>` or the clients on
+a listening interface using :ref:`interface-tag<unbound.conf.interface-tag>`,
 and the tags need to be specified for the policy zones for which they apply.
 
 .. code-block:: text
