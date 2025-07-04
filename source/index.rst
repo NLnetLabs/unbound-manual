@@ -4,10 +4,10 @@ Unbound by NLnet Labs
 Unbound is a validating, recursive, caching DNS resolver. It is designed to be
 fast and lean and incorporates modern features based on open standards.
 
-.. Note::  Do you love to write and know your way around DNS and Unbound?
-           :doc:`Help us expand this documentation <reference/todo>` and we'll
-           compensate you for your time. Contact us at docs@nlnetlabs.nl or
-           find us on `Twitter <https://twitter.com/nlnetlabs>`_.
+NLnet Labs offers `professional support and consultancy services
+<https://www.nlnetlabs.nl/services/contracts/>`_ with a service-level
+agreement. Community support is available via our `mailing list
+<https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_. 
 
 Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
 with packages available for most platforms. It is included in the standard
