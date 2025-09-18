@@ -19,6 +19,7 @@
 import os
 import datetime
 import sphinx_rtd_theme
+import re
 import requests
 
 # -- Project information -----------------------------------------------------
@@ -29,9 +30,37 @@ copyright = f'1999-{year}, NLnet Labs'
 author = 'NLnet Labs'
 
 # The short X.Y version
-version = '1.23.0'
+version = '@version@'
 # The full version, including alpha/beta/rc tags
-release = version
+release = '@version@'
+
+if not 'UNBOUND_NO_VERSION_FROM_REPO' in os.environ:
+    # Take the version from the Unbound submodule
+    package_version_re = re.compile(r"^PACKAGE_VERSION='(?P<version>\d+\.\d+\.\d+)'")
+    try:
+        with open('../unbound/configure', 'r') as f:
+            for line in f:
+                m = package_version_re.match(line)
+                if m:
+                    version = m.group('version')
+                    release = m.group('version')
+                    break
+    except FileNotFoundError:
+        # Local sphinx without an inited submodule.
+        # This is for local manpage making, it will use "@version@" as version.
+        pass
+
+try:
+    response_versions = requests.get(
+        f"https://readthedocs.org/api/v2/version/?project__slug=unbound&active=true",
+        timeout=2,
+    ).json()
+    versions = [
+        (version["slug"], f"/{version['project']['language']}/{version['slug']}/")
+        for version in response_versions["results"]
+    ]
+except Exception:
+    versions = []
 
 try:
     response_versions = requests.get(
@@ -239,6 +268,7 @@ man_pages = [
     ('manpages/libunbound', 'libunbound',
      f'Unbound DNS validating resolver {version} functions.', unbound_authors, 3)
 ]
+man_make_section_directory = False
 
 # -- Options for Texinfo output ----------------------------------------------
 

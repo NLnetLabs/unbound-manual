@@ -16,7 +16,7 @@ to be cached. However, the TTL definition of :rfc:`8767#section-4` states that:
 Serving expired records is not a novel idea and it was already present in
 various forms (e.g., increased cache-hit ratio, fallback when upstream is not
 reachable) in various resolvers.
-Unbound’s own form is called :ref:`serve-expired:<unbound.conf.serve-expired>`
+Unbound’s own form is called :ref:`serve-expired<unbound.conf.serve-expired>`
 and its main purpose was to increase the cache-hit ratio.
 
 As the RFC landed in the standards track, Unbound gained support for it but
@@ -41,8 +41,8 @@ continues resolving and hopefully updating the cached record.
 The immediate downside is obvious: the expired answers rely heavily on the
 cache state.
 Unbound already has the tools to try and tip the scales in its favor with the
-:ref:`prefetch:<unbound.conf.prefetch>` and
-:ref:`serve-expired-ttl:<unbound.conf.serve-expired-ttl>` options.
+:ref:`prefetch<unbound.conf.prefetch>` and
+:ref:`serve-expired-ttl<unbound.conf.serve-expired-ttl>` options.
 
 With prefetch, Unbound tries to update a cached record (after first replying to
 the client) when the current TTL is within 10% of the original TTL value. The
@@ -54,7 +54,7 @@ is kept up-to-date, at least for popular queries.
 
 Rare queries have the inescapable fate of having their records expired past any
 meaningful time.
-The option :ref:`serve-expired-ttl:<unbound.conf.serve-expired-ttl>` limits the
+The option :ref:`serve-expired-ttl<unbound.conf.serve-expired-ttl>` limits the
 amount of time an expired record is supposed to be served.
 :rfc:`8767#section-5-11` suggests a value between one and three days.
 
@@ -90,7 +90,7 @@ following the RFC guidelines.
 The RFC behavior is mainly focused on returning expired answers as fallback for
 normal resolution.
 The option to control that is
-:ref:`serve-expired-client-timeout:<unbound.conf.serve-expired-client-timeout>`
+:ref:`serve-expired-client-timeout<unbound.conf.serve-expired-client-timeout>`
 and setting it to a value greater than 0 enables the RFC behavior.
 
 With the value set, Unbound has a limit on how much time it can spend resolving

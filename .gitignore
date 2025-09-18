@@ -4,3 +4,4 @@ build/
 source/_build
 source/unbound-*
 source/manpages/example.conf*
+.venv

@@ -10,12 +10,12 @@ Tags
 ----
 
 The tags functionality makes it possible to divide incoming client queries in
-categories (tags), and use :ref:`local-zone:<unbound.conf.local-zone>` and
-:ref:`local-data:<unbound.conf.local-data>` information for these specific tags.
+categories (tags), and use :ref:`local-zone<unbound.conf.local-zone>` and
+:ref:`local-data<unbound.conf.local-data>` information for these specific tags.
 
 Before these tags can be used, you need to define them in the Unbound
 configuration using
-:ref:`define-tag:<unbound.conf.define-tag>`.
+:ref:`define-tag<unbound.conf.define-tag>`.
 In this example, a tag for domains containing malware is set, along with one
 for domains of gambling sites:
 
@@ -26,9 +26,9 @@ for domains of gambling sites:
 Now that Unbound is aware of the existing tags, it is possible to start using
 them.
 
-The :ref:`access-control-tag:<unbound.conf.access-control-tag>` element is used
+The :ref:`access-control-tag<unbound.conf.access-control-tag>` element is used
 to specify the tag to use for client source address.
-Alternatively, the :ref:`interface-tag:<unbound.conf.interface-tag>` element is
+Alternatively, the :ref:`interface-tag<unbound.conf.interface-tag>` element is
 used to specify the tag to use for clients on a specific listening interface.
 You can add multiple tags to these elements:
 
@@ -61,7 +61,7 @@ That means that local-zones without any tag will be used for all queries and
 tagged local-zones only for queries with matching tags.
 
 Adding tags to local-zones can be done using the
-:ref:`local-zone-tag:<unbound.conf.local-zone-tag>` element:
+:ref:`local-zone-tag<unbound.conf.local-zone-tag>` element:
 
 .. code-block:: text
 
@@ -81,8 +81,8 @@ least the malware or gambling tag.
 The used local-zone type will be the type specified in the matching local-zone.
 It is possible to depend the local-zone type on the client and tag combination.
 Setting tag specific local-zone types can be done using
-:ref:`access-control-tag-action:<unbound.conf.access-control-tag-action>` and/or
-:ref:`interface-tag-action:<unbound.conf.interface-tag-action>`:
+:ref:`access-control-tag-action<unbound.conf.access-control-tag-action>` and/or
+:ref:`interface-tag-action<unbound.conf.interface-tag-action>`:
 
 .. code-block:: text
 
@@ -97,8 +97,8 @@ Setting tag specific local-zone types can be done using
 In addition to configuring a local-zone type for specific clients/tag match, it
 is also possible to set the used local-data RRs.
 This can be done using the
-:ref:`access-control-tag-data:<unbound.conf.access-control-tag-data>` and/or
-:ref:`interface-tag-data:<unbound.conf.interface-tag-data>` elements:
+:ref:`access-control-tag-data<unbound.conf.access-control-tag-data>` and/or
+:ref:`interface-tag-data<unbound.conf.interface-tag-data>` elements:
 
 .. code-block:: text
 
@@ -111,10 +111,10 @@ This can be done using the
 Sometimes you might want to override a local-zone type for a specific IP prefix
 or interface, regardless the type configured for tagged and untagged local
 zones, and regardless the type configured using
-:ref:`access-control-tag-action:<unbound.conf.access-control-tag-action>` and/or
-:ref:`interface-tag-action:<unbound.conf.interface-tag-action>`.
+:ref:`access-control-tag-action<unbound.conf.access-control-tag-action>` and/or
+:ref:`interface-tag-action<unbound.conf.interface-tag-action>`.
 This override can be done using
-:ref:`local-zone-override:<unbound.conf.local-zone-override>`.
+:ref:`local-zone-override<unbound.conf.local-zone-override>`.
 
 Views
 -----
@@ -135,8 +135,8 @@ Configuring a client specific local-zone tree can be done using views.
 
 A view is a named list of configuration options.
 The supported view configuration options are
-:ref:`local-zone:<unbound.conf.view.local-zone>` and
-:ref:`local-data:<unbound.conf.view.local-data>`.
+:ref:`local-zone<unbound.conf.view.local-zone>` and
+:ref:`local-data<unbound.conf.view.local-data>`.
 
 A view is configured using a **view:** clause.
 There may be multiple view clauses, each with a unique name. For example:
@@ -150,14 +150,14 @@ There may be multiple view clauses, each with a unique name. For example:
       local-zone: refused.example.nl refuse
 
 Mapping a view to a client can be done using the
-:ref:`access-control-view:<unbound.conf.access-control-view>` element:
+:ref:`access-control-view<unbound.conf.access-control-view>` element:
 
 .. code-block:: text
 
   access-control-view: 10.0.5.0/24 firstview
 
 Alternatively, mapping a view to clients in a specific interface can be done
-using the :ref:`interface-view:<unbound.conf.interface-view>` element:
+using the :ref:`interface-view<unbound.conf.interface-view>` element:
 
 .. code-block:: text
 
@@ -167,7 +167,7 @@ By default, view configuration options override the global configuration
 outside the view.
 When a client matches a view it will only use the view's local-zone tree.
 This behaviour can be changed by setting
-:ref:`view-first:<unbound.conf.view.view-first>` to yes.
+:ref:`view-first: yes<unbound.conf.view.view-first>`.
 If view-first is enabled, Unbound will try to use the view's local-zone tree,
 and if there is no match it will search the global tree.
 

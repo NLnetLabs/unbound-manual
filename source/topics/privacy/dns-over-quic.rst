@@ -27,7 +27,7 @@ With this in unbound.conf, in the ``server:`` section:
 That would make unbound listen on the port number 2853, for doq traffic.
 The port number shown here is for test purposes.
 The quic port is set using the
-:ref:`quic-port:<unbound.conf.quic-port>` configuration option.
+:ref:`quic-port<unbound.conf.quic-port>` configuration option.
 
 It is possible to configure more interfaces with this port number, like
 ``::1@2853``, those interfaces are then configured to have doq traffic too.
@@ -37,12 +37,12 @@ numbers.
 
 Like for DNS over TLS, Unbound needs a TLS certificate for doq, and this can be
 configured with ``tls-service-key: "privatefile.key"`` and ``tls-service-pem: "publicfile.pem"``,
-:ref:`tls-service-key:<unbound.conf.tls-service-key>` and 
-:ref:`tls-service-pem:<unbound.conf.tls-service-pem>` .
+:ref:`tls-service-key<unbound.conf.tls-service-key>` and 
+:ref:`tls-service-pem<unbound.conf.tls-service-pem>` .
 
 The resource consumption can be configured with ``quic-size: 8m``. More
 queries are turned away,
-:ref:`quic-size:<unbound.conf.quic-size>` .
+:ref:`quic-size<unbound.conf.quic-size>` .
 
 Libraries
 ---------

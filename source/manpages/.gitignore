@@ -1,0 +1,7 @@
+# This directory is auto-populated with the files in /manpages based on
+# build runtime.
+
+# Ignore everything here
+*
+# Except this file
+!.gitignore
