@@ -95,10 +95,12 @@ Here is a short summary of optimisation config:
         num-threads: <number of cores>
 
         # power of 2 close to num-threads
-        msg-cache-slabs: <same>
-        rrset-cache-slabs: <same>
-        infra-cache-slabs: <same>
-        key-cache-slabs: <same>
+        # Configure only if you want a specific value here.
+        # If left unconfigured they will be auto-configured wrt num-threads.
+        #msg-cache-slabs: <same>
+        #rrset-cache-slabs: <same>
+        #infra-cache-slabs: <same>
+        #key-cache-slabs: <same>
 
         # more cache memory, rrset=msg*2
         rrset-cache-size: 100m
