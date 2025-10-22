@@ -53,7 +53,7 @@ man: Makefile $(VENV_READY)
 	@bash scripts/copy_built_manpages.sh $(unbound_dir) && echo "Copied templated manpages back to $(unbound_dir)/doc"
 
 # The 'localhtml' target is the same as the 'html' target (caught below and
-# passed to Sphinx) but allows for using a local # unbound repo to get the man
+# passed to Sphinx) but allows for using a local unbound repo to get the man
 # pages from.
 # Mostly used for development/debugging of new Sphinx/RST features.
 .PHONY: localhtml Makefile
