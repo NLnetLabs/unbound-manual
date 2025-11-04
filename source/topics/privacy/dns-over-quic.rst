@@ -1,150 +1,179 @@
 .. versionadded:: 1.22.0
+   Downstream DoQ was introduced. A special fork of OpenSSL (openssl+quic) was
+   required for provide crypto functionality to libngtcp2.
+.. versionadded:: 1.24.0
+   OpenSSL 3.5.0 and later can be used instead of the openssl+quic fork.
 
 DNS-over-QUIC
 =============
 
 DNS-over-QUIC (DoQ) uses the QUIC transport mechanism to encrypt queries and
-responses. Unbound can be configured to serve to clients over doq. For that
+responses. Unbound can be configured to serve to clients over DoQ. For that
 the feature must be compiled in, with the support libraries that this needs.
 
-The feature allows unbound to support doq clients downstream. The doq
-transport for DNS is from
-:rfc:`9250` .
+The feature allows Unbound to support DoQ clients downstream.
+The QUIC transport for DNS is from :rfc:`9250`.
 
 Configuration
 -------------
 
-The DOQ downstream can be configured, by setting Unbound to listen on the
-doq UDP port for traffic.
+The DoQ downstream can be configured, by setting Unbound to listen on the
+DoQ UDP port for traffic.
 
-With this in unbound.conf, in the ``server:`` section:
+A minimal confiugration that enables DoQ can be:
 
 .. code-block:: text
 
-    interface: 127.0.0.1@2853
-    quic-port: 2853
+    server:
+        interface: 127.0.0.1@2853
+        quic-port: 2853
+        tls-service-key: "privatefile.key"
+        tls-service-pem: "publicfile.pem"
 
-That would make unbound listen on the port number 2853, for doq traffic.
+That would make unbound listen on the port number ``2853``, for DoQ traffic.
 The port number shown here is for test purposes.
-The quic port is set using the
+The QUIC port is set using the
 :ref:`quic-port<unbound.conf.quic-port>` configuration option.
 
 It is possible to configure more interfaces with this port number, like
-``::1@2853``, those interfaces are then configured to have doq traffic too.
+``::1@2853``, those interfaces are then configured to have DoQ traffic too.
 If the interface receives also TCP traffic, this can be combined with DNS TCP,
-or with DNS over TLS or with DNS over HTTP traffic, by setting the port
-numbers.
+or with DNS over TLS or with DNS over HTTP traffic, by setting the relevant
+port numbers.
 
-Like for DNS over TLS, Unbound needs a TLS certificate for doq, and this can be
-configured with ``tls-service-key: "privatefile.key"`` and ``tls-service-pem: "publicfile.pem"``,
-:ref:`tls-service-key<unbound.conf.tls-service-key>` and 
-:ref:`tls-service-pem<unbound.conf.tls-service-pem>` .
+Like for DNS over TLS, Unbound needs a TLS certificate for DoQ, and this can be
+configured with
+:ref:`tls-service-key: "privatefile.key"<unbound.conf.tls-service-key>` and
+:ref:`tls-service-pem: "publicfile.pem"<unbound.conf.tls-service-pem>` .
 
-The resource consumption can be configured with ``quic-size: 8m``. More
-queries are turned away,
-:ref:`quic-size<unbound.conf.quic-size>` .
+The resource consumption can be configured with something like
+:ref:`quic-size: 8m<unbound.conf.quic-size>`.
+More queries are turned away.
 
 Libraries
 ---------
 
-Unbound uses libngtcp2 for DNS over QUIC. This in turn requires a modified
-openssl library for quic support in the encryption for the quic transport.
-The modified openssl library is called openssl+quic. It is available for
-openssl versions 1.1.1 and 3.2.0, and so on.
+Unbound uses ``libngtcp2`` for DNS over QUIC.
+This in turn requires OpenSSL version 3.5.0 or later for QUIC support in the
+encryption for the QUIC transport.
 
-The modified openssl library is available from the openssl+quic repository, 
-`quictls <https://github.com/quictls/openssl>`__ . The libngtcp2 library
-is available from `ngtcp2 <https://github.com/ngtcp2/ngtcp2>`__ .
-
-The online documentation for libngtcp2 is available, `ngtcp2 <https://nghttp2.org/ngtcp2/>`__ . The ngtcp2-0.19.1 version tarball can be downloaded `ngtcp2-0.19.1 release <https://github.com/ngtcp2/ngtcp2/releases/tag/v0.19.1>`__ , instead
-of using the git checkout.
-
-For the openssl+quic also tarball downloads are available for releases,
-like for 3.0.10+quic, `openssl-3.0.10-quic1 release <https://github.com/quictls/openssl/releases/tag/openssl-3.0.10-quic1>`__ .
-
-For example unbound can be compiled with version ngtcp2-0.19.1, and with
-OpenSSL_1_1_1o+quic and openssl-3.0.10-quic1 .
-
-This is how to compile openssl+quic:
+If the system has at least ``OpenSSL 3.5.0`` and ``libngtcp2 1.13.0`` you can
+build Unbound with:
 
 .. code-block:: bash
 
-    git clone --depth 1 -b OpenSSL_1_1_1o+quic https://github.com/quictls/openssl openssl+quic
-    cd openssl+quic
-    git submodule update --init --recursive
-    ./config enable-tls1_3 no-shared threads --prefix=/path/to/openssl+quic_install
+    ./configure <other flags> --with-libngtcp2 --prefix=/path/to/unbound_install
     make
-    make install
 
-Fill in a good place to put the quic install. The example uses no-shared,
-so that the shared library search path later does not find the wrong dynamic
-library, but a shared library works too of course.
+Building libraries from source
+..............................
+
+If the system lacks the minimun versions, the libraries can be built
+from source.
+
+The versions used here are the earliest working ones.
+
+For OpenSSL, the ``3.5.0`` version tar can be downloaded from
+https://openssl-library.org/source/old/index.html.
+
+This is how to compile OpenSSL:
+
+.. code-block:: bash
+
+    tar -zxf openssl-3.5.0.tar.gz
+    cd openssl-3.5.0
+    ./config enable-tls1_3 no-shared no-docs threads --prefix=/path/to/openssl_install
+    make -j && make install
+
+Fill in a good place to put the OpenSSL install.
+The example uses ``no-shared``, so that the shared library search path later
+does not find the wrong dynamic library, but a shared library works too of
+course.
 
 For the ngtcp2 library, the
 packages ``pkg-config autoconf automake autotools-dev libtool`` are needed
-to build the configure script. They can be installed
-like ``sudo apt install pkg-config autoconf automake autotools-dev libtool``
-and this makes the autoreconf command available.
+to build the configure script.
+They can be installed like
+``sudo apt install pkg-config autoconf automake autotools-dev libtool`` in a
+Debian style system and this makes the ``autoreconf`` command available.
 
-The ngtcp2 library can be compiled like this:
+This is then how to compile libngtcp2:
 
 .. code-block:: bash
 
-    git clone --depth 1 -b v0.19.1 https://github.com/ngtcp2/ngtcp2 ngtcp2
+    git clone --depth 1 -b v1.13.0 https://github.com/ngtcp2/ngtcp2 ngtcp2
     cd ngtcp2
     git submodule update --init --recursive
     autoreconf -i
-    ./configure PKG_CONFIG_PATH=/path/to/openssl+quic_install/lib/pkgconfig LDFLAGS="-Wl,-rpath,/path/to/openssl+quic_install/lib" --prefix=/path/to/ngtcp2_install
-    make
-    make install
+    ./configure PKG_CONFIG_PATH=/path/to/openssl_install/lib64/pkgconfig LDFLAGS="-Wl,-rpath,/path/to/openssl_install/lib64" --prefix=/path/to/ngtcp2_install
+    make -j && make install
 
-Fill in the path to the openssl+quic install and path for where the libngtcp2
-install is created. The example sets the rpath to the directory to search for
-the dynamic library.
+Fill in the path to the openssl_install and path for where the libngtcp2
+should be installed.
+The example sets the rpath to the directory to search for the dynamic library.
 
-The unbound server can be compiled with doq support, with the libngtcp2
-library, and the modified openssl library for quic support to libngtcp2, and
-this openssl library is then also used for TLS and other crypto calls, like
-for DNSSEC.
+.. caution::
 
-Compile unbound then like this:
+    The output of the configure command above should include output like:
+
+    Crypto helper libraries:
+        libngtcp2_crypto_ossl:      yes
+
+    Libs:
+        OpenSSL:        yes (CFLAGS='-I/path/to/openssl_install/include' LIBS='-L/path/to/openssl_install/lib64 -lssl -lcrypto')
+
+    If the configure output does not contain the above, i.e., libngtcp2 can't find
+    the OpenSSL installation make sure you used the correct paths.
+    Some systems may use ``lib`` instead of ``lib64`` for example.
+
+Now that both libraries are built and available Unbound can be built with:
 
 .. code-block:: bash
 
-    ./configure <other flags> --with-ssl=/path/to/openssl+quic_install --with-libngtcp2=/path/to/ngtcp2_install LDFLAGS="-Wl,-rpath -Wl,/path/to/ngtcp2_install/lib" --prefix=/path/to/unbound_install
-    make
+    ./configure <other flags> --with-ssl=/path/to/openssl_install --with-libngtcp2=/path/to/ngtcp2_install LDFLAGS="-Wl,-rpath -Wl,/path/to/ngtcp2_install/lib64" --prefix=/path/to/unbound_install
+    make -j
 
-Fill in the path to the openssl+quic install and libngtcp2 install.
+Fill in the path to the openssl_install and ngtcp2_install.
 The rpath is set so that the dynamic libraries can be found in the search path.
-This then results in an unbound server that supports doq.
+
+Unbound is now compiled with DoQ support, with the libngtcp2
+library, linked against the specified OpenSSL library.
+This OpenSSL library will be used for both providing encryption to the QUIC
+transport of libngtcp2 and providing TLS and other crypto calls for other
+functionalities in Unbound like DNSSEC.
+
 
 Test
 ----
 
-Unbound contains a test tool implementation. This can be compiled from the
-source directory of unbound, with:
+Unbound contains a test tool implementation.
+This can be compiled from the source directory of Unbound, with:
 
 .. code-block:: bash
 
     make doqclient
 
-This creates a test tool, see some options with ``./doqclient -h``.
+This creates a DoQ client test tool; you can see some options with
+``./doqclient -h``.
 
-Unbound can be started attached to the console for debug, with ``./unbound -d -c theconfig.conf``. With ``-dd`` it prints logs to the terminal as well. Ctrl-C can exit, or send a term signal.
+Unbound can be started attached to the console for debug, with ``./unbound -dd -c theconfig.conf``.
+Ctrl-C can exit, or send a term signal.
 
 Send a query with ``./doqclient -s 127.0.0.1 -p 2853 www.example.com A IN``.
-If the server is listening to doq queries on port 2853.
+If the server is listening to DoQ queries on port 2853.
 With ``-v`` the test tool prints more diagnostics.
 
-It is also possible to get more information from the server. This is done
-by setting configuration for a log file and verbosity 4 or more. It also
-prints internal information from libngtcp2 for the doq transport.
+It is also possible to get more information from the server.
+This is done by setting configuration for a log file and verbosity 4 or more.
+It also prints internal information from libngtcp2 for the DoQ transport.
 
 Metrics
 -------
 
-The number of quic queries is output in
+The number of QUIC queries is tracked with
 :ref:`num.query.quic<unbound-control.stats.num.query.quic>`
-in the statistics. The
+in the statistics.
+
+The number of memory used for QUIC is tracked with
 :ref:`mem.quic<unbound-control.stats.mem.quic>`
-statistic outputs memory used.
+in the statistics.
