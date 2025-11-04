@@ -1,6 +1,6 @@
 .. versionadded:: 1.22.0
    Downstream DoQ was introduced. A special fork of OpenSSL (openssl+quic) was
-   required for provide crypto functionality to libngtcp2.
+   required to provide crypto functionality to libngtcp2.
 .. versionadded:: 1.24.0
    OpenSSL 3.5.0 and later can be used instead of the openssl+quic fork.
 
@@ -20,7 +20,7 @@ Configuration
 The DoQ downstream can be configured, by setting Unbound to listen on the
 DoQ UDP port for traffic.
 
-A minimal confiugration that enables DoQ can be:
+A minimal configuration that enables DoQ can be:
 
 .. code-block:: text
 
@@ -68,7 +68,7 @@ build Unbound with:
 Building libraries from source
 ..............................
 
-If the system lacks the minimun versions, the libraries can be built
+If the system lacks the minimum versions, the libraries can be built
 from source.
 
 The versions used here are the earliest working ones.
