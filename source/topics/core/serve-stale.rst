@@ -73,6 +73,7 @@ A simple configuration for the primal serve-expired behavior could then be:
         prefetch: yes 
         serve-expired: yes 
         serve-expired-ttl: 86400  # one day, in seconds
+        serve-expired-client-timeout: 0  # for version 1.23.0 and latter
 
 This will allow Unbound to:
 
