@@ -276,7 +276,7 @@ and copy the file contents below:
 
 Note that in this file ``systemctl`` uses the default config location. This 
 location is different depending on the installation method used. In this case the 
-default config file is located at :file:`/usr/local/etc/unbound` (normally located at :file:`/etc/unbound`). We need to copy
+default config file is located at :file:`/usr/local/etc/unbound` (some distributions use  :file:`/etc/unbound` for their Unbound package). We need to copy
 the config that we are going to use here. 
 You might also want to create the environment file :file:`/usr/local/etc/unbound/unbound_env` for setting the
 `DAEMON_OPTS` environment variable. Omit the `-p` option if you wish to create a PID file.
