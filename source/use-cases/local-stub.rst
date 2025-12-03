@@ -267,7 +267,7 @@ and copy the file contents below:
     [Service]
     Type=exec
     Restart=on-failure
-    EnvironmentFile=-/usr/local/etc/unbound/unbound
+    EnvironmentFile=-/usr/local/etc/unbound/unbound_env
     ExecStart=/usr/local/sbin/unbound -d -p $DAEMON_OPTS
     ExecReload=+/bin/kill -HUP $MAINPID
 
