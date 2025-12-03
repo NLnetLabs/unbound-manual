@@ -279,7 +279,8 @@ location is different depending on the installation method used. In this case th
 default config file is located at :file:`/usr/local/etc/unbound` (some distributions use  :file:`/etc/unbound` for their Unbound package). We need to copy
 the config that we are going to use here. 
 You might also want to create the environment file :file:`/usr/local/etc/unbound/unbound_env` for setting the
-`DAEMON_OPTS` environment variable. Omit the `-p` option if you wish to create a PID file.
+`DAEMON_OPTS` environment variable.
+With this systemd service file there is no longer a need for a PID file (`-p` option above) since service management is handled by systemd. You can omit the `-p` option if you still wish to create a PID file.
 
 Once you have your config copied in the right location, we need to make sure the 
 system can find it. 
