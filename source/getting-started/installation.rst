@@ -252,7 +252,7 @@ You may have to use ``sudo`` to run this, depending on the installation.
 
 .. code-block:: bash
 
-    unbound -V
+   # unbound -V
 
 If all the previous steps were successful we can continue to configuring our
 Unbound instance.
