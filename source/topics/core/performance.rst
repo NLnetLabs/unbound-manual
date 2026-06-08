@@ -5,8 +5,7 @@ Most users will probably not have a need to tune and optimise their Unbound
 installation, but it could be useful for large resolver installations.
 This page contains recommendations based on user feedback.
 If you have different experiences or have recommendations, please share them
-on the
-`Unbound users mailing list <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_.
+on our `community forum <https://community.nlnetlabs.nl/>`_.
 
 Configuration
 -------------
