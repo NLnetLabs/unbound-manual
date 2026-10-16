@@ -343,7 +343,7 @@ to a web browser, which should give you access to the router configuration
 portal. If you can't find the portal using this method, consult the manual or
 the manufacturer's website. When you have access, you should change the DHCP
 configuration to advertise the IP address of the machine running Unbound as the
-default gateway. In the case of our example, that would be ``192.168.0.2``.
+default resolver. In the case of our example, that would be ``192.168.0.2``.
 
 Another possibility is a machine that does not use a resolver that is
 “recommended” by your router. This machine can be running its own resolver or be
