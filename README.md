@@ -41,7 +41,7 @@ point to the release tag/branch.
 The submodule plays no other role in this repository.
 
 
-## Generating templaged manpages for the Unbound master branch
+## Generating templated manpages for the Unbound master branch
 
 ```
 make man unbound_dir=</path/to/local/unbound/repo>
