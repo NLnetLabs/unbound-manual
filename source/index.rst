@@ -6,8 +6,9 @@ fast and lean and incorporates modern features based on open standards.
 
 NLnet Labs offers `professional support and consultancy services
 <https://www.nlnetlabs.nl/services/contracts/>`_ with a service-level
-agreement. Community support is available via our `mailing list
-<https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_. 
+agreement, which include early security vulnerability notices under a
+non-disclosure agreement. Community support is available via the `NLnet Labs
+forum <https://community.nlnetlabs.nl/>`_.
 
 Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
 with packages available for most platforms. It is included in the standard
@@ -95,7 +96,7 @@ license, with attribution to NLnet Labs.
    reference/rfc-compliance
    reference/history/index
    reference/todo
-   
+
 
 Index
 =====

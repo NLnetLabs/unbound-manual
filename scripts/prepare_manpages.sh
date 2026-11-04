@@ -70,7 +70,7 @@ DNSTAP_SOCKET_PATH=''
 #  2.|
 #  3.|     .. |pre.text.target-with space.dot| raw:: html
 #  4.|
-#  5.|         <a class="headerlink" href="pre-text-target-with-space-dot" title="Link to this heading"></a>
+#  5.|         <a class="headerlink" href="pre-text-target-with-space-dot" title="Link to this heading">¶</a>
 #  6.|
 #  7.|     target__after__ |pre.text.target-with space.dot|
 #
@@ -93,7 +93,7 @@ SED_MATCH_3='\([^@]\+\)' # Group something that is not '@'
 SED_MATCH_4='\(.*\)'     # Group anything
 SED_GEN_TARGET='\1.. _\2.\3:\n\n'
 SED_GEN_SUBSTITUTE='\1.. |\2.\3| raw:: html\n\n'
-SED_GEN_RAW_HTML='\1    <a class="headerlink" href="#\2.\3" title="Link to this heading"></a>\n\n'
+SED_GEN_RAW_HTML='\1    <a class="headerlink" href="#\2.\3" title="Link to this heading">¶</a>\n\n'
 SED_GEN_TEXT='\1\3\4 |\2.\3|'
 SED_EXPAND_COMMAND="s?\
 ${SED_MATCH_1}@@UAHL@${SED_MATCH_2}@${SED_MATCH_3}@@${SED_MATCH_4}?\
