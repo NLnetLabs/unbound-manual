@@ -10,8 +10,6 @@ RFCs are implemented in Unbound according to the described standard.
 The following table provides an extensive overview of all the RFC standards and
 Internet drafts that have been implemented in Unbound.
 
-.. class:: rfc-compliance
-
 ============== ====
 :rfc:`1034`    Domain Names – Concepts and Facilities
 :rfc:`1035`    Domain Names – Implementation and Specification
