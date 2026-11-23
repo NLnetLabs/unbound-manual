@@ -22,10 +22,6 @@ Start with :doc:`installation <getting-started/installation>`, then follow the
 sensible defaults, but listening interfaces, client access and DNSSEC trust
 anchors still need to suit your deployment.
 
-For worked examples, see how to run a resolver for
-:doc:`a single machine <use-cases/local-stub>` or
-:doc:`a home network <use-cases/home-resolver>`.
-
 Configure and operate
 ---------------------
 
