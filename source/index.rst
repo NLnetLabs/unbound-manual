@@ -1,37 +1,94 @@
-Unbound by NLnet Labs
+Unbound documentation
 =====================
 
-Unbound is a validating, recursive, caching DNS resolver. It is designed to be
-fast and lean and incorporates modern features based on open standards.
+Unbound is an open-source, validating, recursive DNS resolver developed by
+NLnet Labs. It resolves DNS queries, verifies DNSSEC signatures and caches
+answers for subsequent requests. It runs in environments ranging from home
+routers and network appliances to enterprise networks and large-scale cloud
+infrastructure.
 
-NLnet Labs offers `professional support and consultancy services
-<https://www.nlnetlabs.nl/services/contracts/>`_ with a service-level
-agreement, which include early security vulnerability notices under a
-non-disclosure agreement. Community support is available via the `NLnet Labs
-forum <https://community.nlnetlabs.nl/>`_.
+This manual explains how to install, configure and operate Unbound, and how to
+use its resolution capabilities in your own applications. For an overview of
+its capabilities, read `About Unbound
+<https://nlnetlabs.nl/projects/unbound/about/>`__. For the engineering behind
+its performance, resilience and operational controls, see `Unbound in depth
+<https://nlnetlabs.nl/projects/unbound/in-depth/>`__.
 
-Unbound runs on FreeBSD, OpenBSD, NetBSD, MacOS, Linux and Microsoft Windows,
-with packages available for most platforms. It is included in the standard
-repositories of most Linux distributions. Installation and configuration is
-designed to be easy. Setting up a resolver for your machine or network can be
-done with only a few lines of configuration.
+Get started
+-----------
 
-This documentation is an `open source project
-<https://github.com/NLnetLabs/unbound-manual/>`_ and is edited via text files in
-the `reStructuredText <http://www.sphinx-doc.org/en/stable/rest.html>`_ markup
-language and then compiled into a static website/offline document using `Sphinx
-<http://www.sphinx-doc.org>`_  and `ReadTheDocs <https://readthedocs.org/>`_.
+Start with :doc:`installation <getting-started/installation>`, then follow the
+:doc:`configuration guide <getting-started/configuration>`. Unbound provides
+sensible defaults, but listening interfaces, client access and DNSSEC trust
+anchors still need to suit your deployment.
 
-We always appreciate your feedback and improvements. You can submit an issue or
-pull request on the `GitHub repository
-<https://github.com/NLnetLabs/unbound-manual/issues>`_, or post a message on the
-`Unbound users <https://lists.nlnetlabs.nl/mailman/listinfo/unbound-users>`_
-mailing list. All the contents are under the permissive Creative Commons
-Attribution 3.0 (`CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_)
-license, with attribution to NLnet Labs.
+For worked examples, see how to run a resolver for
+:doc:`a single machine <use-cases/local-stub>` or
+:doc:`a home network <use-cases/home-resolver>`.
+
+Configure and operate
+---------------------
+
+Use the topic guides to adapt Unbound to your workload and policies:
+
+- **Performance and availability:** :doc:`tune resource use
+  <topics/core/performance>` and :doc:`serve stale data when fresh answers
+  cannot be retrieved <topics/core/serve-stale>`.
+- **Monitoring:** :doc:`collect statistics <topics/core/monitoring>` and use
+  :doc:`unbound-control <manpages/unbound-control>` to inspect and manage a
+  running resolver.
+- **Local policy:** organise clients and local data with
+  :doc:`tags and views <topics/filtering/tags-views>`, or apply
+  :doc:`Response Policy Zones <topics/filtering/rpz>`.
+- **Encrypted DNS:** configure :doc:`DNS over HTTPS
+  <topics/privacy/dns-over-https>` or :doc:`DNS over QUIC
+  <topics/privacy/dns-over-quic>`.
+
+Look up an option or command
+----------------------------
+
+The :doc:`unbound.conf reference <manpages/unbound.conf>` describes
+configuration options and their defaults. Use
+:doc:`unbound-checkconf <manpages/unbound-checkconf>` to check a configuration
+file before applying it. The manual pages in the navigation cover the daemon,
+command-line tools and library interfaces; the :ref:`genindex` provides
+another way to find individual entries.
+
+See :doc:`RFC compliance <reference/rfc-compliance>` for supported standards.
+
+Develop with Unbound
+--------------------
+
+Use :doc:`libunbound <developer/libunbound-tutorial/index>` to add validating
+DNS resolution to an application, or explore
+:doc:`Python modules <developer/python-modules>` to extend resolver behaviour.
+The :doc:`source-code documentation <developer/doxygen-docs>` describes
+Unbound's internals.
+
+Get help and contribute
+-----------------------
+
+Ask operational questions and discuss deployments on the `NLnet Labs community
+forum <https://community.nlnetlabs.nl/>`__. Organisations that need assistance
+from the development team and service-level commitments can obtain
+`professional support and consultancy
+<https://nlnetlabs.nl/services/contracts/>`__.
+
+Report software bugs in the `Unbound issue tracker
+<https://github.com/NLnetLabs/unbound/issues>`__. For suspected security
+vulnerabilities, use the `security reporting instructions
+<https://nlnetlabs.nl/security-report/>`__.
+
+Corrections and improvements to this manual are welcome through issues and
+pull requests in the `documentation repository
+<https://github.com/NLnetLabs/unbound-manual/>`__. The documentation is licensed
+under `Creative Commons Attribution 3.0
+<https://creativecommons.org/licenses/by/3.0/>`__, with attribution to
+NLnet Labs.
 
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Getting Started
 
@@ -39,6 +96,7 @@ license, with attribution to NLnet Labs.
    getting-started/configuration
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Use Cases
 
@@ -46,6 +104,7 @@ license, with attribution to NLnet Labs.
    use-cases/local-stub
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Core
 
@@ -55,6 +114,7 @@ license, with attribution to NLnet Labs.
    topics/core/monitoring
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Privacy
 
@@ -63,6 +123,7 @@ license, with attribution to NLnet Labs.
    topics/privacy/dns-over-quic
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Filtering
 
@@ -70,6 +131,7 @@ license, with attribution to NLnet Labs.
    topics/filtering/rpz
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Developer
 
@@ -78,6 +140,7 @@ license, with attribution to NLnet Labs.
    developer/doxygen-docs
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :caption: Manual Pages
 
@@ -90,17 +153,10 @@ license, with attribution to NLnet Labs.
    manpages/unbound-anchor
 
 .. toctree::
+   :hidden:
    :maxdepth: 1
    :caption: Reference
 
    reference/rfc-compliance
    reference/history/index
    reference/todo
-
-
-Index
-=====
-
-* :ref:`genindex`
-
-.. * :ref:`search`
