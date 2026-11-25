@@ -36,9 +36,13 @@ Use the topic guides to adapt Unbound to your workload and policies:
 - **Local policy:** organise clients and local data with
   :doc:`tags and views <topics/filtering/tags-views>`, or apply
   :doc:`Response Policy Zones <topics/filtering/rpz>`.
-- **Encrypted DNS:** configure :doc:`DNS over HTTPS
-  <topics/privacy/dns-over-https>` or :doc:`DNS over QUIC
-  <topics/privacy/dns-over-quic>`.
+- **Encrypted DNS:** configure DNS over TLS for
+  :ref:`forward<unbound.conf.forward>` and
+  :ref:`stub<unbound.conf.stub>` zones.
+- **Encrypted client DNS:** configure
+  :ref:`DNS over TLS <unbound.conf.tls-port>`,
+  :doc:`DNS over HTTPS <topics/privacy/dns-over-https>` or
+  :doc:`DNS over QUIC <topics/privacy/dns-over-quic>`.
 
 Look up an option or command
 ----------------------------
