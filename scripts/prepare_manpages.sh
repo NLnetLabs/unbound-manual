@@ -36,7 +36,7 @@ UNBOUND_CHROOT_DIR=${UNBOUND_RUN_DIR}
 UNBOUND_PIDFILE=${UNBOUND_RUN_DIR}/unbound.pid
 UNBOUND_USERNAME=unbound
 ub_conf_file=${UNBOUND_RUN_DIR}/unbound.conf
-DNSTAP_SOCKET_PATH=''
+DNSTAP_SOCKET_PATH=${UNBOUND_RUN_DIR}/dnstap.sock
 
 # The upcoming sed usage here is complicated and try to go around
 # Sphinx/restructuredText limitation of providing arbitrary hover links.
